@@ -1,0 +1,9 @@
+.sidebarContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.individualSection{
+    display: flex;
+    align-items: center;
+}

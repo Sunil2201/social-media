@@ -31,6 +31,14 @@ function Login() {
     navigate("/signup")
   };
 
+  const enterTestCredentialsAndLogin = () => {
+    setFormData({
+      username: "sunil_ballani",
+      password: "sunil123"
+    })
+    handleUserLogin("sunil_ballani", "sunil123")
+  }
+
   return (
     <div className="loginPage">
       <main className="loginForm">
@@ -67,7 +75,7 @@ function Login() {
           </div>
           <div className="buttonContainer">
             <button type="submit">Sign In</button> &nbsp;
-            <button type="button">Test user</button>
+            <button type="button" onClick={enterTestCredentialsAndLogin}>Test user</button>
           </div>
         </form>
         <p>

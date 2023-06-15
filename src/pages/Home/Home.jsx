@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
+import Sidebar from '../../components/Sidebar'
+import "./Home.css"
 
 function Home() {
 
@@ -8,7 +10,10 @@ function Home() {
   console.log(authState?.user, authState?.token)
 
   return (
-    <div>This is the home page</div>
+    <div className='homePageContainer'>
+      <Sidebar />
+      This is the home page
+    </div>
   )
 }
 
