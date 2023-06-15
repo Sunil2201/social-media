@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdVisibility } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 
 function Signup() {
+  const {handleUserSignup} = useContext(AuthContext)
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +34,7 @@ function Signup() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("submitted")
+    handleUserSignup(username, password, firstName, lastName)
   };
 
   return (
