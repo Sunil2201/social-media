@@ -1,30 +1,27 @@
-import React, { useContext } from 'react'
-import { AuthContext } from '../../contexts/AuthContext'
-import Sidebar from '../../components/Sidebar/Sidebar'
-import "./Home.css"
-import ExploreUsers from '../../components/Explore Users/ExploreUsers'
+import React, { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import "./Home.css";
+import ExploreUsers from "../../components/Explore Users/ExploreUsers";
+import { DataContext } from "../../contexts/DataContext";
+import CreatePost from "../../components/CreatePost/CreatePost";
 
 function Home() {
+  const { authState } = useContext(AuthContext);
+  const { dataState } = useContext(DataContext);
 
-  const {authState} = useContext(AuthContext)
-
-  console.log(authState?.user, authState?.token)
+  console.log(dataState?.users, dataState?.posts);
 
   return (
-    <div className='homePageContainer'>
+    <div className="homePageContainer">
       <Sidebar />
-      <section className='homeSection'>
+      <section className="homeSection">
         <h2>Home</h2>
-        <div className='newPost'>
-          User avatar
-          <form>
-            <div role='textbox' className='tweet-input' contentEditable="true" placeholder='What is happenining?!' />
-          </form>
-        </div>
+        <CreatePost />
       </section>
       <ExploreUsers />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
