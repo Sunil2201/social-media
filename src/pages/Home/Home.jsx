@@ -5,6 +5,7 @@ import "./Home.css";
 import ExploreUsers from "../../components/Explore Users/ExploreUsers";
 import { DataContext } from "../../contexts/DataContext";
 import CreatePost from "../../components/CreatePost/CreatePost";
+import Filters from "../../components/Filters/Filters";
 
 function Home() {
   const { authState } = useContext(AuthContext);
@@ -18,6 +19,7 @@ function Home() {
       <section className="homeSection">
         <h2>Home</h2>
         <CreatePost />
+        <Filters />
       </section>
       <ExploreUsers />
     </div>

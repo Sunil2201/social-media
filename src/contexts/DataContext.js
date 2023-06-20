@@ -7,6 +7,7 @@ export const DataContext = createContext();
 export function DataProvider({ children }) {
   const [isPostsLoading, setIsPostsLoading] = useState(true);
   const [isUsersLoading, setIsUsersLoading] = useState(true);
+  const [filter, setFilter] = useState("trending");
 
   const initialDataState = {
     users: [],
@@ -48,6 +49,11 @@ export function DataProvider({ children }) {
     } catch (error) {}
   };
 
+  const handleChangeFilter = (e) => {
+    const selectedFilter = e.target.getAttribute("value");
+    setFilter(selectedFilter)
+  }
+
   useEffect(() => {
     getAllUsers();
     getAllPosts();
@@ -55,7 +61,7 @@ export function DataProvider({ children }) {
 
   return (
     <DataContext.Provider
-      value={{ dataState, dataDispatch, isPostsLoading, isUsersLoading }}
+      value={{ dataState, filter, dataDispatch, isPostsLoading, isUsersLoading, handleChangeFilter }}
     >
       {children}
     </DataContext.Provider>
