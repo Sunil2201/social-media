@@ -11,7 +11,27 @@ function Home() {
   const { authState } = useContext(AuthContext);
   const { dataState } = useContext(DataContext);
 
-  console.log(dataState?.users, dataState?.posts);
+  const loggedInUser = dataState?.users?.find(
+    (user) => user.username === authState?.user?.username
+  );
+
+  const followingUsers = loggedInUser?.following || [];
+
+  const usernameOfFollowingUsers = [...followingUsers].map(
+    (user) => user?.username
+  );
+
+  const postsOfFollowingUsers = dataState?.posts.filter((post) =>
+    usernameOfFollowingUsers.includes(post.username)
+  );
+
+  const postsOfLoggedInUser = dataState?.posts.filter(
+    (post) => post.username === loggedInUser.username
+  );
+
+  const timelinePosts = [...postsOfFollowingUsers, ...postsOfLoggedInUser]
+
+  console.log(timelinePosts);
 
   return (
     <div className="homePageContainer">
