@@ -6,10 +6,12 @@ import ExploreUsers from "../../components/Explore Users/ExploreUsers";
 import { DataContext } from "../../contexts/DataContext";
 import CreatePost from "../../components/CreatePost/CreatePost";
 import Filters from "../../components/Filters/Filters";
+import { sortPosts } from "../../utils/SortPosts";
+import Post from "../../components/Post/Post";
 
 function Home() {
   const { authState } = useContext(AuthContext);
-  const { dataState } = useContext(DataContext);
+  const { dataState, filter } = useContext(DataContext);
 
   const loggedInUser = dataState?.users?.find(
     (user) => user.username === authState?.user?.username
@@ -29,9 +31,9 @@ function Home() {
     (post) => post.username === loggedInUser.username
   );
 
-  const timelinePosts = [...postsOfFollowingUsers, ...postsOfLoggedInUser]
+  const timelinePosts = [...postsOfFollowingUsers, ...postsOfLoggedInUser];
 
-  console.log(timelinePosts);
+  const sortedPosts = sortPosts(timelinePosts, filter);
 
   return (
     <div className="homePageContainer">
@@ -40,6 +42,11 @@ function Home() {
         <h2>Home</h2>
         <CreatePost />
         <Filters />
+        <div className="postsContainer">
+          {[...sortedPosts].reverse().map((post, idx) => (
+            <Post post={post} key={idx} />
+          ))}
+        </div>
       </section>
       <ExploreUsers />
     </div>
