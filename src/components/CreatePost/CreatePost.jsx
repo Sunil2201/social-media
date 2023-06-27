@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {MdOutlineInsertPhoto, MdOutlineGifBox} from "react-icons/md"
 import {BsEmojiSmile} from "react-icons/bs"
+import { AuthContext } from "../../contexts/AuthContext";
 
 function CreatePost() {
+  const {authState} = useContext(AuthContext)
   const [tweet, setTweet] = useState("");
 
   const handleChange = (e) => {
@@ -29,7 +31,7 @@ function CreatePost() {
   return (
     <div className="newPost">
       <div className="userAvatar">
-        <p>SB</p>
+        <img src={authState?.user?.profileAvatar} style={{width: "30px", height: "30px", borderRadius: "50%"}} alt="" />
       </div>
       <form onSubmit={handleSubmit}>
         <div

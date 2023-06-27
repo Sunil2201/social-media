@@ -23,6 +23,7 @@ export const users = [
     lastName: "Ballani",
     username: "sunil_ballani",
     password: "sunil123",
+    profileAvatar: "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607556/samples/smile.jpg",
     followers: [],
     following: [
       { _id: uuid(), fullName: "Adarsh Balika", username: "adarshBalika123" },

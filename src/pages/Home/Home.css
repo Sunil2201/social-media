@@ -4,10 +4,10 @@
   padding: 0rem 8rem;
 }
 .homeSection {
-  padding: 1rem 0rem;
+  padding-top: 1rem;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  height: 100vh;
+  min-height: 100vh;
 }
 .homeSection h2{
   padding: 0rem 1rem 1rem 1rem;
