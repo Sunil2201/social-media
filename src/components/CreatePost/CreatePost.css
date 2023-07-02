@@ -1,0 +1,30 @@
+.fileInput {
+  display: none;
+}
+.addToTweet {
+  display: flex;
+  align-items: center;
+}
+.addToTweet label {
+  height: 23px;
+}
+.mediaContainer img, .mediaContainer video {
+  width: 40rem;
+  border-radius: 10px;
+}
+.mediaContainer {
+  position: relative;
+}
+.mediaContainer .closeMedia {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  background-color: rgb(60, 60, 60);
+  color: white;
+  margin: 0.5rem;
+  border-radius: 1rem;
+  padding: 0.3rem;
+  font-size: 1.5rem;
+  opacity: 0.9;
+}

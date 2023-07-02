@@ -54,12 +54,12 @@ export function DataProvider({ children }) {
     setFilter(selectedFilter)
   }
 
-  console.log(filter);
-
   useEffect(() => {
     getAllUsers();
     getAllPosts();
   }, []);
+
+  console.log(dataState?.posts);
 
   return (
     <DataContext.Provider

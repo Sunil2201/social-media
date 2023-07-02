@@ -15,7 +15,7 @@ function Post({ post }) {
           <div className="primaryDetails">
             <div className="userDetails">
               <div className="profile">
-                <h4>{post?.fullName}</h4>
+                <h4>{post?.fullName || post?.firstName + " " + post?.lastName}</h4>
                 <p>{post?.username}</p>
               </div>
             </div>
@@ -27,8 +27,15 @@ function Post({ post }) {
             <BsThreeDots />
           </div>
         </div>
-        <div className="postImage">
-          <img className="postImage" src={post?.postImage} alt="post-image" />
+        <div className="media">
+          {post?.mediaUrl && post?.type === "video" && (
+            <video className="postImage" controls autoPlay muted loop>
+              <source src={post?.mediaUrl} />
+            </video>
+          )}
+          {post?.mediaUrl && post?.type === "image" && (
+            <img className="postImage" src={post?.mediaUrl} alt="postImg"/>
+          )}
         </div>
         <div className="postActions">
           <BiComment size={20}/>
