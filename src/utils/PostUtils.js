@@ -1,4 +1,4 @@
-import { createPostService } from "../services/PostServices";
+import { createPostService, dislikePostService, likePostService } from "../services/PostServices";
 
 export const createPost = async (postForm, token, dataDispatch) => {
   try {
@@ -11,3 +11,28 @@ export const createPost = async (postForm, token, dataDispatch) => {
     console.error(error)
   }
 };
+
+export const likePost = async(postId, token, dataDispatch) => {
+  try {
+    const res = await likePostService(postId, token);
+    const resJson = await res.json()
+    if(res.status === 201){
+      dataDispatch({type: "setPosts", payload: resJson?.posts})
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+export const dislikePost = async(postId, token, dataDispatch) => {
+  try {
+    const res = await dislikePostService(postId, token);
+    const resJson = await res.json()
+    console.log(resJson);
+    if(res.status === 201){
+      dataDispatch({type: "setPosts", payload: resJson?.posts})
+    }
+  } catch (error) {
+   console.error(error.message); 
+  }
+}

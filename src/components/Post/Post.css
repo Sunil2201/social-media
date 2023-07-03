@@ -20,6 +20,10 @@
   align-items: flex-start;
   gap: 0.5rem;
 }
+.postContent{
+  width: 40rem;
+  text-overflow: clip;
+}
 .postImage{
   width: 40rem;
 }
@@ -28,4 +32,9 @@
   align-items: center;
   gap: 1rem;
   cursor: pointer;
+}
+.postActions .actionsContainer{
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }

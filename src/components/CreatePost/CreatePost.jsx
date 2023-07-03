@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { MdOutlineInsertPhoto, MdOutlineGifBox } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { BsEmojiSmile } from "react-icons/bs";
@@ -65,7 +65,7 @@ function CreatePost() {
       const modifiedPostForm = {...postForm, mediaUrl: resp.url}
       createPost(modifiedPostForm, authState?.token, dataDispatch);
     } else {
-      createPost(postForm?.content, "", authState?.token, dataDispatch);
+      createPost(postForm, authState?.token, dataDispatch);
     }
 
     setPostForm({

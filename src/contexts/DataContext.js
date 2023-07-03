@@ -46,7 +46,9 @@ export function DataProvider({ children }) {
       if (res.status === 200) {
         dataDispatch({ type: "setPosts", payload: resJson?.posts });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   const handleChangeFilter = (e) => {
@@ -59,7 +61,6 @@ export function DataProvider({ children }) {
     getAllPosts();
   }, []);
 
-  console.log(dataState?.posts);
 
   return (
     <DataContext.Provider
