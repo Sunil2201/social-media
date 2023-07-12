@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { BiComment, BiBookmark, BiShareAlt } from "react-icons/bi";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -6,16 +6,20 @@ import "./Post.css";
 import { dislikePost, likePost } from "../../utils/PostUtils";
 import { AuthContext } from "../../contexts/AuthContext";
 import { DataContext } from "../../contexts/DataContext";
+import { addBookmark } from "../../utils/UserUtils";
 
 function Post({ post }) {
   const { authState } = useContext(AuthContext);
   const { dataDispatch } = useContext(DataContext);
+  const [showPostActionsMenu, setShowPostActionMenu] = useState(false);
 
   const isLikedAlready = post?.likes?.likedBy.find(
     (user) => user?.username === authState?.user?.username
   );
 
-  console.log(post);
+  const handlePostActionsMenu = () => {
+    setShowPostActionMenu((prevState) => !prevState);
+  };
 
   return (
     <div className="post">
@@ -37,9 +41,17 @@ function Post({ post }) {
               <p>.&nbsp;&nbsp;{post?.createdAt}</p>
             </div>
           </div>
-          <div className="moreOptions">
-            <BsThreeDots />
-          </div>
+          {authState?.user?.username === post?.username && (
+            <div onClick={handlePostActionsMenu} className="moreOptions">
+              <BsThreeDots />
+            </div>
+          )}
+          {showPostActionsMenu && (
+            <div className="postActionsMenu">
+              <p>Edit Post</p>
+              <p>Delete Post</p>
+            </div>
+          )}
         </div>
         <div className="postContent">
           <p>{post?.content}</p>
@@ -75,11 +87,15 @@ function Post({ post }) {
                 }
               />
             )}
-
             <span>{post?.likes?.likeCount}</span>
           </div>
           <BiShareAlt size={20} />
-          <BiBookmark size={20} />
+          <BiBookmark
+            size={20}
+            onClick={() =>
+              addBookmark(post?._id, authState?.token, dataDispatch)
+            }
+          />
         </div>
       </div>
     </div>

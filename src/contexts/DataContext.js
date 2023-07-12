@@ -12,6 +12,7 @@ export function DataProvider({ children }) {
   const initialDataState = {
     users: [],
     posts: [],
+    bookmarks: [],
   };
 
   const dataReducer = (state, action) => {
@@ -20,12 +21,16 @@ export function DataProvider({ children }) {
         return { ...state, users: action.payload };
       case "setPosts":
         return { ...state, posts: action.payload };
+      case "setBookmarks":
+        return { ...state, bookmarks: action.payload };
       default:
         return state;
     }
   };
 
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
+
+  console.log(dataState?.bookmarks);
 
   const getAllUsers = async () => {
     try {
@@ -53,18 +58,24 @@ export function DataProvider({ children }) {
 
   const handleChangeFilter = (e) => {
     const selectedFilter = e.target.getAttribute("value");
-    setFilter(selectedFilter)
-  }
+    setFilter(selectedFilter);
+  };
 
   useEffect(() => {
     getAllUsers();
     getAllPosts();
   }, []);
 
-
   return (
     <DataContext.Provider
-      value={{ dataState, filter, dataDispatch, isPostsLoading, isUsersLoading, handleChangeFilter }}
+      value={{
+        dataState,
+        filter,
+        dataDispatch,
+        isPostsLoading,
+        isUsersLoading,
+        handleChangeFilter,
+      }}
     >
       {children}
     </DataContext.Provider>
