@@ -30,8 +30,6 @@ export function DataProvider({ children }) {
 
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
 
-  console.log(dataState?.bookmarks);
-
   const getAllUsers = async () => {
     try {
       const res = await getAllUsersService();

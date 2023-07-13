@@ -1,20 +1,25 @@
 import React, { useContext, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
-import { BiComment, BiBookmark, BiShareAlt } from "react-icons/bi";
+import { BiComment, BiShareAlt } from "react-icons/bi";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import "./Post.css";
 import { dislikePost, likePost } from "../../utils/PostUtils";
 import { AuthContext } from "../../contexts/AuthContext";
 import { DataContext } from "../../contexts/DataContext";
-import { addBookmark } from "../../utils/UserUtils";
+import { addBookmark, removeBookmark } from "../../utils/UserUtils";
 
 function Post({ post }) {
   const { authState } = useContext(AuthContext);
-  const { dataDispatch } = useContext(DataContext);
+  const { dataState, dataDispatch } = useContext(DataContext);
   const [showPostActionsMenu, setShowPostActionMenu] = useState(false);
 
   const isLikedAlready = post?.likes?.likedBy.find(
     (user) => user?.username === authState?.user?.username
+  );
+
+  const isBookmarkedAlready = [...dataState?.bookmarks].find(
+    (bookmark) => post?._id === bookmark?._id
   );
 
   const handlePostActionsMenu = () => {
@@ -90,12 +95,21 @@ function Post({ post }) {
             <span>{post?.likes?.likeCount}</span>
           </div>
           <BiShareAlt size={20} />
-          <BiBookmark
-            size={20}
-            onClick={() =>
-              addBookmark(post?._id, authState?.token, dataDispatch)
-            }
-          />
+          {isBookmarkedAlready ? (
+            <FaBookmark
+              size={20}
+              onClick={() =>
+                removeBookmark(post?._id, authState?.token, dataDispatch)
+              }
+            />
+          ) : (
+            <FaRegBookmark
+              size={20}
+              onClick={() =>
+                addBookmark(post?._id, authState?.token, dataDispatch)
+              }
+            />
+          )}
         </div>
       </div>
     </div>
