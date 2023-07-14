@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./Home.css";
@@ -8,10 +8,22 @@ import CreatePost from "../../components/CreatePost/CreatePost";
 import Filters from "../../components/Filters/Filters";
 import { sortPosts } from "../../utils/SortPosts";
 import Post from "../../components/Post/Post";
+import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
 
 function Home() {
   const { authState } = useContext(AuthContext);
   const { dataState, filter } = useContext(DataContext);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsPostModalOpen(true);
+    document.body.style.overflow = 'hidden'
+  };
+
+  const closeModal = () => {
+    setIsPostModalOpen(false);
+    document.body.style.overflow = 'auto'
+  };
 
   const loggedInUser = dataState?.users?.find(
     (user) => user.username === authState?.user?.username
@@ -37,7 +49,7 @@ function Home() {
 
   return (
     <div className="homePageContainer">
-      <Sidebar />
+      <Sidebar openModal={openModal} />
       <section className="homeSection">
         <h2>Home</h2>
         <CreatePost />
@@ -49,6 +61,7 @@ function Home() {
         </div>
       </section>
       <ExploreUsers />
+      {isPostModalOpen && <CreatePostModal closeModal={closeModal}/>}
     </div>
   );
 }

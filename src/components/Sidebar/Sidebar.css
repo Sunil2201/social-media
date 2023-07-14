@@ -9,3 +9,11 @@
   align-items: center;
   gap: 0.5rem;
 }
+.newPostBtn{
+  padding: 1rem 3rem;
+  background: rgb(29, 155, 240);
+  color: #fff;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}

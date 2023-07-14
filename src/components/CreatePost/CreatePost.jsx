@@ -5,8 +5,8 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { AuthContext } from "../../contexts/AuthContext";
 import { createPost } from "../../utils/PostUtils";
 import { DataContext } from "../../contexts/DataContext";
-import "./CreatePost.css";
 import { uploadImage } from "../../utils/UploadImage";
+import "./CreatePost.css";
 
 function CreatePost() {
   const { authState } = useContext(AuthContext);
@@ -42,12 +42,12 @@ function CreatePost() {
 
   const handleMediaInput = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     if (file.type.startsWith("image/") || file?.type.startsWith("video/")) {
       if (file.size < 20 * 1024 * 1024) {
         setPostForm((prev) => ({
           ...prev,
-          mediaUrl: file,
+          media: file,
+          mediaUrl: URL.createObjectURL(file),
           type: file?.type.startsWith("image/") ? "image" : "video",
         }));
       } else {
@@ -61,7 +61,7 @@ function CreatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (postForm?.mediaUrl !== "") {
-      const resp = await uploadImage(postForm?.mediaUrl);
+      const resp = await uploadImage(postForm?.media);
       const modifiedPostForm = {...postForm, mediaUrl: resp.url}
       createPost(modifiedPostForm, authState?.token, dataDispatch);
     } else {
@@ -102,7 +102,7 @@ function CreatePost() {
 
         {postForm?.mediaUrl && postForm?.type === "image" && (
           <div className="mediaContainer">
-            <img src={URL.createObjectUrl(postForm?.mediaUrl)} alt="post-img" />
+            <img src={(postForm?.mediaUrl)} alt="post-img" />
             <IoMdClose
               onClick={() => {
                 setPostForm((prev) => ({ ...prev, mediaUrl: "" }));
@@ -115,7 +115,7 @@ function CreatePost() {
         {postForm?.mediaUrl && postForm?.type === "video" && (
           <div className="mediaContainer">
             <video controls muted loop>
-              <source src={URL.createObjectURL(postForm?.mediaUrl)}></source>
+              <source src={(postForm?.mediaUrl)}></source>
             </video>
             <IoMdClose
               onClick={() => {

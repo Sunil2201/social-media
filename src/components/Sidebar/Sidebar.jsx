@@ -3,9 +3,9 @@ import { AiFillHome } from "react-icons/ai";
 import { MdExplore } from "react-icons/md";
 import { BsBookmarksFill } from "react-icons/bs";
 import { BiLogOut } from "react-icons/bi";
-import "./Sidebar.css"
+import "./Sidebar.css";
 
-function Sidebar() {
+function Sidebar({openModal}) {
   const sidebarSections = [
     { name: "Home", icon: <AiFillHome /> },
     { name: "Explore", icon: <MdExplore /> },
@@ -24,6 +24,9 @@ function Sidebar() {
           </div>
         );
       })}
+      <button className="newPostBtn" onClick={openModal}>
+        New Post
+      </button>
     </div>
   );
 }
