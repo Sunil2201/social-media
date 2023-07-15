@@ -9,6 +9,9 @@
   z-index: 9999;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   text-align: left;
+  border-radius: 10px;
+  padding: 1.5rem;
+  padding-right: 2.5rem;
 }
 
 .modalOverlay {
@@ -21,13 +24,13 @@
   z-index: 10;
 }
 
-.newPost {
+.newPostModal {
   display: flex;
   gap: 0.5rem;
   border: none;
 }
 
-.newPost form {
+.newPostModal form {
   width: 100%;
 }
 
@@ -44,4 +47,27 @@
 .tweetInput.empty::before {
   content: attr(placeholder);
   color: #999;
+}
+
+.modalMediaContainer img, .modalMediaContainer video {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.modalMediaContainer{
+  position: relative;
+}
+
+.modalMediaContainer .closeMediaInModal, .closePostModal{
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  background-color: rgb(60, 60, 60);
+  color: white;
+  margin: 0.5rem;
+  border-radius: 1rem;
+  padding: 0.3rem;
+  font-size: 1.5rem;
+  opacity: 0.9;
 }

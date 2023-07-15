@@ -76,13 +76,14 @@ function CreatePostModal({ closeModal }) {
       mediaUrl: "",
     });
     newPostRef.current.innerText = "";
+    closeModal()
   };
 
   return (
     <>
       <div className="modal">
         <div className="modalContent">
-          <div className="newPost">
+          <div className="newPostModal">
             <div className="userAvatar">
               <img
                 src={authState?.user?.profileAvatar}
@@ -105,7 +106,7 @@ function CreatePostModal({ closeModal }) {
               />
 
               {postForm?.mediaUrl && postForm?.type === "image" && (
-                <div className="mediaContainer">
+                <div className="modalMediaContainer">
                   <img
                     src={(postForm?.mediaUrl)}
                     alt="post-img"
@@ -114,13 +115,13 @@ function CreatePostModal({ closeModal }) {
                     onClick={() => {
                       setPostForm((prev) => ({ ...prev, mediaUrl: "" }));
                     }}
-                    className="closeMedia"
+                    className="closeMediaInModal"
                   />
                 </div>
               )}
 
               {postForm?.mediaUrl && postForm?.type === "video" && (
-                <div className="mediaContainer">
+                <div className="modalMediaContainer">
                   <video controls muted loop>
                     <source
                       src={(postForm?.mediaUrl)}
@@ -130,7 +131,7 @@ function CreatePostModal({ closeModal }) {
                     onClick={() => {
                       setPostForm((prev) => ({ ...prev, mediaUrl: "" }));
                     }}
-                    className="closeMedia"
+                    className="closeMediaInModal"
                   />
                 </div>
               )}
@@ -152,7 +153,7 @@ function CreatePostModal({ closeModal }) {
               </div>
             </form>
           </div>
-          <button onClick={closeModal}>Close</button>
+          <IoMdClose className="closePostModal" onClick={closeModal} />
         </div>
       </div>
       <div className="modalOverlay"></div>
