@@ -4,7 +4,7 @@ import { BiComment, BiShareAlt } from "react-icons/bi";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import "./Post.css";
-import { dislikePost, likePost } from "../../utils/PostUtils";
+import { deletePost, dislikePost, likePost } from "../../utils/PostUtils";
 import { AuthContext } from "../../contexts/AuthContext";
 import { DataContext } from "../../contexts/DataContext";
 import { addBookmark, removeBookmark } from "../../utils/UserUtils";
@@ -24,6 +24,11 @@ function Post({ post }) {
 
   const handlePostActionsMenu = () => {
     setShowPostActionMenu((prevState) => !prevState);
+  };
+
+  const handleDeletePost = () => {
+    deletePost(post?._id, authState?.token, dataDispatch);
+    setShowPostActionMenu(false)
   };
 
   return (
@@ -54,7 +59,7 @@ function Post({ post }) {
           {showPostActionsMenu && (
             <div className="postActionsMenu">
               <p>Edit Post</p>
-              <p>Delete Post</p>
+              <p onClick={handleDeletePost}>Delete Post</p>
             </div>
           )}
         </div>
