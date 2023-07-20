@@ -8,10 +8,12 @@ import { deletePost, dislikePost, likePost } from "../../utils/PostUtils";
 import { AuthContext } from "../../contexts/AuthContext";
 import { DataContext } from "../../contexts/DataContext";
 import { addBookmark, removeBookmark } from "../../utils/UserUtils";
+import { PostModalContext } from "../../contexts/PostModalContext";
 
-function Post({ post }) {
+function Post({ post, openModal }) {
   const { authState } = useContext(AuthContext);
   const { dataState, dataDispatch } = useContext(DataContext);
+  const {handleFormEdit} = useContext(PostModalContext)
   const [showPostActionsMenu, setShowPostActionMenu] = useState(false);
 
   const isLikedAlready = post?.likes?.likedBy.find(
@@ -27,9 +29,15 @@ function Post({ post }) {
   };
 
   const handleDeletePost = () => {
-    deletePost(post?._id, authState?.token, dataDispatch);
     setShowPostActionMenu(false)
+    deletePost(post?._id, authState?.token, dataDispatch);
   };
+
+  const handleEditPost = (postToEdit) => {
+    setShowPostActionMenu(false)
+    openModal()
+    handleFormEdit(postToEdit)
+  }
 
   return (
     <div className="post">
@@ -58,7 +66,7 @@ function Post({ post }) {
           )}
           {showPostActionsMenu && (
             <div className="postActionsMenu">
-              <p>Edit Post</p>
+              <p onClick={() => handleEditPost(post)}>Edit Post</p>
               <p onClick={handleDeletePost}>Delete Post</p>
             </div>
           )}

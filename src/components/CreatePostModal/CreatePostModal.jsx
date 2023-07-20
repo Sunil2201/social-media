@@ -1,32 +1,23 @@
-import React, { useContext, useRef, useState } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-import { DataContext } from "../../contexts/DataContext";
+import React, { useContext, useRef } from "react";
 import { MdOutlineInsertPhoto, MdOutlineGifBox } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { BsEmojiSmile } from "react-icons/bs";
-import { createPost } from "../../utils/PostUtils";
-import { uploadImage } from "../../utils/UploadImage";
 import "./CreatePostModal.css";
+import { PostModalContext } from "../../contexts/PostModalContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 function CreatePostModal({ closeModal }) {
   const { authState } = useContext(AuthContext);
-  const { dataDispatch } = useContext(DataContext);
-
-  const firstName = authState?.user?.firstName;
-  const lastName = authState?.user?.lastName;
-
-  const [postForm, setPostForm] = useState({
-    firstName,
-    lastName,
-    content: "",
-    mediaUrl: "",
-  });
-
   const newPostRef = useRef();
-
-  const handleChange = (e) => {
-    setPostForm((prev) => ({ ...prev, content: e.target.innerText }));
-  };
+  const {
+    postForm,
+    editMode,
+    handleChange,
+    handleMediaInput,
+    handlePostFormSubmit,
+    closeMedia,
+    handleSubmitEditedPost,
+  } = useContext(PostModalContext);
 
   const handleFocus = (e) => {
     if (e.target.innerText.trim() !== "") {
@@ -40,43 +31,16 @@ function CreatePostModal({ closeModal }) {
     }
   };
 
-  const handleMediaInput = (e) => {
-    const file = e.target.files[0];
-    console.log(file);
-    if (file.type.startsWith("image/") || file?.type.startsWith("video/")) {
-      if (file.size < 20 * 1024 * 1024) {
-        setPostForm((prev) => ({
-          ...prev,
-          media: file,
-          mediaUrl: URL.createObjectURL(file),
-          type: file?.type.startsWith("image/") ? "image" : "video",
-        }));
-      } else {
-        console.log("File size must be less than 20mb");
-      }
-    } else {
-      console.log("File must be a video or video or an image");
-    }
+  const handleSubmit = (e) => {
+    handlePostFormSubmit(e);
+    newPostRef.current.innerText = "";
+    closeModal();
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (postForm?.mediaUrl !== "") {
-      const resp = await uploadImage(postForm?.media);
-      const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
-      createPost(modifiedPostForm, authState?.token, dataDispatch);
-    } else {
-      createPost(postForm, authState?.token, dataDispatch);
-    }
-
-    setPostForm({
-      firstName,
-      lastName,
-      content: "",
-      mediaUrl: "",
-    });
+  const handleEdit = (e) => {
+    handleSubmitEditedPost(e);
     newPostRef.current.innerText = "";
-    closeModal()
+    closeModal();
   };
 
   return (
@@ -91,30 +55,24 @@ function CreatePostModal({ closeModal }) {
                 alt=""
               />
             </div>
-            <form onSubmit={handleSubmit}>
-              <div
-                role="textbox"
+            <form onSubmit={editMode ? handleEdit : handleSubmit}>
+              <textarea
                 ref={newPostRef}
                 className={`tweetInput ${
                   postForm?.content.trim() === "" ? "empty" : ""
                 }`}
-                contentEditable="true"
                 placeholder="What is happening?!"
-                onInput={handleChange}
+                onChange={handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
+                defaultValue={postForm?.content}
               />
 
               {postForm?.mediaUrl && postForm?.type === "image" && (
                 <div className="modalMediaContainer">
-                  <img
-                    src={(postForm?.mediaUrl)}
-                    alt="post-img"
-                  />
+                  <img src={postForm?.mediaUrl} alt="post-img" />
                   <IoMdClose
-                    onClick={() => {
-                      setPostForm((prev) => ({ ...prev, mediaUrl: "" }));
-                    }}
+                    onClick={closeMedia}
                     className="closeMediaInModal"
                   />
                 </div>
@@ -123,14 +81,10 @@ function CreatePostModal({ closeModal }) {
               {postForm?.mediaUrl && postForm?.type === "video" && (
                 <div className="modalMediaContainer">
                   <video controls muted loop>
-                    <source
-                      src={(postForm?.mediaUrl)}
-                    ></source>
+                    <source src={postForm?.mediaUrl}></source>
                   </video>
                   <IoMdClose
-                    onClick={() => {
-                      setPostForm((prev) => ({ ...prev, mediaUrl: "" }));
-                    }}
+                    onClick={closeMedia}
                     className="closeMediaInModal"
                   />
                 </div>
@@ -149,7 +103,7 @@ function CreatePostModal({ closeModal }) {
                   <MdOutlineGifBox size={23} />
                   <BsEmojiSmile size={20} />
                 </div>
-                <button type="submit">Tweet</button>
+                <button type="submit">{editMode ? "Update" : "Tweet"}</button>
               </div>
             </form>
           </div>

@@ -9,20 +9,24 @@ import Filters from "../../components/Filters/Filters";
 import { sortPosts } from "../../utils/SortPosts";
 import Post from "../../components/Post/Post";
 import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
+import { PostModalContext } from "../../contexts/PostModalContext";
 
 function Home() {
   const { authState } = useContext(AuthContext);
   const { dataState, filter } = useContext(DataContext);
+  const { setPostForm, setEditMode } = useContext(PostModalContext);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   const openModal = () => {
     setIsPostModalOpen(true);
-    document.body.style.overflow = 'hidden'
+    setEditMode(false);
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
+    setPostForm((prevState) => ({ ...prevState, content: "", mediaUrl: "" }));
     setIsPostModalOpen(false);
-    document.body.style.overflow = 'auto'
+    document.body.style.overflow = "auto";
   };
 
   const loggedInUser = dataState?.users?.find(
@@ -56,12 +60,12 @@ function Home() {
         <Filters />
         <div className="postsContainer">
           {[...sortedPosts].reverse().map((post, idx) => (
-            <Post post={post} key={idx} />
+            <Post post={post} key={idx} openModal={openModal} />
           ))}
         </div>
       </section>
       <ExploreUsers />
-      {isPostModalOpen && <CreatePostModal closeModal={closeModal}/>}
+      {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
     </div>
   );
 }

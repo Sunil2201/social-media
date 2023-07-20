@@ -1,7 +1,7 @@
 .modal {
   position: fixed;
   width: 35%;
-  top: 30%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: #000;
@@ -38,10 +38,12 @@
   width: 100%;
   min-height: 100px;
   background: #262626;
+  color: #fff;
   border-radius: 4px;
   padding: 8px;
   font-size: 14px;
   margin-bottom: 8px;
+  resize: none;
 }
 
 .tweetInput.empty::before {

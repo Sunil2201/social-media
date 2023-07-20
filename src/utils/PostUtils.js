@@ -2,6 +2,7 @@ import {
   createPostService,
   deletePostService,
   dislikePostService,
+  editPostService,
   likePostService,
 } from "../services/PostServices";
 
@@ -52,3 +53,15 @@ export const deletePost = async (postId, token, dataDispatch) => {
     console.error(error.message);
   }
 };
+
+export const editPost = async (postId, postForm, token, dataDispatch) => {
+  try {
+    const res = await editPostService(postId, postForm, token);
+    const resJson = await res.json()
+    if(res.status === 201){
+      dataDispatch({type: "setPosts", payload: resJson?.posts})
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+}

@@ -1,4 +1,5 @@
 .post {
+  position: relative;
   padding: 0.5rem 1rem;
   display: flex;
   gap: 0.5rem;
@@ -40,8 +41,8 @@
 }
 .postActionsMenu{
   position: absolute;
-  top: 34%;
-  left: 60%;
+  top: 4%;
+  right: 8%;
   background: #fff;
   width: 7.5rem;
   padding: 0.5rem;
