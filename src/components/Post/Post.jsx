@@ -9,12 +9,32 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { DataContext } from "../../contexts/DataContext";
 import { addBookmark, removeBookmark } from "../../utils/UserUtils";
 import { PostModalContext } from "../../contexts/PostModalContext";
+import CommentsSection from "../CommentsSection/CommentsSection";
+import {
+  addCommentsService,
+  getCommentsService,
+} from "../../services/PostServices";
 
 function Post({ post, openModal }) {
   const { authState } = useContext(AuthContext);
   const { dataState, dataDispatch } = useContext(DataContext);
-  const {handleFormEdit} = useContext(PostModalContext)
+  const { handleFormEdit } = useContext(PostModalContext);
+
+  const firstName = authState?.user?.firstName;
+  const lastName = authState?.user?.lastName;
+  const username = authState?.user?.username;
+  const avatarUrl = authState?.user?.profileAvatar;
+
   const [showPostActionsMenu, setShowPostActionMenu] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState({
+    firstName,
+    lastName,
+    username,
+    avatarUrl,
+    text: "",
+  });
 
   const isLikedAlready = post?.likes?.likedBy.find(
     (user) => user?.username === authState?.user?.username
@@ -29,15 +49,37 @@ function Post({ post, openModal }) {
   };
 
   const handleDeletePost = () => {
-    setShowPostActionMenu(false)
+    setShowPostActionMenu(false);
     deletePost(post?._id, authState?.token, dataDispatch);
   };
 
   const handleEditPost = (postToEdit) => {
-    setShowPostActionMenu(false)
-    openModal()
-    handleFormEdit(postToEdit)
-  }
+    setShowPostActionMenu(false);
+    openModal();
+    handleFormEdit(postToEdit);
+  };
+
+  const toggleCommentSectionAndGetComments = async () => {
+    setShowComments((prevState) => !prevState);
+    const res = await getCommentsService(post?._id);
+    const resJson = await res.json();
+    setComments(resJson?.comments);
+  };
+
+  const handleChange = (e) => {
+    setComment((prev) => ({ ...prev, text: e.target.value }));
+  };
+
+  const handleAddComment = async () => {
+    const res = await addCommentsService(post?._id, comment, authState?.token);
+    const resJson = await res.json();
+    const modifiedPosts = resJson?.posts;
+    const postOnWhichCommentIsAdded = [...modifiedPosts].find(
+      (singlePost) => singlePost?._id === post?._id
+    );
+    setComments(postOnWhichCommentIsAdded?.comments);
+    setComment({ firstName, lastName, username, avatarUrl, text: "" });
+  };
 
   return (
     <div className="post">
@@ -86,7 +128,7 @@ function Post({ post, openModal }) {
         </div>
         <div className="postActions">
           <div className="actionsContainer">
-            <BiComment size={20} />
+            <BiComment onClick={toggleCommentSectionAndGetComments} size={20} />
             <span>{post?.comments.length}</span>
           </div>
           <div className="actionsContainer">
@@ -124,6 +166,14 @@ function Post({ post, openModal }) {
             />
           )}
         </div>
+        {showComments && (
+          <CommentsSection
+            comments={comments}
+            comment={comment}
+            handleChange={handleChange}
+            handleAddComment={handleAddComment}
+          />
+        )}
       </div>
     </div>
   );

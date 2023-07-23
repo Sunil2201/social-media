@@ -1,0 +1,13 @@
+.singleComment {
+  display: flex;
+}
+.commentInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+.userInfo {
+  display: flex;
+  gap: 0.3rem;
+}

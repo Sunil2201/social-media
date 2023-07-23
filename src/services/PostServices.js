@@ -72,3 +72,27 @@ export const editPostService = async (postId, postForm, token) => {
     console.error(error.message);
   }
 };
+
+export const getCommentsService = async(postId) => {
+  try {
+    const res = await fetch(`/api/comments/${postId}`)
+    return res
+  } catch (error) {
+    console.error(error.message)
+  }
+}
+
+export const addCommentsService = async(postId, commentData, token) => {
+  try {
+    const res = await fetch(`/api/comments/add/${postId}`, {
+      method: "POST",
+      body:JSON.stringify({
+        commentData: {...commentData}
+      }),
+      headers: {authorization: token}
+    })
+    return res;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
