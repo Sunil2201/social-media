@@ -1,6 +1,9 @@
 .exploreUsersContainer {
+  padding-top: 1rem;
+  padding-left: 1rem;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 .searchContainer {
   position: relative;
@@ -15,8 +18,31 @@
 .searchContainer input {
   padding: 0.75rem 2rem 0.75rem 2rem;
   border-radius: 20px;
-  background: var(--search-box-color);
+  background: #ccc;
   border: none;
   font-size: 14px;
 }
-
+.suggestedUsersContainer{
+  padding: 1.2rem 1rem;
+  background: #ccc;
+  border-radius: 10px;
+}
+.userCard{
+  display: flex;
+  justify-content: space-between;
+}
+.aboutUser{
+  display: flex;
+  gap: 0.2rem;
+}
+.infoAboutUserToFollow{
+  display: flex;
+  flex-direction: column;
+}
+.userCard button{
+  border: none;
+  height: fit-content;
+  padding: 0.5rem 0.8rem;
+  border-radius: 20px;
+  cursor: pointer;
+}

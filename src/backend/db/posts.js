@@ -45,7 +45,7 @@ export const posts = [
       },
     ],
     fullName: "Adarsh Balika",
-    username: "adarshBalika123",
+    username: "adarshbalika",
     mediaUrl:
       "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607536/samples/food/fish-vegetables.jpg",
     type: "image",

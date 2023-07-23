@@ -29,9 +29,7 @@ function Home() {
     document.body.style.overflow = "auto";
   };
 
-  const loggedInUser = dataState?.users?.find(
-    (user) => user.username === authState?.user?.username
-  );
+  const loggedInUser = authState?.user;
 
   const followingUsers = loggedInUser?.following || [];
 
@@ -51,6 +49,12 @@ function Home() {
 
   const sortedPosts = sortPosts(timelinePosts, filter);
 
+  const usersToFollow = [...dataState?.users].filter(
+    (user) =>
+      user?.username !== loggedInUser?.username &&
+      !usernameOfFollowingUsers.includes(user?.username)
+  );
+
   return (
     <div className="homePageContainer">
       <Sidebar openModal={openModal} />
@@ -64,7 +68,7 @@ function Home() {
           ))}
         </div>
       </section>
-      <ExploreUsers />
+      <ExploreUsers usersToFollow={usersToFollow} />
       {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
     </div>
   );

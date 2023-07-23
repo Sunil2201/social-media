@@ -41,3 +41,16 @@ export const removeBookmarkService = async (_id, token) => {
     console.error(error.message);
   }
 };
+
+export const followUserService = async(userId, token) => {
+  try {
+    const res = await fetch(`/api/users/follow/${userId}`, {
+      method: "POST",
+      headers: {authorization: token},
+      body: {}
+    })
+    return res
+  } catch (error) {
+    console.error(error.message);
+  }
+}
