@@ -23,8 +23,6 @@ export function AuthProvider({ children }) {
 
   const [authState, authDispatch] = useReducer(authReducer, initialAuthState);
 
-  console.log(authState);
-
   const navigate = useNavigate();
   const location = useLocation();
 

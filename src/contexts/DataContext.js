@@ -13,6 +13,7 @@ export function DataProvider({ children }) {
     users: [],
     posts: [],
     bookmarks: [],
+    userProfile: {},
   };
 
   const dataReducer = (state, action) => {
@@ -23,6 +24,8 @@ export function DataProvider({ children }) {
         return { ...state, posts: action.payload };
       case "setBookmarks":
         return { ...state, bookmarks: action.payload };
+      case "setUserProfile":
+        return { ...state, userProfile: action.payload };
       default:
         return state;
     }

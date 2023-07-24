@@ -14,11 +14,13 @@ import {
   addCommentsService,
   getCommentsService,
 } from "../../services/PostServices";
+import { useNavigate } from "react-router-dom";
 
 function Post({ post, openModal }) {
   const { authState } = useContext(AuthContext);
   const { dataState, dataDispatch } = useContext(DataContext);
   const { handleFormEdit } = useContext(PostModalContext);
+  const navigate = useNavigate()
 
   const firstName = authState?.user?.firstName;
   const lastName = authState?.user?.lastName;
@@ -81,16 +83,28 @@ function Post({ post, openModal }) {
     setComment({ firstName, lastName, username, avatarUrl, text: "" });
   };
 
+  const currentUser = [...dataState?.users]?.find(({username}) => username === post?.username)
+
+  const navigateToUserProfile = () => {
+    navigate(`/profile/${currentUser?.username}`)
+  };
+
   return (
     <div className="post">
-      <div className="profilePicture">
+      <div
+        className="profilePicture"
+        onClick={navigateToUserProfile}
+      >
         <p>SB</p>
       </div>
       <div className="postDetails">
         <div className="postHeader">
           <div className="primaryDetails">
             <div className="userDetails">
-              <div className="profile">
+              <div
+                className="profile"
+                onClick={navigateToUserProfile}
+              >
                 <h4>
                   {post?.fullName || post?.firstName + " " + post?.lastName}
                 </h4>

@@ -2,6 +2,7 @@ import {
   addBookmarkService,
   followUserService,
   getBookmarksService,
+  getUserService,
   removeBookmarkService
 } from "../services/UserServices";
 
@@ -47,6 +48,18 @@ export const followUser = async(userId, token, authDispatch) => {
     const resJson = await res.json()
     if(res.status === 200){
       authDispatch({type: "setUser", payload: resJson?.user})
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+export const getUserInfo = async(userId, dataDispatch) => {
+  try {
+    const res = await getUserService(userId)
+    const resJson = await res.json()
+    if(res.status === 200){
+      dataDispatch({type: "setUserProfile", payload: resJson?.user})
     }
   } catch (error) {
     console.error(error.message);

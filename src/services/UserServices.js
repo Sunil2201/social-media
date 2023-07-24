@@ -54,3 +54,12 @@ export const followUserService = async(userId, token) => {
     console.error(error.message);
   }
 }
+
+export const getUserService = async(userId) => {
+  try {
+    const res = await fetch(`/api/users/${userId}`)
+    return res
+  } catch (error) {
+    console.error(error.message);
+  }
+}
