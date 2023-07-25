@@ -21,6 +21,7 @@
   background: #ccc;
   border: none;
   font-size: 14px;
+  width: 100%;
 }
 .suggestedUsersContainer{
   padding: 1.2rem 1rem;
@@ -30,6 +31,7 @@
 .userCard{
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 }
 .aboutUser{
   display: flex;

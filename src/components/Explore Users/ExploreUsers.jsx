@@ -3,9 +3,20 @@ import { BiSearch } from "react-icons/bi";
 import "./ExploreUsers.css";
 import { AuthContext } from "../../contexts/AuthContext";
 import { followUser } from "../../utils/UserUtils";
+import { useNavigate } from "react-router-dom";
 
 function ExploreUsers({ usersToFollow }) {
   const { authState, authDispatch } = useContext(AuthContext);
+  const navigate = useNavigate()
+
+  const navigateToUserProfile = (username) => {
+    navigate(`/profile/${username}`)
+  };
+
+  const handleFollowUser = (e, userId) => {
+    e.stopPropagation();
+    followUser(userId, authState?.token, authDispatch);
+  };
 
   return (
     <div className="exploreUsersContainer">
@@ -21,7 +32,11 @@ function ExploreUsers({ usersToFollow }) {
           ) : (
             usersToFollow.map((user, idx) => {
               return (
-                <div className="userCard" key={idx}>
+                <div
+                  className="userCard"
+                  key={idx}
+                  onClick={() => navigateToUserProfile(user?.username)}
+                >
                   <div className="aboutUser">
                     <div className="profileAvatar">SB</div>
                     <div className="infoAboutUserToFollow">
@@ -29,11 +44,7 @@ function ExploreUsers({ usersToFollow }) {
                       <p>@{user?.username}</p>
                     </div>
                   </div>
-                  <button
-                    onClick={() =>
-                      followUser(user?._id, authState?.token, authDispatch)
-                    }
-                  >
+                  <button onClick={(e) => handleFollowUser(e, user?._id)}>
                     Follow
                   </button>
                 </div>

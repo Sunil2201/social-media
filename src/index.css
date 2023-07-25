@@ -18,6 +18,12 @@ code {
     monospace;
 }
 
+.appContainer{
+  display: grid;
+  grid-template-columns: 15rem 1fr 20rem;
+  padding: 0rem 8rem;
+}
+
 .loginPage, .signupPage{
   display: flex;
   align-items: center;

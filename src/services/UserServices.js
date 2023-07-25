@@ -55,6 +55,19 @@ export const followUserService = async(userId, token) => {
   }
 }
 
+export const unfollowUserService = async(userId, token) => {
+  try {
+    const res = await fetch(`/api/users/unfollow/${userId}`, {
+      method: "POST",
+      headers: {authorization: token},
+      body: {}
+    })
+    return res
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
 export const getUserService = async(userId) => {
   try {
     const res = await fetch(`/api/users/${userId}`)

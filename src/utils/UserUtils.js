@@ -3,7 +3,8 @@ import {
   followUserService,
   getBookmarksService,
   getUserService,
-  removeBookmarkService
+  removeBookmarkService,
+  unfollowUserService
 } from "../services/UserServices";
 
 export const getBookmarks = async (token, dataDispatch) => {
@@ -46,6 +47,19 @@ export const followUser = async(userId, token, authDispatch) => {
   try {
     const res = await followUserService(userId, token)
     const resJson = await res.json()
+    if(res.status === 200){
+      authDispatch({type: "setUser", payload: resJson?.user})
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+export const unfollowUser = async(userId, token, authDispatch) => {
+  try {
+    const res = await unfollowUserService(userId, token)
+    const resJson = await res.json()
+    console.log(resJson);
     if(res.status === 200){
       authDispatch({type: "setUser", payload: resJson?.user})
     }

@@ -1,8 +1,3 @@
-.homePageContainer {
-  display: flex;
-  justify-content: center;
-  padding: 0rem 8rem;
-}
 .homeSection {
   padding-top: 1rem;
   border-left: 1px solid #ccc;
