@@ -42,37 +42,54 @@ export const removeBookmarkService = async (_id, token) => {
   }
 };
 
-export const followUserService = async(userId, token) => {
+export const followUserService = async (userId, token) => {
   try {
     const res = await fetch(`/api/users/follow/${userId}`, {
       method: "POST",
-      headers: {authorization: token},
-      body: {}
-    })
-    return res
+      headers: { authorization: token },
+      body: {},
+    });
+    return res;
   } catch (error) {
     console.error(error.message);
   }
-}
+};
 
-export const unfollowUserService = async(userId, token) => {
+export const unfollowUserService = async (userId, token) => {
   try {
     const res = await fetch(`/api/users/unfollow/${userId}`, {
       method: "POST",
-      headers: {authorization: token},
-      body: {}
-    })
-    return res
+      headers: { authorization: token },
+      body: {},
+    });
+    return res;
   } catch (error) {
     console.error(error.message);
   }
-}
+};
 
-export const getUserService = async(userId) => {
+export const getUserService = async (userId) => {
   try {
-    const res = await fetch(`/api/users/${userId}`)
-    return res
+    const res = await fetch(`/api/users/${userId}`);
+    return res;
   } catch (error) {
     console.error(error.message);
   }
-}
+};
+
+export const editUserService = async (token, data) => {
+  try {
+    const res = await fetch(`/api/users/edit`, {
+      method: "POST",
+      headers: {
+        authorization: token,
+      },
+      body: JSON.stringify({
+        userData: data,
+      }),
+    });
+    return res;
+  } catch (error) {
+    console.error(error.message);
+  }
+};

@@ -1,20 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DataContext } from "../../contexts/DataContext";
 import { FaArrowLeft } from "react-icons/fa";
 import { AuthContext } from "../../contexts/AuthContext";
 import "./Profile.css";
-import { followUser, unfollowUser } from "../../utils/UserUtils";
+import { editUser, followUser, unfollowUser } from "../../utils/UserUtils";
 import Post from "../../components/Post/Post";
+import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
+import { uploadImage } from "../../utils/UploadImage";
 
-function Profile({openModal}) {
+function Profile({ openModal }) {
   const { authState, authDispatch } = useContext(AuthContext);
-  const { dataState } = useContext(DataContext);
+  const { dataState, dataDispatch } = useContext(DataContext);
   const { username } = useParams();
   const navigate = useNavigate();
 
+  const [userProfile, setUserProfile] = useState({
+    profileAvatar: "",
+    firstName: "",
+    lastName: "",
+    username: "",
+    about: "",
+    website: "",
+  });
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [isNewProfilePicUploaded, setIsNewProfilePicUploaded] = useState(false);
+
   const currentUser = [...dataState?.users].find(
     (user) => user.username === username
+  );
+
+  const remainingUsers = [...dataState?.users].filter(
+    (user) => user.username !== username
   );
 
   const isFollowingCurrentUser = [...authState?.user?.following].find(
@@ -43,6 +60,88 @@ function Profile({openModal}) {
     followUser(currentUser?._id, authState?.token, authDispatch);
   };
 
+  const handleOpenEditProfileModal = () => {
+    setShowEditProfileModal((prevValue) => !prevValue);
+  };
+
+  const handleCloseEditProfileModal = () => {
+    setShowEditProfileModal(false);
+    setUserProfile({
+      profileAvatar: currentUser?.profileAvatar,
+      firstName: currentUser?.firstName,
+      lastName: currentUser?.lastName,
+      username: currentUser?.username,
+      about: currentUser?.about,
+      website: currentUser?.website,
+    });
+  };
+
+  const handleChooseAvatar = (e) => {
+    const selectedAvatar = e.target.getAttribute("id");
+    setUserProfile((prevValue) => ({
+      ...prevValue,
+      profileAvatar: selectedAvatar,
+    }));
+  };
+
+  const handleChange = (e) => {
+    setUserProfile((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const handleMediaInput = (e) => {
+    setIsNewProfilePicUploaded(true);
+    const file = e.target.files[0];
+    if (file.type.startsWith("image/")) {
+      if (file.size < 10 * 1024 * 1024) {
+        setUserProfile((prev) => ({
+          ...prev,
+          media: file,
+          profileAvatar: URL.createObjectURL(file),
+        }));
+      } else {
+        console.log("File size must be less than 10mb");
+      }
+    } else {
+      console.log("File must be an image");
+    }
+  };
+
+  const handleEditProfileFormSubmit = async (e) => {
+    e.preventDefault();
+    if (isNewProfilePicUploaded) {
+      const resp = await uploadImage(userProfile?.media);
+      const modifiedUserProfileForm = {
+        ...userProfile,
+        profileAvatar: resp.url,
+      };
+      editUser(
+        authState?.token,
+        modifiedUserProfileForm,
+        dataDispatch,
+        remainingUsers
+      );
+    }
+    else{
+      editUser(authState?.token, userProfile, dataDispatch, remainingUsers)
+    }
+    setShowEditProfileModal(false);
+    setIsNewProfilePicUploaded(false)
+  };
+
+  useEffect(() => {
+    setUserProfile({
+      profileAvatar: currentUser?.profileAvatar,
+      firstName: currentUser?.firstName,
+      lastName: currentUser?.lastName,
+      username: currentUser?.username,
+      about: currentUser?.about,
+      website: currentUser?.website,
+    });
+  }, [currentUser]);
+
   return (
     <section className="profileSection">
       <div className="profileHeader">
@@ -56,7 +155,7 @@ function Profile({openModal}) {
         <div className="profilePicAndActionContainer">
           <img src={currentUser?.profileAvatar} alt="profile-pic" />
           {authState?.user?.username === currentUser?.username ? (
-            <button>Edit Profile</button>
+            <button onClick={handleOpenEditProfileModal}>Edit Profile</button>
           ) : isFollowingCurrentUser !== undefined ? (
             <button onClick={handleUnfollowUser}>Following</button>
           ) : (
@@ -90,12 +189,21 @@ function Profile({openModal}) {
         </div>
       </div>
       <div className="profilePosts">
-        {[...postsOfCurrentUser].map(post => {
-          return(
-            <Post post={post} openModal={openModal} />
-          )
+        {[...postsOfCurrentUser].map((post, idx) => {
+          return <Post post={post} openModal={openModal} key={idx} />;
         })}
       </div>
+      {showEditProfileModal && (
+        <EditProfileModal
+          userProfile={userProfile}
+          handleOpenEditProfileModal={handleOpenEditProfileModal}
+          handleCloseEditProfileModal={handleCloseEditProfileModal}
+          handleChooseAvatar={handleChooseAvatar}
+          handleChange={handleChange}
+          handleMediaInput={handleMediaInput}
+          handleEditProfileFormSubmit={handleEditProfileFormSubmit}
+        />
+      )}
     </section>
   );
 }
