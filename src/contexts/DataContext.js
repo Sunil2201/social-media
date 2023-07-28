@@ -59,8 +59,6 @@ export function DataProvider({ children }) {
     setFilter(selectedFilter);
   };
 
-  console.log(dataState?.users);
-
   useEffect(() => {
     getAllUsers();
     getAllPosts();

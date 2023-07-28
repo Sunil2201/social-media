@@ -8,6 +8,8 @@ import { sortPosts } from "../../utils/SortPosts";
 import Post from "../../components/Post/Post";
 import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
 import { PostModalContext } from "../../contexts/PostModalContext";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import ExploreUsers from "../../components/Explore Users/ExploreUsers";
 
 function Home() {
   const { authState } = useContext(AuthContext);
@@ -47,18 +49,29 @@ function Home() {
 
   const sortedPosts = sortPosts(timelinePosts, filter);
 
+  const usersToFollow = [...dataState?.users].filter(
+    (user) =>
+      user?.username !== loggedInUser?.username &&
+      !usernameOfFollowingUsers.includes(user?.username)
+  );
+
   return (
-    <section className="homeSection">
-      <h2>Home</h2>
-      <CreatePost />
-      <Filters />
-      <div className="postsContainer">
-        {[...sortedPosts].reverse().map((post, idx) => (
-          <Post post={post} key={idx} openModal={openModal} />
-        ))}
-      </div>
+    <div className="homePageContainer">
+      <Sidebar openModal={openModal} />
+      <section className="homeSection">
+        <h2>Home</h2>
+        <CreatePost />
+        <Filters />
+        <div className="postsContainer">
+          {[...sortedPosts].reverse().map((post, idx) => (
+            <Post post={post} key={idx} openModal={openModal} />
+          ))}
+        </div>
+        {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
+      </section>
+      <ExploreUsers usersToFollow={usersToFollow} />
       {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
-    </section>
+    </div>
   );
 }
 

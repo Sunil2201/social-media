@@ -8,10 +8,15 @@ import { editUser, followUser, unfollowUser } from "../../utils/UserUtils";
 import Post from "../../components/Post/Post";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
 import { uploadImage } from "../../utils/UploadImage";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import { PostModalContext } from "../../contexts/PostModalContext";
+import ExploreUsers from "../../components/Explore Users/ExploreUsers";
+import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
 
-function Profile({ openModal }) {
+function Profile() {
   const { authState, authDispatch } = useContext(AuthContext);
   const { dataState, dataDispatch } = useContext(DataContext);
+  const { setPostForm, setEditMode } = useContext(PostModalContext);
   const { username } = useParams();
   const navigate = useNavigate();
 
@@ -25,6 +30,33 @@ function Profile({ openModal }) {
   });
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const [isNewProfilePicUploaded, setIsNewProfilePicUploaded] = useState(false);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsPostModalOpen(true);
+    setEditMode(false);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setPostForm((prevState) => ({ ...prevState, content: "", mediaUrl: "" }));
+    setIsPostModalOpen(false);
+    document.body.style.overflow = "auto";
+  };
+
+  const loggedInUser = authState?.user;
+
+  const followingUsers = loggedInUser?.following || [];
+
+  const usernameOfFollowingUsers = [...followingUsers].map(
+    (user) => user?.username
+  );
+
+  const usersToFollow = [...dataState?.users].filter(
+    (user) =>
+      user?.username !== loggedInUser?.username &&
+      !usernameOfFollowingUsers.includes(user?.username)
+  );
 
   const currentUser = [...dataState?.users].find(
     (user) => user.username === username
@@ -123,12 +155,11 @@ function Profile({ openModal }) {
         dataDispatch,
         remainingUsers
       );
-    }
-    else{
-      editUser(authState?.token, userProfile, dataDispatch, remainingUsers)
+    } else {
+      editUser(authState?.token, userProfile, dataDispatch, remainingUsers);
     }
     setShowEditProfileModal(false);
-    setIsNewProfilePicUploaded(false)
+    setIsNewProfilePicUploaded(false);
   };
 
   useEffect(() => {
@@ -143,68 +174,73 @@ function Profile({ openModal }) {
   }, [currentUser]);
 
   return (
-    <section className="profileSection">
-      <div className="profileHeader">
-        <FaArrowLeft style={{ cursor: "pointer" }} onClick={navigateToHome} />
-        <div className="userProfileBasicInfo">
-          <h3>{fullName}</h3>
-          <p>{noOfPosts} Posts</p>
+    <div className="profilePageContainer">
+      <Sidebar openModal={openModal} />
+      <section className="profileSection">
+        <div className="profileHeader">
+          <FaArrowLeft style={{ cursor: "pointer" }} onClick={navigateToHome} />
+          <div className="userProfileBasicInfo">
+            <h3>{fullName}</h3>
+            <p>{noOfPosts} Posts</p>
+          </div>
         </div>
-      </div>
-      <div className="profilePrimaryInfo">
-        <div className="profilePicAndActionContainer">
-          <img src={currentUser?.profileAvatar} alt="profile-pic" />
-          {authState?.user?.username === currentUser?.username ? (
-            <button onClick={handleOpenEditProfileModal}>Edit Profile</button>
-          ) : isFollowingCurrentUser !== undefined ? (
-            <button onClick={handleUnfollowUser}>Following</button>
-          ) : (
-            <button onClick={handleFollowUser}>Follow</button>
-          )}
+        <div className="profilePrimaryInfo">
+          <div className="profilePicAndActionContainer">
+            <img src={currentUser?.profileAvatar} alt="profile-pic" />
+            {authState?.user?.username === currentUser?.username ? (
+              <button onClick={handleOpenEditProfileModal}>Edit Profile</button>
+            ) : isFollowingCurrentUser !== undefined ? (
+              <button onClick={handleUnfollowUser}>Following</button>
+            ) : (
+              <button onClick={handleFollowUser}>Follow</button>
+            )}
+          </div>
+          <div className="userPrimaryInfo">
+            <h3>{fullName}</h3>
+            <p>@{currentUser?.username}</p>
+          </div>
+          <p className="userAboutInfo">{currentUser?.about}</p>
+          <div className="userWebsiteAndJoinedDate">
+            <a className="userWebsite" href={currentUser?.website}>
+              {currentUser?.website}
+            </a>
+            <p>Joined {currentUser?.createdAt}</p>
+          </div>
+          <div className="userSecondaryInfo">
+            <p>
+              {noOfPosts}
+              <span>Posts</span>
+            </p>
+            <p>
+              {currentUser?.following.length}
+              <span>Following</span>
+            </p>
+            <p>
+              {currentUser?.followers.length}
+              <span>Followers</span>
+            </p>
+          </div>
         </div>
-        <div className="userPrimaryInfo">
-          <h3>{fullName}</h3>
-          <p>@{currentUser?.username}</p>
+        <div className="profilePosts">
+          {[...postsOfCurrentUser].map((post, idx) => {
+            return <Post post={post} openModal={openModal} key={idx} />;
+          })}
         </div>
-        <p className="userAboutInfo">{currentUser?.about}</p>
-        <div className="userWebsiteAndJoinedDate">
-          <a className="userWebsite" href={currentUser?.website}>
-            {currentUser?.website}
-          </a>
-          <p>Joined {currentUser?.createdAt}</p>
-        </div>
-        <div className="userSecondaryInfo">
-          <p>
-            {noOfPosts}
-            <span>Posts</span>
-          </p>
-          <p>
-            {currentUser?.following.length}
-            <span>Following</span>
-          </p>
-          <p>
-            {currentUser?.followers.length}
-            <span>Followers</span>
-          </p>
-        </div>
-      </div>
-      <div className="profilePosts">
-        {[...postsOfCurrentUser].map((post, idx) => {
-          return <Post post={post} openModal={openModal} key={idx} />;
-        })}
-      </div>
-      {showEditProfileModal && (
-        <EditProfileModal
-          userProfile={userProfile}
-          handleOpenEditProfileModal={handleOpenEditProfileModal}
-          handleCloseEditProfileModal={handleCloseEditProfileModal}
-          handleChooseAvatar={handleChooseAvatar}
-          handleChange={handleChange}
-          handleMediaInput={handleMediaInput}
-          handleEditProfileFormSubmit={handleEditProfileFormSubmit}
-        />
-      )}
-    </section>
+        {showEditProfileModal && (
+          <EditProfileModal
+            userProfile={userProfile}
+            handleOpenEditProfileModal={handleOpenEditProfileModal}
+            handleCloseEditProfileModal={handleCloseEditProfileModal}
+            handleChooseAvatar={handleChooseAvatar}
+            handleChange={handleChange}
+            handleMediaInput={handleMediaInput}
+            handleEditProfileFormSubmit={handleEditProfileFormSubmit}
+          />
+        )}
+      </section>
+      <ExploreUsers usersToFollow={usersToFollow} />
+      {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
+    </div>
   );
 }
 
