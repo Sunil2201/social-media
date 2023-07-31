@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 
 function Signup() {
-  const {handleUserSignup} = useContext(AuthContext)
+  const { handleUserSignup } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -34,15 +34,24 @@ function Signup() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleUserSignup(username, password, firstName, lastName)
+    handleUserSignup(username, password, firstName, lastName);
   };
 
   return (
     <div className="signupPage">
+      <section className="signupVideoContainer">
+        <video
+          src="https://res.cloudinary.com/dp6uypw0c/video/upload/v1690784032/Untitled_video_-_Made_with_Clipchamp_ityvh3.mp4"
+          autoPlay
+          playbackRate={1.5}
+          muted
+          loop
+          controls={false}
+        />
+      </section>
       <main className="signupForm">
         <h2>Signup</h2>
         <form onSubmit={handleSubmit}>
-
           <div className="firstnameInputDiv">
             <label htmlFor="firstName">Firstname</label>
             <input
@@ -131,11 +140,11 @@ function Signup() {
             </div>
           </div>
 
-          <button type="submit">
-            Sign up
-          </button>
+          <button type="submit">Sign up</button>
         </form>
-        <p>Already have an account? <span onClick={navigateToSignIn}>Login</span></p>
+        <p>
+          Already have an account? <span onClick={navigateToSignIn}>Login</span>
+        </p>
       </main>
     </div>
   );

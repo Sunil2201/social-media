@@ -25,16 +25,34 @@ code {
   padding: 0rem 8rem;
 }
 
-.loginPage,
-.signupPage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+.loginVideoContainer,
+.signupVideoContainer {
+  background-color: #000;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.loginVideoContainer video,
+.signupVideoContainer video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
 }
 
 .loginForm,
 .signupForm {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  right: 0;
   border: 1px solid black;
   padding: 1rem;
   display: flex;

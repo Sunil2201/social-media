@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 
 function Login() {
-  const {handleUserLogin} = useContext(AuthContext)
+  const { handleUserLogin } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -24,23 +24,33 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleUserLogin(username, password)
+    handleUserLogin(username, password);
   };
 
   const navigateToSignup = () => {
-    navigate("/signup")
+    navigate("/signup");
   };
 
   const enterTestCredentialsAndLogin = () => {
     setFormData({
       username: "sunil_ballani",
-      password: "sunil123"
-    })
-    handleUserLogin("sunil_ballani", "sunil123")
-  }
+      password: "sunil123",
+    });
+    handleUserLogin("sunil_ballani", "sunil123");
+  };
 
   return (
     <div className="loginPage">
+      <section className="loginVideoContainer">
+        <video
+          src="https://res.cloudinary.com/dp6uypw0c/video/upload/v1690784032/Untitled_video_-_Made_with_Clipchamp_ityvh3.mp4"
+          autoPlay
+          playbackRate={1.5}
+          muted
+          loop
+          controls={false}
+        />
+      </section>
       <main className="loginForm">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
@@ -75,7 +85,9 @@ function Login() {
           </div>
           <div className="buttonContainer">
             <button type="submit">Sign In</button> &nbsp;
-            <button type="button" onClick={enterTestCredentialsAndLogin}>Test user</button>
+            <button type="button" onClick={enterTestCredentialsAndLogin}>
+              Test user
+            </button>
           </div>
         </form>
         <p>
