@@ -41,7 +41,7 @@
   width: 2.2rem;
 }
 .tweet-input {
-  width: 40rem;
+  width: 100%;
   min-height: 60px;
   height: 100%;
   border-radius: 4px;

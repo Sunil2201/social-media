@@ -22,11 +22,11 @@
   gap: 0.5rem;
 }
 .postContent{
-  width: 40rem;
+  width: 100%;
   text-overflow: clip;
 }
 .postImage{
-  width: 40rem;
+  width: 100%;
 }
 .postActions{
   display: flex;

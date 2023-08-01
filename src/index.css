@@ -4,8 +4,17 @@
   box-sizing: border-box;
 }
 
+:root {
+  --background-color: #000;
+  --text-color: #fff;
+  --primary-color: rgb(29, 155, 240);
+  --hover-background: #292929;
+}
+
 body {
   margin: 0;
+  background: var(--background-color);
+  color: var(--text-color);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -17,14 +26,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
+.homePage {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
 .homePageContainer,
 .profilePageContainer {
   display: grid;
-  grid-template-columns: 15rem 1fr 20rem;
-  padding: 0rem 8rem;
+  grid-template-columns: 15vw auto 18vw;
+  column-gap: 2rem;
+  margin: 0 auto;
+  width: 80%;
 }
-
 .loginVideoContainer,
 .signupVideoContainer {
   background-color: #000;

@@ -1,26 +1,27 @@
 import React from "react";
-import { AiFillHome } from "react-icons/ai";
-import { MdExplore } from "react-icons/md";
-import { BsBookmarksFill } from "react-icons/bs";
-import { BiLogOut } from "react-icons/bi";
+import {
+  MdOutlineHome,
+  MdOutlineExplore,
+  MdOutlineBookmarks,
+  MdOutlineLogout,
+} from "react-icons/md";
 import "./Sidebar.css";
 
-function Sidebar({openModal}) {
+function Sidebar({ openModal }) {
   const sidebarSections = [
-    { name: "Home", icon: <AiFillHome /> },
-    { name: "Explore", icon: <MdExplore /> },
-    { name: "Bookmarks", icon: <BsBookmarksFill /> },
-    { name: "Logout", icon: <BiLogOut /> },
+    { name: "Home", icon: <MdOutlineHome size={25} /> },
+    { name: "Explore", icon: <MdOutlineExplore size={25} /> },
+    { name: "Bookmarks", icon: <MdOutlineBookmarks size={25} /> },
+    { name: "Logout", icon: <MdOutlineLogout size={25} /> },
   ];
 
   return (
     <div className="sidebarContainer">
-      <h2>TripTrails</h2>
       {sidebarSections.map((section, idx) => {
         return (
           <div className="individualSection" key={idx}>
             {section.icon}
-            {section.name}
+            <span>{section.name}</span>
           </div>
         );
       })}

@@ -10,6 +10,7 @@ import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
 import { PostModalContext } from "../../contexts/PostModalContext";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ExploreUsers from "../../components/Explore Users/ExploreUsers";
+import Header from "../../components/Header/Header";
 
 function Home() {
   const { authState } = useContext(AuthContext);
@@ -56,21 +57,24 @@ function Home() {
   );
 
   return (
-    <div className="homePageContainer">
-      <Sidebar openModal={openModal} />
-      <section className="homeSection">
-        <h2>Home</h2>
-        <CreatePost />
-        <Filters />
-        <div className="postsContainer">
-          {[...sortedPosts].reverse().map((post, idx) => (
-            <Post post={post} key={idx} openModal={openModal} />
-          ))}
-        </div>
+    <div className="homePage">
+      <Header />
+      <div className="homePageContainer">
+        <Sidebar openModal={openModal} />
+        <section className="homeSection">
+          <h2>Home</h2>
+          <CreatePost />
+          <Filters />
+          <div className="postsContainer">
+            {[...sortedPosts].reverse().map((post, idx) => (
+              <Post post={post} key={idx} openModal={openModal} />
+            ))}
+          </div>
+          {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
+        </section>
+        <ExploreUsers usersToFollow={usersToFollow} />
         {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
-      </section>
-      <ExploreUsers usersToFollow={usersToFollow} />
-      {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
+      </div>
     </div>
   );
 }
