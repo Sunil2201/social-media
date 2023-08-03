@@ -7,6 +7,8 @@ import { createPost } from "../../utils/PostUtils";
 import { DataContext } from "../../contexts/DataContext";
 import { uploadImage } from "../../utils/UploadImage";
 import "./CreatePost.css";
+import EmojiPicker from "emoji-picker-react";
+import GifPicker from "gif-picker-react";
 
 function CreatePost() {
   const { authState } = useContext(AuthContext);
@@ -21,23 +23,35 @@ function CreatePost() {
     content: "",
     mediaUrl: "",
   });
+  const [showEmojiContainer, setShowEmojiContainer] = useState(false);
+  const [showGifContainer, setShowGifContainer] = useState(false);
 
   const newPostRef = useRef();
 
   const handleChange = (e) => {
-    setPostForm((prev) => ({ ...prev, content: e.target.innerText }));
+    setPostForm((prev) => ({ ...prev, content: e.target.value }));
   };
 
   const handleFocus = (e) => {
-    if (e.target.innerText.trim() !== "") {
-      e.target.classList.remove("empty");
+    const textarea = e.target;
+    if (textarea.value.trim() !== "") {
+      textarea.classList.remove("empty");
     }
   };
 
   const handleBlur = (e) => {
-    if (e.target.innerText.trim() === "") {
-      e.target.classList.add("empty");
+    const textarea = e.target;
+    if (textarea.value.trim() === "") {
+      textarea.classList.add("empty");
     }
+  };
+
+  const toggleEmojiContainer = () => {
+    setShowEmojiContainer((prevState) => !prevState);
+  };
+
+  const toggleGifContainer = () => {
+    setShowGifContainer((prevState) => !prevState);
   };
 
   const handleMediaInput = (e) => {
@@ -62,7 +76,7 @@ function CreatePost() {
     e.preventDefault();
     if (postForm?.mediaUrl !== "") {
       const resp = await uploadImage(postForm?.media);
-      const modifiedPostForm = {...postForm, mediaUrl: resp.url}
+      const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
       createPost(modifiedPostForm, authState?.token, dataDispatch);
     } else {
       createPost(postForm, authState?.token, dataDispatch);
@@ -77,32 +91,36 @@ function CreatePost() {
     newPostRef.current.innerText = "";
   };
 
+  const handleEmojiClick = (emoji) => {
+    setPostForm((prev) => ({
+      ...prev,
+      content: prev.content + emoji?.emoji,
+    }));
+  };
+
   return (
     <div className="newPost">
       <div className="userAvatar">
-        <img
-          src={authState?.user?.profileAvatar}
-          style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-          alt=""
-        />
+        <div className="profilePicture">
+          <img src={authState?.user?.profileAvatar} />
+        </div>
       </div>
       <form onSubmit={handleSubmit}>
-        <div
-          role="textbox"
+        <textarea
           ref={newPostRef}
-          className={`tweet-input ${
+          className={`tweetInput ${
             postForm?.content.trim() === "" ? "empty" : ""
           }`}
-          contentEditable="true"
           placeholder="What is happening?!"
-          onInput={handleChange}
+          onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          value={postForm?.content}
         />
 
         {postForm?.mediaUrl && postForm?.type === "image" && (
           <div className="mediaContainer">
-            <img src={(postForm?.mediaUrl)} alt="post-img" />
+            <img src={postForm?.mediaUrl} alt="post-img" />
             <IoMdClose
               onClick={() => {
                 setPostForm((prev) => ({ ...prev, mediaUrl: "" }));
@@ -115,7 +133,7 @@ function CreatePost() {
         {postForm?.mediaUrl && postForm?.type === "video" && (
           <div className="mediaContainer">
             <video controls muted loop>
-              <source src={(postForm?.mediaUrl)}></source>
+              <source src={postForm?.mediaUrl}></source>
             </video>
             <IoMdClose
               onClick={() => {
@@ -134,14 +152,31 @@ function CreatePost() {
                 className="fileInput"
                 onChange={handleMediaInput}
               />
-              <MdOutlineInsertPhoto size={23} />
+              <MdOutlineInsertPhoto size={25} className="icon" />
             </label>
-            <MdOutlineGifBox size={23} />
-            <BsEmojiSmile size={20} />
+            <MdOutlineGifBox
+              size={25}
+              className="icon"
+              onClick={toggleGifContainer}
+            />
+            <BsEmojiSmile
+              size={20}
+              className="icon"
+              onClick={toggleEmojiContainer}
+            />
           </div>
           <button type="submit">Tweet</button>
         </div>
       </form>
+      {showEmojiContainer && (
+        <EmojiPicker
+          onEmojiClick={handleEmojiClick}
+          className="emojiPickerContainer"
+        />
+      )}
+      {showGifContainer && (
+        <GifPicker tenorApiKey="AIzaSyDHZRMhrQg0K7ibOX7Qq6zWjfZEm7j4bH4" />
+      )}
     </div>
   );
 }

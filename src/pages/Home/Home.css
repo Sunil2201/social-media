@@ -1,7 +1,5 @@
 .homeSection {
-  padding-top: 1rem;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+  padding-top: 0.5rem;
   min-height: 100vh;
 }
 .homeSection h2 {
@@ -10,9 +8,10 @@
 .newPost {
   display: grid;
   grid-template-columns: 2.5rem auto;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  padding: 1rem;
+  column-gap: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.5rem 1rem;
 }
 .newPost form {
   display: flex;
@@ -22,11 +21,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-.addToTweet {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 .createTweetActions button {
   cursor: pointer;

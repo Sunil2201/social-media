@@ -4,6 +4,7 @@
 .addToTweet {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 .addToTweet label {
   height: 23px;
@@ -27,4 +28,10 @@
   padding: 0.3rem;
   font-size: 1.5rem;
   opacity: 0.9;
+}
+aside.EmojiPickerReact.epr-main{
+  position: absolute !important;
+  z-index: 10;
+  top: 35%;
+  left: 30%;
 }

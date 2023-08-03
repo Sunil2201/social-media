@@ -10,6 +10,7 @@
   --primary-color: #1d9bf0;
   --button-hover: rgb(26, 140, 216);
   --hover-background: #292929;
+  --border-color: #292929;
 }
 
 body {
@@ -144,6 +145,7 @@ code {
 
 .icon {
   cursor: pointer;
+  color: var(--primary-color);
 }
 
 .profilePicture {
@@ -152,7 +154,7 @@ code {
   width: 2.7rem;
 }
 
-img{
+img {
   display: block;
   width: 100%;
 }

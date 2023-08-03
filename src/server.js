@@ -117,7 +117,8 @@ export function makeServer({ environment = "development" } = {}) {
       );
 
       this.passthrough(
-        "https://api.cloudinary.com/v1_1/dp6uypw0c/upload"
+        "https://api.cloudinary.com/v1_1/dp6uypw0c/upload",
+        "https://tenor.googleapis.com/v2/categories?key=AIzaSyDHZRMhrQg0K7ibOX7Qq6zWjfZEm7j4bH4&client_key=gif-picker-react&contentfilter=off&media_filter=gif%2Ctinygif&locale=en_US&country=US&type=featured",
       );
     },
   });

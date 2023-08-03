@@ -17,7 +17,7 @@ function Home() {
   const { dataState, filter } = useContext(DataContext);
   const { setPostForm, setEditMode } = useContext(PostModalContext);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-
+  
   const openModal = () => {
     setIsPostModalOpen(true);
     setEditMode(false);
@@ -62,7 +62,6 @@ function Home() {
       <div className="homePageContainer">
         <Sidebar openModal={openModal} />
         <section className="homeSection">
-          <h2>Home</h2>
           <CreatePost />
           <Filters />
           <div className="postsContainer">
