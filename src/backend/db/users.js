@@ -12,8 +12,10 @@ export const users = [
     lastName: "Balika",
     username: "adarshbalika",
     password: "adarshBalika123",
-    profileAvatar: "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607558/cld-sample.jpg",
-    about: "Passionate traveler 🌍 | Book lover 📚 | Aspiring photographer 📷 | Living life to the fullest ✨",
+    profileAvatar:
+      "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607558/cld-sample.jpg",
+    about:
+      "Passionate traveler 🌍 | Book lover 📚 | Aspiring photographer 📷 | Living life to the fullest ✨",
     website: "https://book-bazaar-sunil.netlify.app/",
     followers: [],
     following: [],
@@ -26,12 +28,18 @@ export const users = [
     lastName: "Ballani",
     username: "sunil_ballani",
     password: "sunil123",
-    profileAvatar: "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607556/samples/smile.jpg",
-    about: "Tech enthusiast 📱💻 | Gaming aficionado 🎮🕹️ | Coffee lover ☕ | Aspiring coder 👨‍💻🌟 | Always learning 📚🌐",
+    profileAvatar:
+      "https://res.cloudinary.com/dp6uypw0c/image/upload/v1690958588/sexy-pic_tpdz49.jpg",
+    about:
+      "Tech enthusiast 📱💻 | Gaming aficionado 🎮🕹️ | Coffee lover ☕ | Aspiring coder 👨‍💻🌟 | Always learning 📚🌐",
     website: "https://github-finder-react-snowy.vercel.app/",
     followers: [],
     following: [
-      { _id: "d05165bf-1238-43b9-9258-989469a4a6be", fullName: "Smriti Jain", username: "smriti_13" },
+      {
+        _id: "d05165bf-1238-43b9-9258-989469a4a6be",
+        fullName: "Smriti Jain",
+        username: "smriti_13",
+      },
     ],
     createdAt: formatDate(),
     updatedAt: formatDate(),
@@ -42,8 +50,10 @@ export const users = [
     lastName: "Jain",
     username: "smriti_13",
     password: "smriti123",
-    profileAvatar: "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607534/samples/animals/cat.jpg",
-    about: "Dreamer | Explorer | Nature lover 🌿🍃 | Seeking adventures ✨ | Spreading positivity 🌞💕",
+    profileAvatar:
+      "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607534/samples/animals/cat.jpg",
+    about:
+      "Dreamer | Explorer | Nature lover 🌿🍃 | Seeking adventures ✨ | Spreading positivity 🌞💕",
     website: "https://house-marketplace-sunil.vercel.app/",
     followers: [],
     following: [],

@@ -1,8 +1,15 @@
 .sidebarContainer {
+  position: sticky;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 89vh;
+  padding: 0.5rem 1rem;
+}
+.topSection{
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1rem;
 }
 .individualSection {
   display: flex;
@@ -11,19 +18,41 @@
   cursor: pointer;
   padding: 0.8rem 1rem;
   border-radius: 25px;
+  text-decoration: none;
+  color: #fff;
 }
-.individualSection:hover{
+.individualSection:hover, .loggedInUserProfile:hover{
   background: var(--hover-background);
 }
 .individualSection span {
   font-size: 1.3rem;
-  font-weight: 500;
 }
 .newPostBtn {
-  padding: 1rem 3rem;
-  background: rgb(29, 155, 240);
+  padding: 0.8rem 1rem;
+  background: var(--primary-color);
   color: #fff;
-  border-radius: 30px;
+  border-radius: 25px;
   border: none;
   cursor: pointer;
+}
+.newPostBtn:hover{
+  background: var(--button-hover);
+  transition: all 0.5s ease;
+}
+.newPostBtn span {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.loggedInUserProfile{
+  display: flex;
+  gap: 0.8rem;
+  cursor: pointer;
+  padding: 0.5rem 0.8rem;
+  border-radius: 30px;
+}
+.loggedInUserProfile .fullName{
+  font-weight: 600;
+}
+.loggedInUserProfile .username{
+  opacity: 0.4;
 }
