@@ -54,9 +54,8 @@ export function DataProvider({ children }) {
     }
   };
 
-  const handleChangeFilter = (e) => {
-    const selectedFilter = e.target.getAttribute("value");
-    setFilter(selectedFilter);
+  const handleChangeFilter = (selectedValue) => {
+    setFilter(selectedValue);
   };
 
   useEffect(() => {

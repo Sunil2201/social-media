@@ -152,6 +152,7 @@ code {
   border-radius: 50%;
   overflow: hidden;
   width: 2.7rem;
+  cursor: pointer;
 }
 
 img {

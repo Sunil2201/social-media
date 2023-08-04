@@ -4,7 +4,7 @@ import { BiComment, BiShareAlt } from "react-icons/bi";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import "./Post.css";
-import { deletePost, dislikePost, likePost } from "../../utils/PostUtils";
+import calculateTimePassed, { deletePost, dislikePost, likePost } from "../../utils/PostUtils";
 import { AuthContext } from "../../contexts/AuthContext";
 import { DataContext } from "../../contexts/DataContext";
 import { addBookmark, removeBookmark } from "../../utils/UserUtils";
@@ -20,7 +20,7 @@ function Post({ post, openModal }) {
   const { authState } = useContext(AuthContext);
   const { dataState, dataDispatch } = useContext(DataContext);
   const { handleFormEdit } = useContext(PostModalContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const firstName = authState?.user?.firstName;
   const lastName = authState?.user?.lastName;
@@ -83,36 +83,32 @@ function Post({ post, openModal }) {
     setComment({ firstName, lastName, username, avatarUrl, text: "" });
   };
 
-  const currentUser = [...dataState?.users]?.find(({username}) => username === post?.username)
+  const currentUser = [...dataState?.users]?.find(
+    ({ username }) => username === post?.username
+  );
 
   const navigateToUserProfile = () => {
-    navigate(`/profile/${currentUser?.username}`)
+    navigate(`/profile/${currentUser?.username}`);
   };
 
   return (
     <div className="post">
-      <div
-        className="profilePicture"
-        onClick={navigateToUserProfile}
-      >
-        <p>SB</p>
+      <div className="userProfileImage">
+        <div className="profilePicture">
+          <img src={currentUser?.profileAvatar} alt={currentUser?.username} />
+        </div>
       </div>
       <div className="postDetails">
         <div className="postHeader">
           <div className="primaryDetails">
-            <div className="userDetails">
-              <div
-                className="profile"
-                onClick={navigateToUserProfile}
-              >
-                <h4>
-                  {post?.fullName || post?.firstName + " " + post?.lastName}
-                </h4>
-                <p>{post?.username}</p>
-              </div>
+            <div className="profile" onClick={navigateToUserProfile}>
+              <span>
+                {post?.fullName || post?.firstName + " " + post?.lastName}
+              </span>
+              <p>@{post?.username}</p>
             </div>
             <div className="dateCreated">
-              <p>.&nbsp;&nbsp;{post?.createdAt}</p>
+              <p>{calculateTimePassed(post?.createdAt)} ago</p>
             </div>
           </div>
           {authState?.user?.username === post?.username && (

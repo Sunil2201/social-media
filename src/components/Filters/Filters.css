@@ -2,6 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid #ccc;
+  padding: 1.5rem 1rem;
+}
+.filterName{
+  text-transform: capitalize;
 }

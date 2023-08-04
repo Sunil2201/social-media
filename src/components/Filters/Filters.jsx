@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { BiFilter } from "react-icons/bi";
+import { MdFilterList } from "react-icons/md";
 import "./Filters.css";
 import FiltersContainer from "../FiltersContainer/FiltersContainer";
 import { DataContext } from "../../contexts/DataContext";
@@ -15,8 +15,10 @@ function Filters() {
   return (
     <div className="filterContainer">
       <h3 className="filterName">{filter} Posts</h3>
-      <BiFilter onClick={handleFiltersContainer} size={25} />
-      {filtersContainer && <FiltersContainer />}
+      <MdFilterList onClick={handleFiltersContainer} size={25} />
+      {filtersContainer && (
+        <FiltersContainer setFiltersContainer={setFiltersContainer} />
+      )}
     </div>
   );
 }

@@ -46,8 +46,8 @@ export const deletePost = async (postId, token, dataDispatch) => {
   try {
     const res = await deletePostService(postId, token);
     const resJson = await res.json();
-    if(res.status === 201){
-      dataDispatch({type: "setPosts", payload: resJson?.posts})
+    if (res.status === 201) {
+      dataDispatch({ type: "setPosts", payload: resJson?.posts });
     }
   } catch (error) {
     console.error(error.message);
@@ -57,11 +57,42 @@ export const deletePost = async (postId, token, dataDispatch) => {
 export const editPost = async (postId, postForm, token, dataDispatch) => {
   try {
     const res = await editPostService(postId, postForm, token);
-    const resJson = await res.json()
-    if(res.status === 201){
-      dataDispatch({type: "setPosts", payload: resJson?.posts})
+    const resJson = await res.json();
+    if (res.status === 201) {
+      dataDispatch({ type: "setPosts", payload: resJson?.posts });
     }
   } catch (error) {
     console.error(error.message);
   }
+};
+
+export default function calculateTimePassed(dateString) {
+  const date = new Date(dateString);
+  const currentTime = new Date().getTime();
+
+  const timeDifference = currentTime - date.getTime();
+
+  const secondsPassed = Math.floor(timeDifference / 1000);
+
+  if (secondsPassed < 60) {
+    return `${secondsPassed} seconds`;
+  }
+
+  const minutesPassed = Math.floor(secondsPassed / 60);
+
+  if (minutesPassed > 60) {
+    const hoursPassed = Math.floor(minutesPassed / 60);
+    return hoursPassed > 24
+      ? `${Math.floor(hoursPassed / 24)} days`
+      : `${hoursPassed} hours`;
+  }
+
+  if (minutesPassed > 1440) {
+    const daysPassed = Math.floor(minutesPassed / 1440);
+    return `${daysPassed} days`;
+  }
+
+  return `${minutesPassed} minutes`;
 }
+
+

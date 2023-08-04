@@ -195,6 +195,7 @@ function CreatePost() {
       {showEmojiContainer && (
         <EmojiPicker
           onEmojiClick={handleEmojiClick}
+          theme="dark"
           className="emojiPickerContainer"
         />
       )}

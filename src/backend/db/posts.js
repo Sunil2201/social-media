@@ -49,7 +49,7 @@ export const posts = [
     mediaUrl:
       "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607536/samples/food/fish-vegetables.jpg",
     type: "image",
-    createdAt: "2023-06-05",
+    createdAt: new Date("2023-06-05"),
     updatedAt: formatDate(),
   },
   {
@@ -66,7 +66,7 @@ export const posts = [
     mediaUrl:
       "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607536/samples/food/fish-vegetables.jpg",
     type: "image",
-    createdAt: "2023-06-10",
+    createdAt: new Date("2023-06-10"),
     updatedAt: formatDate(),
   },
   {
@@ -83,7 +83,7 @@ export const posts = [
     mediaUrl:
       "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607536/samples/food/fish-vegetables.jpg",
     type: "image",
-    createdAt: "2023-06-17",
+    createdAt: new Date("2023-06-17"),
     updatedAt: formatDate(),
   },
 ];

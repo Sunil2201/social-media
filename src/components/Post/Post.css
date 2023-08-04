@@ -1,9 +1,10 @@
 .post {
   position: relative;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   display: flex;
-  gap: 0.5rem;
-  border-bottom: 1px solid #ccc;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  gap: 0.8rem;
 }
 .postDetails{
   display: flex;
@@ -59,7 +60,12 @@
 }
 .profile{
   cursor: pointer;
+  display: flex;
+  gap: 0.5rem;
 }
-.profilePicture{
-  cursor: pointer;
+.profile span{
+  font-weight: 700;
+}
+.profile p, .dateCreated p{
+  color: gray;
 }
