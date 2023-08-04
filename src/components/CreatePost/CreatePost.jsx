@@ -25,6 +25,7 @@ function CreatePost() {
   });
   const [showEmojiContainer, setShowEmojiContainer] = useState(false);
   const [showGifContainer, setShowGifContainer] = useState(false);
+  const [uploadingGif, setUploadingGif] = useState(false);
 
   const newPostRef = useRef();
 
@@ -75,9 +76,17 @@ function CreatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (postForm?.mediaUrl !== "") {
-      const resp = await uploadImage(postForm?.media);
-      const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
-      createPost(modifiedPostForm, authState?.token, dataDispatch);
+      if (uploadingGif) {
+        const resp = await uploadImage(postForm?.mediaUrl);
+        console.log(resp.url);
+        const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
+        createPost(modifiedPostForm, authState?.token, dataDispatch);
+        setUploadingGif(false);
+      } else {
+        const resp = await uploadImage(postForm?.media);
+        const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
+        createPost(modifiedPostForm, authState?.token, dataDispatch);
+      }
     } else {
       createPost(postForm, authState?.token, dataDispatch);
     }
@@ -88,7 +97,6 @@ function CreatePost() {
       content: "",
       mediaUrl: "",
     });
-    newPostRef.current.innerText = "";
   };
 
   const handleEmojiClick = (emoji) => {
@@ -98,11 +106,21 @@ function CreatePost() {
     }));
   };
 
+  const handleGifClick = (gif) => {
+    setUploadingGif(true);
+    setPostForm((prev) => ({
+      ...prev,
+      mediaUrl: gif.url,
+      type: "image",
+    }));
+    setShowGifContainer(false);
+  };
+
   return (
     <div className="newPost">
       <div className="userAvatar">
         <div className="profilePicture">
-          <img src={authState?.user?.profileAvatar} />
+          <img src={authState?.user?.profileAvatar} alt={authState?.user?.username}/>
         </div>
       </div>
       <form onSubmit={handleSubmit}>
@@ -123,7 +141,8 @@ function CreatePost() {
             <img src={postForm?.mediaUrl} alt="post-img" />
             <IoMdClose
               onClick={() => {
-                setPostForm((prev) => ({ ...prev, mediaUrl: "" }));
+                setPostForm((prev) => ({ ...prev, mediaUrl: "", media: "", type: ""}));
+                setUploadingGif(false);
               }}
               className="closeMedia"
             />
@@ -137,7 +156,7 @@ function CreatePost() {
             </video>
             <IoMdClose
               onClick={() => {
-                setPostForm((prev) => ({ ...prev, mediaUrl: "" }));
+                setPostForm((prev) => ({ ...prev, mediaUrl: "", media: "", type: ""}));
               }}
               className="closeMedia"
             />
@@ -154,18 +173,23 @@ function CreatePost() {
               />
               <MdOutlineInsertPhoto size={25} className="icon" />
             </label>
-            <MdOutlineGifBox
+            {/* <MdOutlineGifBox
               size={25}
               className="icon"
               onClick={toggleGifContainer}
-            />
+            /> */}
             <BsEmojiSmile
               size={20}
               className="icon"
               onClick={toggleEmojiContainer}
             />
           </div>
-          <button type="submit">Tweet</button>
+          <button
+            disabled={postForm?.content === "" && postForm?.mediaUrl === ""}
+            type="submit"
+          >
+            Post
+          </button>
         </div>
       </form>
       {showEmojiContainer && (
@@ -174,9 +198,12 @@ function CreatePost() {
           className="emojiPickerContainer"
         />
       )}
-      {showGifContainer && (
-        <GifPicker tenorApiKey="AIzaSyDHZRMhrQg0K7ibOX7Qq6zWjfZEm7j4bH4" />
-      )}
+      {/* {showGifContainer && (
+        <GifPicker
+          onGifClick={handleGifClick}
+          tenorApiKey="AIzaSyDHZRMhrQg0K7ibOX7Qq6zWjfZEm7j4bH4"
+        />
+      )} */}
     </div>
   );
 }
