@@ -42,13 +42,6 @@ function Sidebar({ openModal }) {
     navigate(`/profile/${loggedInUser?.username}`);
   };
 
-  // const sidebarSections = [
-  //   { name: "Home", icon: <MdOutlineHome size={25} /> },
-  //   { name: "Explore", icon: <MdOutlineExplore size={25} /> },
-  //   { name: "Bookmarks", icon: <MdOutlineBookmarks size={25} /> },
-  //   { name: "Logout", icon: <MdOutlineLogout size={25} /> },
-  // ];
-
   return (
     <div className="sidebarContainer">
       <div className="topSection">

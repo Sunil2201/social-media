@@ -1,9 +1,11 @@
 .sidebarContainer {
   position: sticky;
+  left: 0;
+  top: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 89vh;
+  height: 90vh;
   padding: 0.5rem 1rem;
 }
 .topSection{

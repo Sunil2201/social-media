@@ -3,8 +3,13 @@
   align-items: center;
   justify-content: space-between;
   width: 80%;
+  height: 10vh;
+  background: var(--background-color);
   padding: 1rem 2rem;
   margin: 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 .appName {
   display: flex;
