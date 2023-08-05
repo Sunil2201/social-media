@@ -15,7 +15,11 @@ function Filters() {
   return (
     <div className="filterContainer">
       <h3 className="filterName">{filter} Posts</h3>
-      <MdFilterList onClick={handleFiltersContainer} size={25} />
+      <MdFilterList
+        className="icon feedIcon"
+        onClick={handleFiltersContainer}
+        size={25}
+      />
       {filtersContainer && (
         <FiltersContainer setFiltersContainer={setFiltersContainer} />
       )}

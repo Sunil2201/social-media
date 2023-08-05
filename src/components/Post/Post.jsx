@@ -1,10 +1,15 @@
 import React, { useContext, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
-import { BiComment, BiShareAlt } from "react-icons/bi";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { BiShareAlt } from "react-icons/bi";
+import { MdBookmarkBorder, MdBookmark } from "react-icons/md";
+import { FaRegComment } from "react-icons/fa";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import "./Post.css";
-import calculateTimePassed, { deletePost, dislikePost, likePost } from "../../utils/PostUtils";
+import calculateTimePassed, {
+  deletePost,
+  dislikePost,
+  likePost,
+} from "../../utils/PostUtils";
 import { AuthContext } from "../../contexts/AuthContext";
 import { DataContext } from "../../contexts/DataContext";
 import { addBookmark, removeBookmark } from "../../utils/UserUtils";
@@ -37,6 +42,12 @@ function Post({ post, openModal }) {
     avatarUrl,
     text: "",
   });
+  const [hoveredOverCommentAction, setHoveredOverCommentAction] =
+    useState(false);
+  const [hoveredOverLikeAction, setHoveredOverLikeAction] = useState(false);
+  const [hoveredOverShareAction, setHoveredOverShareAction] = useState(false);
+  const [hoveredOverBookmarkAction, setHoveredOverBookmarkAction] =
+    useState(false);
 
   const isLikedAlready = post?.likes?.likedBy.find(
     (user) => user?.username === authState?.user?.username
@@ -93,7 +104,7 @@ function Post({ post, openModal }) {
 
   return (
     <div className="post">
-      <div className="userProfileImage">
+      <div className="userProfileImage" onClick={navigateToUserProfile}>
         <div className="profilePicture">
           <img src={currentUser?.profileAvatar} alt={currentUser?.username} />
         </div>
@@ -113,7 +124,7 @@ function Post({ post, openModal }) {
           </div>
           {authState?.user?.username === post?.username && (
             <div onClick={handlePostActionsMenu} className="moreOptions">
-              <BsThreeDots />
+              <BsThreeDots className="icon feedIcon" size={20} />
             </div>
           )}
           {showPostActionsMenu && (
@@ -123,59 +134,139 @@ function Post({ post, openModal }) {
             </div>
           )}
         </div>
+
         <div className="postContent">
           <p>{post?.content}</p>
         </div>
-        <div className="media">
-          {post?.mediaUrl && post?.type === "video" && (
-            <video className="postImage" controls autoPlay muted loop>
-              <source src={post?.mediaUrl} />
-            </video>
-          )}
-          {post?.mediaUrl && post?.type === "image" && (
-            <img className="postImage" src={post?.mediaUrl} alt="postImg" />
-          )}
-        </div>
+
+        {post?.mediaUrl !== "" && (
+          <div className="media">
+            {post?.mediaUrl && post?.type === "video" && (
+              <video className="postMedia" controls autoPlay muted loop>
+                <source src={post?.mediaUrl} />
+              </video>
+            )}
+            {post?.mediaUrl && post?.type === "image" && (
+              <img className="postMedia" src={post?.mediaUrl} alt="postImg" />
+            )}
+          </div>
+        )}
+
         <div className="postActions">
-          <div className="actionsContainer">
-            <BiComment onClick={toggleCommentSectionAndGetComments} size={20} />
+          <div
+            className="actionsContainer commentsActionContainer"
+            onMouseOver={() =>
+              setHoveredOverCommentAction((prevState) => !prevState)
+            }
+            onMouseOut={() =>
+              setHoveredOverCommentAction((prevState) => !prevState)
+            }
+            onClick={toggleCommentSectionAndGetComments}
+          >
+            <div
+              className={
+                !hoveredOverCommentAction
+                  ? "iconContainer"
+                  : "commentIconContainer"
+              }
+            >
+              <FaRegComment size={22} className="icon" />
+            </div>
             <span>{post?.comments.length}</span>
           </div>
-          <div className="actionsContainer">
-            {isLikedAlready ? (
-              <AiFillHeart
-                size={22}
-                onClick={() =>
-                  dislikePost(post?._id, authState?.token, dataDispatch)
-                }
-              />
-            ) : (
-              <AiOutlineHeart
-                size={22}
-                onClick={() =>
-                  likePost(post?._id, authState?.token, dataDispatch)
-                }
-              />
-            )}
+
+          <div
+            className="actionsContainer likeActionContainer"
+            onMouseOver={() =>
+              setHoveredOverLikeAction((prevState) => !prevState)
+            }
+            onMouseOut={() =>
+              setHoveredOverLikeAction((prevState) => !prevState)
+            }
+          >
+            <div
+              className={
+                !hoveredOverLikeAction ? "iconContainer" : "likeIconContainer"
+              }
+            >
+              {isLikedAlready ? (
+                <AiFillHeart
+                  size={25}
+                  onClick={() =>
+                    dislikePost(post?._id, authState?.token, dataDispatch)
+                  }
+                  className="icon"
+                  style={{ color: "red" }}
+                />
+              ) : (
+                <AiOutlineHeart
+                  size={25}
+                  onClick={() =>
+                    likePost(post?._id, authState?.token, dataDispatch)
+                  }
+                  className="icon"
+                />
+              )}
+            </div>
             <span>{post?.likes?.likeCount}</span>
           </div>
-          <BiShareAlt size={20} />
-          {isBookmarkedAlready ? (
-            <FaBookmark
-              size={20}
-              onClick={() =>
-                removeBookmark(post?._id, authState?.token, dataDispatch)
+
+          <div
+            className="actionsContainer shareActionContainer"
+            onMouseOver={() =>
+              setHoveredOverShareAction((prevState) => !prevState)
+            }
+            onMouseOut={() =>
+              setHoveredOverShareAction((prevState) => !prevState)
+            }
+          >
+            <div
+              className={
+                !hoveredOverShareAction ? "iconContainer" : "shareIconContainer"
               }
-            />
-          ) : (
-            <FaRegBookmark
-              size={20}
-              onClick={() =>
-                addBookmark(post?._id, authState?.token, dataDispatch)
+            >
+              <BiShareAlt size={22} className="icon" />
+            </div>
+          </div>
+
+          <div
+            className="actionsContainer bookmarkActionContainer"
+            onMouseOver={() =>
+              setHoveredOverBookmarkAction((prevState) => !prevState)
+            }
+            onMouseOut={() =>
+              setHoveredOverBookmarkAction((prevState) => !prevState)
+            }
+          >
+            <div
+              className={
+                !hoveredOverBookmarkAction
+                  ? "iconContainer"
+                  : "bookmarkIconContainer"
               }
-            />
-          )}
+            >
+              {isBookmarkedAlready ? (
+                <MdBookmark
+                  size={25}
+                  onClick={() =>
+                    removeBookmark(post?._id, authState?.token, dataDispatch)
+                  }
+                  className="icon"
+                  style={{ color: "#1d9bf0" }}
+                />
+              ) : (
+                <MdBookmarkBorder
+                  size={25}
+                  onClick={() =>
+                    addBookmark(post?._id, authState?.token, dataDispatch)
+                  }
+                  className="icon"
+                />
+              )}
+            </div>
+          </div>
         </div>
+        
         {showComments && (
           <CommentsSection
             comments={comments}

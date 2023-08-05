@@ -1,13 +1,13 @@
 .filtersContainer {
   position: absolute;
-  top: 44%;
-  left: 60%;
+  top: 42%;
+  left: 60.5%;
   background: var(--background-color);
   color: var(--text-color);
   border: 1px solid var(--border-color);
   width: 10rem;
   padding: 0.5rem;
-  border-radius: 5px;
+  border-radius: 10px;
   z-index: 10;
 }
 

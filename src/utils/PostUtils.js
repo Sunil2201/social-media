@@ -71,7 +71,6 @@ export default function calculateTimePassed(dateString) {
   const currentTime = new Date().getTime();
 
   const timeDifference = currentTime - date.getTime();
-
   const secondsPassed = Math.floor(timeDifference / 1000);
 
   if (secondsPassed < 60) {
@@ -80,19 +79,34 @@ export default function calculateTimePassed(dateString) {
 
   const minutesPassed = Math.floor(secondsPassed / 60);
 
-  if (minutesPassed > 60) {
-    const hoursPassed = Math.floor(minutesPassed / 60);
-    return hoursPassed > 24
-      ? `${Math.floor(hoursPassed / 24)} days`
-      : `${hoursPassed} hours`;
+  if (minutesPassed < 60) {
+    return `${minutesPassed} minutes`;
   }
 
-  if (minutesPassed > 1440) {
-    const daysPassed = Math.floor(minutesPassed / 1440);
+  const hoursPassed = Math.floor(minutesPassed / 60);
+
+  if (hoursPassed < 24) {
+    return `${hoursPassed} hours`;
+  }
+
+  const daysPassed = Math.floor(hoursPassed / 24);
+
+  if (daysPassed < 30) {
     return `${daysPassed} days`;
   }
 
-  return `${minutesPassed} minutes`;
+  const monthsPassed = Math.floor(daysPassed / 30);
+
+  if (monthsPassed < 12) {
+    return `${monthsPassed} months`;
+  }
+
+  const yearsPassed = Math.floor(monthsPassed / 12);
+  const remainingMonths = monthsPassed % 12;
+
+  if (remainingMonths === 0) {
+    return `${yearsPassed} years`;
+  }
+
+  return `${yearsPassed} years and ${remainingMonths} months`;
 }
-
-

@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./CommentsSection.css";
 import Comment from "../Comment/Comment";
+import { AuthContext } from "../../contexts/AuthContext";
 
-function CommentsSection({ comments, comment, handleChange, handleAddComment }) {
+function CommentsSection({
+  comments,
+  comment,
+  handleChange,
+  handleAddComment,
+}) {
+  const { authState } = useContext(AuthContext);
+
+  const loggedInUser = authState?.user;
+
   return (
     <div className="commentsSection">
       <div className="addCommentSection">
-        <div className="profilePicture">SB</div>
+        <div className="userProfileImage">
+          <div className="profilePicture">
+            <img
+              src={loggedInUser?.profileAvatar}
+              alt={loggedInUser?.username}
+            />
+          </div>
+        </div>
         <textarea
           className="commentInput"
           placeholder="Add your comment"
@@ -14,9 +31,9 @@ function CommentsSection({ comments, comment, handleChange, handleAddComment }) 
           value={comment?.text}
         />
         <button
-          disabled={comment.length === 0}
+          disabled={comment?.text.length === 0}
           className={
-            comment.length === 0 ? "commentBtnDisabled" : "commentBtnEnabled"
+            comment?.text.length === 0 ? "commentBtnDisabled" : "commentBtnEnabled"
           }
           onClick={handleAddComment}
         >

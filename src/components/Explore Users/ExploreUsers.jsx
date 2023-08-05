@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 function ExploreUsers({ usersToFollow }) {
   const { authState, authDispatch } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const navigateToUserProfile = (username) => {
-    navigate(`/profile/${username}`)
+    navigate(`/profile/${username}`);
   };
 
   const handleFollowUser = (e, userId) => {
@@ -23,7 +23,7 @@ function ExploreUsers({ usersToFollow }) {
         <h3>Who to follow?</h3>
         <div className="usersToFollow">
           {usersToFollow.length === 0 ? (
-            <p>No more suggestions</p>
+            <p className="noMoreUsersToFollow">No more suggestions!</p>
           ) : (
             usersToFollow.map((user, idx) => {
               return (
@@ -33,9 +33,13 @@ function ExploreUsers({ usersToFollow }) {
                   onClick={() => navigateToUserProfile(user?.username)}
                 >
                   <div className="aboutUser">
-                    <div className="profileAvatar">SB</div>
+                    <div className="userProfileImage">
+                      <div className="profilePicture">
+                        <img src={user?.profileAvatar} alt={user?.username} />
+                      </div>
+                    </div>
                     <div className="infoAboutUserToFollow">
-                      <p>{user?.firstName + " " + user?.lastName}</p>
+                      <span>{user?.firstName + " " + user?.lastName}</span>
                       <p>@{user?.username}</p>
                     </div>
                   </div>

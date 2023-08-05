@@ -126,7 +126,7 @@ function CreatePost() {
       <form onSubmit={handleSubmit}>
         <textarea
           ref={newPostRef}
-          className={`tweetInput ${
+          className={`tweetInputHomePage ${
             postForm?.content.trim() === "" ? "empty" : ""
           }`}
           placeholder="What is happening?!"
@@ -171,7 +171,7 @@ function CreatePost() {
                 className="fileInput"
                 onChange={handleMediaInput}
               />
-              <MdOutlineInsertPhoto size={25} className="icon" />
+              <MdOutlineInsertPhoto size={25} className="icon blueIcon" />
             </label>
             {/* <MdOutlineGifBox
               size={25}
@@ -180,7 +180,7 @@ function CreatePost() {
             /> */}
             <BsEmojiSmile
               size={20}
-              className="icon"
+              className="icon blueIcon"
               onClick={toggleEmojiContainer}
             />
           </div>

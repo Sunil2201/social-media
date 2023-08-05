@@ -31,12 +31,11 @@ code {
 .homePage {
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
 }
 .homePageContainer,
 .profilePageContainer {
   display: grid;
-  grid-template-columns: 16vw auto 18vw;
+  grid-template-columns: 15vw auto 20vw;
   column-gap: 2rem;
   margin: 0 auto;
   width: 80%;
@@ -145,9 +144,13 @@ code {
 
 .icon {
   cursor: pointer;
+}
+.blueIcon {
   color: var(--primary-color);
 }
-
+.feedIcon:hover {
+  color: var(--primary-color);
+}
 .profilePicture {
   border-radius: 50%;
   overflow: hidden;

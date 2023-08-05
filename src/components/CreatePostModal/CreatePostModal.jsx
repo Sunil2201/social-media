@@ -1,16 +1,18 @@
-import React, { useContext, useRef } from "react";
-import { MdOutlineInsertPhoto, MdOutlineGifBox } from "react-icons/md";
+import React, { useContext, useRef, useState } from "react";
+import { MdOutlineInsertPhoto} from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { BsEmojiSmile } from "react-icons/bs";
 import "./CreatePostModal.css";
 import { PostModalContext } from "../../contexts/PostModalContext";
 import { AuthContext } from "../../contexts/AuthContext";
+import EmojiPicker from "emoji-picker-react";
 
 function CreatePostModal({ closeModal }) {
   const { authState } = useContext(AuthContext);
   const newPostRef = useRef();
   const {
     postForm,
+    setPostForm,
     editMode,
     handleChange,
     handleMediaInput,
@@ -18,6 +20,12 @@ function CreatePostModal({ closeModal }) {
     closeMedia,
     handleSubmitEditedPost,
   } = useContext(PostModalContext);
+
+  const [showEmojiContainer, setShowEmojiContainer] = useState(false);
+
+  const toggleEmojiContainer = () => {
+    setShowEmojiContainer((prevState) => !prevState);
+  };
 
   const handleFocus = (e) => {
     if (e.target.innerText.trim() !== "") {
@@ -41,6 +49,13 @@ function CreatePostModal({ closeModal }) {
     handleSubmitEditedPost(e);
     newPostRef.current.innerText = "";
     closeModal();
+  };
+
+  const handleEmojiClick = (emoji) => {
+    setPostForm((prev) => ({
+      ...prev,
+      content: prev.content + emoji?.emoji,
+    }));
   };
 
   return (
@@ -98,10 +113,9 @@ function CreatePostModal({ closeModal }) {
                       className="fileInput"
                       onChange={handleMediaInput}
                     />
-                    <MdOutlineInsertPhoto size={23} />
+                    <MdOutlineInsertPhoto size={25} className="icon blueIcon" />
                   </label>
-                  <MdOutlineGifBox size={23} />
-                  <BsEmojiSmile size={20} />
+                  <BsEmojiSmile onClick={toggleEmojiContainer} size={20} className="icon blueIcon" />
                 </div>
                 <button type="submit">{editMode ? "Update" : "Tweet"}</button>
               </div>
@@ -109,6 +123,13 @@ function CreatePostModal({ closeModal }) {
           </div>
           <IoMdClose className="closePostModal" onClick={closeModal} />
         </div>
+        {showEmojiContainer && (
+        <EmojiPicker
+          onEmojiClick={handleEmojiClick}
+          theme="dark"
+          className="emojiPickerContainer"
+        />
+      )}
       </div>
       <div className="modalOverlay"></div>
     </>

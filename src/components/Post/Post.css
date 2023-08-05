@@ -13,7 +13,8 @@
 }
 .postHeader {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  width: 35vw;
   justify-content: space-between;
 }
 .primaryDetails,
@@ -24,39 +25,44 @@
 }
 .postContent{
   width: 100%;
-  text-overflow: clip;
+  overflow-wrap: break-word;
 }
-.postImage{
+.postMedia{
   width: 100%;
+  border-radius: 1rem;
 }
 .postActions{
   display: flex;
   align-items: center;
-  gap: 1rem;
-  cursor: pointer;
+  gap: 2rem;
 }
 .postActions .actionsContainer{
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  cursor: pointer;
 }
 .postActionsMenu{
   position: absolute;
-  top: 4%;
-  right: 8%;
-  background: #fff;
-  width: 7.5rem;
-  padding: 0.5rem;
-  border-radius: 5px;
-  box-shadow: 0px 9px 27px rgba(0, 0, 0, 0.07),
-    0px 3.75998px 11.28px rgba(0, 0, 0, 0.0503198),
-    0px 2.01027px 6.0308px rgba(0, 0, 0, 0.0417275),
-    0px 1.12694px 3.38082px rgba(0, 0, 0, 0.035),
-    0px 0.598509px 1.79553px rgba(0, 0, 0, 0.0282725),
-    0px 0.249053px 0.747159px rgba(0, 0, 0, 0.0196802);
+  top: 7%;
+  right: 2%;
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  width: 8rem;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 .postActionsMenu p{
   cursor: pointer;
+  font-size: 1.1rem;
+  padding: 2%;
+  border-radius: 0.2rem;
+}
+.postActionsMenu p:hover{
+  background: rgb(109, 108, 108);
 }
 .profile{
   cursor: pointer;
@@ -68,4 +74,38 @@
 }
 .profile p, .dateCreated p{
   color: gray;
+}
+.media{
+  padding: 0.5rem 0rem;
+}
+.commentsActionContainer:hover, .bookmarkActionContainer:hover{
+  color: var(--primary-color);
+  transition: all 0.5s ease;
+}
+.likeActionContainer:hover{
+  color: red;
+  transition: all 0.5s ease;
+}
+.shareActionContainer:hover{
+  color: rgb(0, 186, 124);
+  transition: all 0.5s ease;
+}
+.iconContainer, .commentIconContainer, .likeIconContainer, .shareIconContainer, .bookmarkIconContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 0.4rem;
+}
+.commentIconContainer, .bookmarkIconContainer{
+  background: rgba(29, 145, 250, 0.2)
+}
+.likeIconContainer{
+  background: rgba(249, 24, 128, 0.2);
+}
+.shareIconContainer{
+  background: rgba(0, 186, 124, 0.2);
+}
+.moreOptions{
+  padding-top: 1%;
 }

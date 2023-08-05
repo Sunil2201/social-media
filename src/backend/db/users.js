@@ -13,7 +13,7 @@ export const users = [
     username: "adarshbalika",
     password: "adarshBalika123",
     profileAvatar:
-      "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607558/cld-sample.jpg",
+      "https://res.cloudinary.com/dp6uypw0c/image/upload/v1691255323/adarsh-balika_qufkpu.jpg",
     about:
       "Passionate traveler 🌍 | Book lover 📚 | Aspiring photographer 📷 | Living life to the fullest ✨",
     website: "https://book-bazaar-sunil.netlify.app/",
@@ -51,7 +51,7 @@ export const users = [
     username: "smriti_13",
     password: "smriti123",
     profileAvatar:
-      "https://res.cloudinary.com/dp6uypw0c/image/upload/v1687607534/samples/animals/cat.jpg",
+      "https://res.cloudinary.com/dp6uypw0c/image/upload/v1691255439/smriti-jain_h6m7gr.jpg",
     about:
       "Dreamer | Explorer | Nature lover 🌿🍃 | Seeking adventures ✨ | Spreading positivity 🌞💕",
     website: "https://house-marketplace-sunil.vercel.app/",
