@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { BiShareAlt } from "react-icons/bi";
 import { MdBookmarkBorder, MdBookmark } from "react-icons/md";
@@ -48,6 +48,7 @@ function Post({ post, openModal }) {
   const [hoveredOverShareAction, setHoveredOverShareAction] = useState(false);
   const [hoveredOverBookmarkAction, setHoveredOverBookmarkAction] =
     useState(false);
+  const postActionsRef = useRef(null);
 
   const isLikedAlready = post?.likes?.likedBy.find(
     (user) => user?.username === authState?.user?.username
@@ -102,6 +103,24 @@ function Post({ post, openModal }) {
     navigate(`/profile/${currentUser?.username}`);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        postActionsRef.current &&
+        !postActionsRef.current.contains(event.target) &&
+        !event.target.classList.contains("feedIcon")
+      ) {
+        setShowPostActionMenu(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className="post">
       <div className="userProfileImage" onClick={navigateToUserProfile}>
@@ -128,7 +147,7 @@ function Post({ post, openModal }) {
             </div>
           )}
           {showPostActionsMenu && (
-            <div className="postActionsMenu">
+            <div className="postActionsMenu" ref={postActionsRef}>
               <p onClick={() => handleEditPost(post)}>Edit Post</p>
               <p onClick={handleDeletePost}>Delete Post</p>
             </div>
@@ -266,7 +285,7 @@ function Post({ post, openModal }) {
             </div>
           </div>
         </div>
-        
+
         {showComments && (
           <CommentsSection
             comments={comments}

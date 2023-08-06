@@ -9,8 +9,14 @@ function Filters() {
   const [filtersContainer, setFiltersContainer] = useState(false);
 
   const handleFiltersContainer = () => {
-    setFiltersContainer((prevState) => !prevState);
+    if (filtersContainer) {
+      setFiltersContainer(false);
+    } else {
+      setFiltersContainer(true);
+    }
   };
+
+  console.log(filtersContainer);
 
   return (
     <div className="filterContainer">
@@ -21,7 +27,10 @@ function Filters() {
         size={25}
       />
       {filtersContainer && (
-        <FiltersContainer setFiltersContainer={setFiltersContainer} />
+        <FiltersContainer
+          filtersContainer={filtersContainer}
+          setFiltersContainer={setFiltersContainer}
+        />
       )}
     </div>
   );

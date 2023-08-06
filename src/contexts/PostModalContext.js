@@ -62,7 +62,7 @@ export function PostModalProvider({ children }) {
   };
 
   const closeMedia = () => {
-    setPostForm((prev) => ({ ...prev, mediaUrl: "" }));
+    setPostForm((prev) => ({ ...prev, mediaUrl: "", media: "", type: ""}));
   };
 
   const handleFormEdit = (postToEdit) => {
@@ -72,11 +72,12 @@ export function PostModalProvider({ children }) {
 
   const handleSubmitEditedPost = async (e) => {
     e.preventDefault();
-    if (postForm?.mediaUrl !== "") {
+    if (postForm?.media && postForm?.media !== "") {
       const resp = await uploadImage(postForm?.media);
-      const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
+      const modifiedPostForm = { ...postForm, mediaUrl: resp?.url };
       editPost(postForm?._id, modifiedPostForm, authState?.token, dataDispatch);
-    } else {
+    }
+     else {
       editPost(postForm?._id, postForm, authState?.token, dataDispatch);
     }
   };

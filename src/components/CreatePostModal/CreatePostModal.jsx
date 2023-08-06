@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { MdOutlineInsertPhoto} from "react-icons/md";
+import { MdOutlineInsertPhoto } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { BsEmojiSmile } from "react-icons/bs";
 import "./CreatePostModal.css";
@@ -80,7 +80,7 @@ function CreatePostModal({ closeModal }) {
                 onChange={handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                defaultValue={postForm?.content}
+                value={postForm?.content}
               />
 
               {postForm?.mediaUrl && postForm?.type === "image" && (
@@ -115,21 +115,32 @@ function CreatePostModal({ closeModal }) {
                     />
                     <MdOutlineInsertPhoto size={25} className="icon blueIcon" />
                   </label>
-                  <BsEmojiSmile onClick={toggleEmojiContainer} size={20} className="icon blueIcon" />
+                  <BsEmojiSmile
+                    onClick={toggleEmojiContainer}
+                    size={20}
+                    className="icon blueIcon"
+                  />
                 </div>
-                <button type="submit">{editMode ? "Update" : "Tweet"}</button>
+                <button
+                  disabled={
+                    postForm?.content === "" && postForm?.mediaUrl === ""
+                  }
+                  type="submit"
+                >
+                  {editMode ? "Update" : "Tweet"}
+                </button>
               </div>
             </form>
           </div>
           <IoMdClose className="closePostModal" onClick={closeModal} />
         </div>
         {showEmojiContainer && (
-        <EmojiPicker
-          onEmojiClick={handleEmojiClick}
-          theme="dark"
-          className="emojiPickerContainer"
-        />
-      )}
+          <EmojiPicker
+            onEmojiClick={handleEmojiClick}
+            theme="dark"
+            className="emojiPickerContainer"
+          />
+        )}
       </div>
       <div className="modalOverlay"></div>
     </>
