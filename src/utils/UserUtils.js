@@ -100,3 +100,21 @@ export const editUser = async (
     console.error(error.message);
   }
 };
+
+export function convertDateFormat(inputDate) {
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  const dateParts = inputDate.split("T");
+  const dateString = dateParts[0];
+  const timeString = dateParts[1].split("+")[0];
+
+  const [year, month, day] = dateString.split("-");
+  const [hour, minute, second] = timeString.split(":");
+  
+  const newDate = new Date(year, month - 1, day, hour, minute, second);
+  const formattedDate = `${months[newDate.getMonth()]} ${newDate.getDate()}, ${newDate.getFullYear()}`;
+  
+  return formattedDate;
+}

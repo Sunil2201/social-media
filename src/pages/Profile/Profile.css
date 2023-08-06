@@ -1,10 +1,8 @@
 .profileSection {
   padding: 1rem;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2.5rem;
   min-height: 100vh;
 }
 .profileHeader {
@@ -23,7 +21,24 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.2rem;
+}
+.profilePrimaryInfo .userPrimaryInfo h3{
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+.profilePrimaryInfo .userPrimaryInfo p{
+  color: grey;
+  font-size: 1.1rem;
+}
+.profilePrimaryInfo .userWebsiteAndJoinedDate, .joinedDateInfo{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.profilePrimaryInfo .userWebsiteAndJoinedDate, .joinedDateInfo p{
+  color: grey;
+  font-size: 1.1rem;
 }
 .profilePicAndActionContainer {
   display: flex;
@@ -32,11 +47,16 @@
 }
 .profilePicAndActionContainer button {
   border: none;
-  background: #ccc;
+  background: var(--text-color);
   border-radius: 22px;
-  padding: 0.8rem 1rem;
+  padding: 0.6rem 1.2rem;
   font-size: 1rem;
+  font-weight: 800;
   cursor: pointer;
+}
+.profilePicAndActionContainer button:hover{
+  background-color: rgb(199, 199, 199);
+  transition: all 0.5s ease;
 }
 .userWebsiteAndJoinedDate {
   display: flex;
@@ -50,15 +70,25 @@
 .userSecondaryInfo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
-.userSecondaryInfo p {
+.userSecondaryInfo .singleStat {
   display: flex;
   align-items: center;
   gap: 0.2rem;
+  font-size: 1.1rem;
+}
+.userSecondaryInfo .singleStat p{
+  font-weight: 800;
+}
+.userSecondaryInfo .singleStat span{
+  color: grey;
 }
 .profilePosts{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+.userAboutInfo{
+  font-size: 1.1rem;
 }

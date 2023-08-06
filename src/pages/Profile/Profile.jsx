@@ -1,10 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DataContext } from "../../contexts/DataContext";
-import { FaArrowLeft } from "react-icons/fa";
+import { MdCalendarMonth } from "react-icons/md";
 import { AuthContext } from "../../contexts/AuthContext";
 import "./Profile.css";
-import { editUser, followUser, unfollowUser } from "../../utils/UserUtils";
+import {
+  convertDateFormat,
+  editUser,
+  followUser,
+  unfollowUser,
+} from "../../utils/UserUtils";
 import Post from "../../components/Post/Post";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
 import { uploadImage } from "../../utils/UploadImage";
@@ -12,6 +17,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import { PostModalContext } from "../../contexts/PostModalContext";
 import ExploreUsers from "../../components/Explore Users/ExploreUsers";
 import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
+import Header from "../../components/Header/Header";
 
 function Profile() {
   const { authState, authDispatch } = useContext(AuthContext);
@@ -174,72 +180,77 @@ function Profile() {
   }, [currentUser]);
 
   return (
-    <div className="profilePageContainer">
-      <Sidebar openModal={openModal} />
-      <section className="profileSection">
-        <div className="profileHeader">
-          <FaArrowLeft style={{ cursor: "pointer" }} onClick={navigateToHome} />
-          <div className="userProfileBasicInfo">
-            <h3>{fullName}</h3>
-            <p>{noOfPosts} Posts</p>
+    <div className="profilePage">
+      <Header />
+      <div className="profilePageContainer">
+        <Sidebar openModal={openModal} />
+        <section className="profileSection">
+          <div className="profilePrimaryInfo">
+            <div className="profilePicAndActionContainer">
+              <img src={currentUser?.profileAvatar} alt="profile-pic" />
+              {authState?.user?.username === currentUser?.username ? (
+                <button onClick={handleOpenEditProfileModal}>
+                  Edit Profile
+                </button>
+              ) : isFollowingCurrentUser !== undefined ? (
+                <button onClick={handleUnfollowUser}>Following</button>
+              ) : (
+                <button onClick={handleFollowUser}>Follow</button>
+              )}
+            </div>
+
+            <div className="userPrimaryInfo">
+              <h3>{fullName}</h3>
+              <p>@{currentUser?.username}</p>
+            </div>
+
+            <p className="userAboutInfo">{currentUser?.about}</p>
+
+            <div className="userWebsiteAndJoinedDate">
+              <a className="userWebsite" href={currentUser?.website}>
+                {currentUser?.website}
+              </a>
+              <div className="joinedDateInfo">
+                <MdCalendarMonth />
+                <p>Joined {convertDateFormat(currentUser?.createdAt)}</p>
+              </div>
+            </div>
+
+            <div className="userSecondaryInfo">
+              <div className="singleStat">
+                <p>{noOfPosts}</p>
+                <span>Posts</span>
+              </div>
+              <div className="singleStat">
+                <p>{currentUser?.following.length}</p>
+                <span>Following</span>
+              </div>
+              <div className="singleStat">
+                <p>{currentUser?.followers.length}</p>
+                <span>Followers</span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="profilePrimaryInfo">
-          <div className="profilePicAndActionContainer">
-            <img src={currentUser?.profileAvatar} alt="profile-pic" />
-            {authState?.user?.username === currentUser?.username ? (
-              <button onClick={handleOpenEditProfileModal}>Edit Profile</button>
-            ) : isFollowingCurrentUser !== undefined ? (
-              <button onClick={handleUnfollowUser}>Following</button>
-            ) : (
-              <button onClick={handleFollowUser}>Follow</button>
-            )}
+          <div className="profilePosts">
+            {[...postsOfCurrentUser].map((post, idx) => {
+              return <Post post={post} openModal={openModal} key={idx} />;
+            })}
           </div>
-          <div className="userPrimaryInfo">
-            <h3>{fullName}</h3>
-            <p>@{currentUser?.username}</p>
-          </div>
-          <p className="userAboutInfo">{currentUser?.about}</p>
-          <div className="userWebsiteAndJoinedDate">
-            <a className="userWebsite" href={currentUser?.website}>
-              {currentUser?.website}
-            </a>
-            <p>Joined {currentUser?.createdAt}</p>
-          </div>
-          <div className="userSecondaryInfo">
-            <p>
-              {noOfPosts}
-              <span>Posts</span>
-            </p>
-            <p>
-              {currentUser?.following.length}
-              <span>Following</span>
-            </p>
-            <p>
-              {currentUser?.followers.length}
-              <span>Followers</span>
-            </p>
-          </div>
-        </div>
-        <div className="profilePosts">
-          {[...postsOfCurrentUser].map((post, idx) => {
-            return <Post post={post} openModal={openModal} key={idx} />;
-          })}
-        </div>
-        {showEditProfileModal && (
-          <EditProfileModal
-            userProfile={userProfile}
-            handleOpenEditProfileModal={handleOpenEditProfileModal}
-            handleCloseEditProfileModal={handleCloseEditProfileModal}
-            handleChooseAvatar={handleChooseAvatar}
-            handleChange={handleChange}
-            handleMediaInput={handleMediaInput}
-            handleEditProfileFormSubmit={handleEditProfileFormSubmit}
-          />
-        )}
-      </section>
-      <ExploreUsers usersToFollow={usersToFollow} />
-      {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
+          {showEditProfileModal && (
+            <EditProfileModal
+              userProfile={userProfile}
+              handleOpenEditProfileModal={handleOpenEditProfileModal}
+              handleCloseEditProfileModal={handleCloseEditProfileModal}
+              handleChooseAvatar={handleChooseAvatar}
+              handleChange={handleChange}
+              handleMediaInput={handleMediaInput}
+              handleEditProfileFormSubmit={handleEditProfileFormSubmit}
+            />
+          )}
+        </section>
+        <ExploreUsers usersToFollow={usersToFollow} />
+        {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
+      </div>
     </div>
   );
 }
