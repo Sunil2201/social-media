@@ -16,8 +16,6 @@ function Filters() {
     }
   };
 
-  console.log(filtersContainer);
-
   return (
     <div className="filterContainer">
       <h3 className="filterName">{filter} Posts</h3>

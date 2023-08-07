@@ -29,14 +29,18 @@ code {
     monospace;
 }
 .homePage,
-.profilePage {
+.profilePage,
+.explorePage,
+.bookmarksPage {
   display: flex;
   flex-direction: column;
 }
 .homePageContainer,
-.profilePageContainer {
+.profilePageContainer,
+.explorePageContainer,
+.bookmarksPageContainer {
   display: grid;
-  grid-template-columns: 15vw auto 20vw;
+  grid-template-columns: 16vw auto 20vw;
   column-gap: 2rem;
   margin: 0 auto;
   width: 80%;

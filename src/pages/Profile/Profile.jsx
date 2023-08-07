@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { DataContext } from "../../contexts/DataContext";
 import { MdCalendarMonth } from "react-icons/md";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -24,7 +24,6 @@ function Profile() {
   const { dataState, dataDispatch } = useContext(DataContext);
   const { setPostForm, setEditMode } = useContext(PostModalContext);
   const { username } = useParams();
-  const navigate = useNavigate();
 
   const [userProfile, setUserProfile] = useState({
     profileAvatar: "",
@@ -85,10 +84,6 @@ function Profile() {
   const noOfPosts = [...dataState?.posts].filter(
     (post) => post?.username === username
   ).length;
-
-  const navigateToHome = () => {
-    navigate("/");
-  };
 
   const handleUnfollowUser = () => {
     unfollowUser(currentUser?._id, authState?.token, authDispatch);
@@ -212,7 +207,7 @@ function Profile() {
               </a>
               <div className="joinedDateInfo">
                 <MdCalendarMonth />
-                <p>Joined {convertDateFormat(currentUser?.createdAt)}</p>
+                <p>Joined {currentUser?.createdAt && convertDateFormat(currentUser?.createdAt)}</p>
               </div>
             </div>
 
