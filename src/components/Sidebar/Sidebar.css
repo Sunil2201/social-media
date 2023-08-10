@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 89vh;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0rem;
 }
 .topSection{
   display: flex;
