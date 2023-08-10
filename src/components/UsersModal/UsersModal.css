@@ -1,0 +1,71 @@
+.usersModal {
+  position: fixed;
+  width: 35%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #000;
+  color: white;
+  z-index: 11;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(25, 25, 25, 0.7);
+  z-index: 10;
+}
+.singleUserCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.singleUserCard button {
+  border: none;
+  height: fit-content;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.singleUserCard .userCardPrimaryInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.singleUserCard .userCardPrimaryInfo .fullNameAndUsername .fullName {
+  font-weight: 700;
+  width: 8vw;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.singleUserCard .userCardPrimaryInfo .fullNameAndUsername .userName {
+  color: grey;
+  width: 8vw;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.appropriateUsersContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.modalContent .noUsers {
+  color: grey;
+  font-size: 1.2rem;
+  text-align: center;
+}
