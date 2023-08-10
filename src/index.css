@@ -31,14 +31,16 @@ code {
 .homePage,
 .profilePage,
 .explorePage,
-.bookmarksPage {
+.bookmarksPage,
+.postDetailsPage {
   display: flex;
   flex-direction: column;
 }
 .homePageContainer,
 .profilePageContainer,
 .explorePageContainer,
-.bookmarksPageContainer {
+.bookmarksPageContainer,
+.postDetailsPageContainer {
   display: grid;
   grid-template-columns: 16vw auto 20vw;
   column-gap: 2rem;

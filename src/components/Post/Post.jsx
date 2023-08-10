@@ -59,9 +59,9 @@ function Post({ post, openModal }) {
   };
 
   const closeUsersWhoLikedModal = () => {
-    setShowUsersWhoLiked(false)
+    setShowUsersWhoLiked(false);
     document.body.style.overflow = "auto";
-  }
+  };
 
   const isLikedAlready = post?.likes?.likedBy.find(
     (user) => user?.username === authState?.user?.username
@@ -136,6 +136,10 @@ function Post({ post, openModal }) {
     // eslint-disable-next-line
   }, []);
 
+  const navigateToPost = () => {
+    navigate(`/post-details/${post?.id}`);
+  };
+  
   return (
     <div className="post">
       <div className="userProfileImage" onClick={navigateToUserProfile}>
@@ -174,7 +178,7 @@ function Post({ post, openModal }) {
         </div>
 
         {post?.mediaUrl !== "" && (
-          <div className="media">
+          <div className="media" onClick={navigateToPost}>
             {post?.mediaUrl && post?.type === "video" && (
               <video className="postMedia" controls autoPlay muted loop>
                 <source src={post?.mediaUrl} />

@@ -62,9 +62,7 @@ export function DataProvider({ children }) {
     getAllUsers();
     getAllPosts();
   }, []);
-
-  console.log(dataState?.users);
-
+  
   return (
     <DataContext.Provider
       value={{

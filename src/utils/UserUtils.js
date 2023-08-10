@@ -60,7 +60,6 @@ export const unfollowUser = async (userId, token, authDispatch) => {
   try {
     const res = await unfollowUserService(userId, token);
     const resJson = await res.json();
-    console.log(resJson);
     if (res.status === 200) {
       authDispatch({ type: "setUser", payload: resJson?.user });
     }
@@ -91,7 +90,6 @@ export const editUser = async (
     const res = await editUserService(token, userProfile);
     const resJson = await res.json();
     const finalData = [...remainingUsers, resJson?.user]
-    console.log(finalData);
     dataDispatch({
       type: "setUsers",
       payload: finalData,

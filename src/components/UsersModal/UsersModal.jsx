@@ -31,7 +31,6 @@ function UsersModal({
                 };
 
                 const handleFollowUser = () => {
-                  console.log("clicked");
                   followUser(user?._id, authState?.token, authDispatch);
                 };
 
