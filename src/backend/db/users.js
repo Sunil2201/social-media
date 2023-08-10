@@ -7,7 +7,7 @@ import { formatDate } from "../utils/authUtils";
 
 export const users = [
   {
-    _id: uuid(),
+    _id: "5a9e29e2-b9ac-4d05-b766-4a34cb0f3279",
     firstName: "Adarsh",
     lastName: "Balika",
     username: "adarshbalika",
@@ -39,6 +39,8 @@ export const users = [
         _id: "d05165bf-1238-43b9-9258-989469a4a6be",
         fullName: "Smriti Jain",
         username: "smriti_13",
+        avatarUrl:
+          "https://res.cloudinary.com/dp6uypw0c/image/upload/v1691255439/smriti-jain_h6m7gr.jpg",
       },
     ],
     createdAt: formatDate(),

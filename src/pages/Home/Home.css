@@ -2,9 +2,6 @@
   padding: 0.5rem 0rem;
   min-height: 100vh;
 }
-.homeSection h2 {
-  padding: 0rem 1rem 1rem 1rem;
-}
 .newPost {
   display: grid;
   grid-template-columns: 2.5rem auto;

@@ -18,6 +18,7 @@ import { PostModalContext } from "../../contexts/PostModalContext";
 import ExploreUsers from "../../components/Explore Users/ExploreUsers";
 import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
 import Header from "../../components/Header/Header";
+import UsersModal from "../../components/UsersModal/UsersModal";
 
 function Profile() {
   const { authState, authDispatch } = useContext(AuthContext);
@@ -36,6 +37,8 @@ function Profile() {
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const [isNewProfilePicUploaded, setIsNewProfilePicUploaded] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [showFollowingUsersModal, setShowFollowingUsersModal] = useState(false);
+  const [showFollowersModal, setShowFollowersModal] = useState(false);
 
   const openModal = () => {
     setIsPostModalOpen(true);
@@ -46,6 +49,26 @@ function Profile() {
   const closeModal = () => {
     setPostForm((prevState) => ({ ...prevState, content: "", mediaUrl: "" }));
     setIsPostModalOpen(false);
+    document.body.style.overflow = "auto";
+  };
+
+  const openFollowingUsersModal = () => {
+    setShowFollowingUsersModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeFollowingUsersModal = () => {
+    setShowFollowingUsersModal(false);
+    document.body.style.overflow = "auto";
+  };
+
+  const openFollowersModal = () => {
+    setShowFollowersModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeFollowersModal = () => {
+    setShowFollowersModal(false);
     document.body.style.overflow = "auto";
   };
 
@@ -84,6 +107,10 @@ function Profile() {
   const noOfPosts = [...dataState?.posts].filter(
     (post) => post?.username === username
   ).length;
+
+  const listOfFollowingUsers = currentUser?.following;
+
+  const listOfFollowers = currentUser?.followers;
 
   const handleUnfollowUser = () => {
     unfollowUser(currentUser?._id, authState?.token, authDispatch);
@@ -207,7 +234,11 @@ function Profile() {
               </a>
               <div className="joinedDateInfo">
                 <MdCalendarMonth />
-                <p>Joined {currentUser?.createdAt && convertDateFormat(currentUser?.createdAt)}</p>
+                <p>
+                  Joined{" "}
+                  {currentUser?.createdAt &&
+                    convertDateFormat(currentUser?.createdAt)}
+                </p>
               </div>
             </div>
 
@@ -218,11 +249,21 @@ function Profile() {
               </div>
               <div className="singleStat">
                 <p>{currentUser?.following.length}</p>
-                <span>Following</span>
+                <span
+                  className="showAppropriateModal"
+                  onClick={openFollowingUsersModal}
+                >
+                  Following
+                </span>
               </div>
               <div className="singleStat">
                 <p>{currentUser?.followers.length}</p>
-                <span>Followers</span>
+                <span
+                  className="showAppropriateModal"
+                  onClick={openFollowersModal}
+                >
+                  Followers
+                </span>
               </div>
             </div>
           </div>
@@ -240,6 +281,20 @@ function Profile() {
               handleChange={handleChange}
               handleMediaInput={handleMediaInput}
               handleEditProfileFormSubmit={handleEditProfileFormSubmit}
+            />
+          )}
+          {showFollowingUsersModal && (
+            <UsersModal
+              usersList={listOfFollowingUsers}
+              modalHeading="Following"
+              closeFollowingUsersModal={closeFollowingUsersModal}
+            />
+          )}
+          {showFollowersModal && (
+            <UsersModal
+              usersList={listOfFollowers}
+              modalHeading="Followers"
+              closeFollowersModal={closeFollowersModal}
             />
           )}
         </section>

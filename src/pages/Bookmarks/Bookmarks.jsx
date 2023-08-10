@@ -56,7 +56,7 @@ function Bookmarks() {
         <Sidebar openModal={openModal} />
         <section className="bookmarksSection">
           {bookmarkedPosts.length === 0 ? (
-            <p className="noBookmarks">You have not added any bookmarks!</p>  
+            <p className="noBookmarks">You have not bookmarked any posts yet!</p>  
           ) : (
             bookmarkedPosts.map((post, idx) => {
               return <Post post={post} key={idx} openModal={openModal} />;

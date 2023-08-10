@@ -20,6 +20,7 @@ import {
   getCommentsService,
 } from "../../services/PostServices";
 import { useNavigate } from "react-router-dom";
+import UsersModal from "../UsersModal/UsersModal";
 
 function Post({ post, openModal }) {
   const { authState } = useContext(AuthContext);
@@ -48,7 +49,19 @@ function Post({ post, openModal }) {
   const [hoveredOverShareAction, setHoveredOverShareAction] = useState(false);
   const [hoveredOverBookmarkAction, setHoveredOverBookmarkAction] =
     useState(false);
+  const [showUsersWhoLiked, setShowUsersWhoLiked] = useState(false);
+
   const postActionsRef = useRef(null);
+
+  const openUsersWhoLikedModal = () => {
+    setShowUsersWhoLiked(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeUsersWhoLikedModal = () => {
+    setShowUsersWhoLiked(false)
+    document.body.style.overflow = "auto";
+  }
 
   const isLikedAlready = post?.likes?.likedBy.find(
     (user) => user?.username === authState?.user?.username
@@ -102,6 +115,8 @@ function Post({ post, openModal }) {
   const navigateToUserProfile = () => {
     navigate(`/profile/${currentUser?.username}`);
   };
+
+  const listOfUsersWhoLiked = post?.likes?.likedBy;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -227,7 +242,9 @@ function Post({ post, openModal }) {
                 />
               )}
             </div>
-            <span>{post?.likes?.likeCount}</span>
+            <span onClick={openUsersWhoLikedModal}>
+              {post?.likes?.likeCount}
+            </span>
           </div>
 
           <div
@@ -295,6 +312,13 @@ function Post({ post, openModal }) {
           />
         )}
       </div>
+      {showUsersWhoLiked && (
+        <UsersModal
+          usersList={listOfUsersWhoLiked}
+          modalHeading={"Liked By"}
+          closeUsersWhoLikedModal={closeUsersWhoLikedModal}
+        />
+      )}
     </div>
   );
 }
