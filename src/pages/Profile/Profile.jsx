@@ -177,14 +177,19 @@ function Profile() {
         ...userProfile,
         profileAvatar: resp.url,
       };
+      const modifiedLoggedInUser = {...authState?.user, ...modifiedUserProfileForm}
       editUser(
         authState?.token,
         modifiedUserProfileForm,
         dataDispatch,
+        authDispatch,
         remainingUsers
-      );
+        );
+      authDispatch({ type: "setUser", payload: modifiedLoggedInUser });
     } else {
-      editUser(authState?.token, userProfile, dataDispatch, remainingUsers);
+      const modifiedLoggedInUser = {...authState?.user, ...userProfile}
+      editUser(authState?.token, userProfile, dataDispatch, authDispatch, remainingUsers);
+      authDispatch({ type: "setUser", payload: modifiedLoggedInUser });
     }
     setShowEditProfileModal(false);
     setIsNewProfilePicUploaded(false);

@@ -84,12 +84,13 @@ export const editUser = async (
   token,
   userProfile,
   dataDispatch,
+  authDispatch,
   remainingUsers
 ) => {
   try {
     const res = await editUserService(token, userProfile);
     const resJson = await res.json();
-    const finalData = [...remainingUsers, resJson?.user]
+    const finalData = [...remainingUsers, resJson?.user];
     dataDispatch({
       type: "setUsers",
       payload: finalData,
@@ -101,7 +102,18 @@ export const editUser = async (
 
 export function convertDateFormat(inputDate) {
   const months = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   const dateParts = inputDate.split("T");
@@ -110,9 +122,11 @@ export function convertDateFormat(inputDate) {
 
   const [year, month, day] = dateString.split("-");
   const [hour, minute, second] = timeString.split(":");
-  
+
   const newDate = new Date(year, month - 1, day, hour, minute, second);
-  const formattedDate = `${months[newDate.getMonth()]} ${newDate.getDate()}, ${newDate.getFullYear()}`;
-  
+  const formattedDate = `${
+    months[newDate.getMonth()]
+  } ${newDate.getDate()}, ${newDate.getFullYear()}`;
+
   return formattedDate;
 }
