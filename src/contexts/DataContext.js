@@ -1,12 +1,14 @@
-import { createContext, useEffect, useReducer, useState } from "react";
+import { createContext, useContext, useEffect, useReducer, useState } from "react";
 import { getAllPostsService } from "../services/PostServices";
 import { getAllUsersService } from "../services/UserServices";
+import { AuthContext } from "./AuthContext";
 
 export const DataContext = createContext();
 
 export function DataProvider({ children }) {
   const [isPostsLoading, setIsPostsLoading] = useState(true);
   const [isUsersLoading, setIsUsersLoading] = useState(true);
+  const {authState} = useContext(AuthContext)
   const [filter, setFilter] = useState("trending");
 
   const initialDataState = {
@@ -35,6 +37,7 @@ export function DataProvider({ children }) {
       const res = await getAllUsersService();
       const resJson = await res.json();
       if (res.status === 200) {
+        console.log(resJson?.users);
         dataDispatch({ type: "setUsers", payload: resJson?.users });
       }
     } catch (error) {
@@ -61,7 +64,7 @@ export function DataProvider({ children }) {
   useEffect(() => {
     getAllUsers();
     getAllPosts();
-  }, []);
+  }, [authState?.token]);
   
   return (
     <DataContext.Provider

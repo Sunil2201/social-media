@@ -53,55 +53,54 @@ function Signup() {
         <h2>Signup</h2>
         <form onSubmit={handleSubmit}>
           <div className="firstnameInputDiv">
-            <label htmlFor="firstName">Firstname</label>
             <input
               type="text"
               className="nameInput"
               id="firstName"
               value={firstName}
               onChange={onChange}
+              placeholder="Enter Firstname"
               required
             />
           </div>
 
           <div className="lastnameInputDiv">
-            <label htmlFor="lastName">Lastname</label>
             <input
               type="text"
               className="nameInput"
               id="lastName"
               value={lastName}
               onChange={onChange}
+              placeholder="Enter Lastname"
               required
             />
           </div>
 
           <div className="emailInputDiv">
-            <label htmlFor="email">Email</label>
             <input
               type="email"
               className="emailInput"
               id="email"
               value={email}
               onChange={onChange}
+              placeholder="Enter Email"
               required
             />
           </div>
 
           <div className="usernameInputDiv">
-            <label htmlFor="email">Username</label>
             <input
               type="text"
               className="usernameInput"
               value={username}
               onChange={onChange}
               id="username"
+              placeholder="Enter Username"
               required
             />
           </div>
 
           <div className="passwordInputOuterDiv">
-            <label htmlFor="password">Password</label>
             <div className="passwordInputDiv">
               <input
                 type={showPassword ? "text" : "password"}
@@ -109,6 +108,7 @@ function Signup() {
                 value={password}
                 onChange={onChange}
                 id="password"
+                placeholder="Enter Password"
                 required
               />
               <MdVisibility
@@ -120,13 +120,13 @@ function Signup() {
           </div>
 
           <div className="confirmPasswordInputOuterDiv">
-            <label htmlFor="confirmPassword">Confirm Password</label>
             <div className="passwordInputDiv">
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 className="passwordInput"
                 value={confirmPassword}
                 onChange={onChange}
+                placeholder="Confirm Password"
                 id="confirmPassword"
                 required
               />

@@ -13,9 +13,9 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 function Sidebar({ openModal }) {
-  const { authState } = useContext(AuthContext);
+  const { authState, logoutUser } = useContext(AuthContext);
   const loggedInUser = authState?.user;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const getActiveStyle = ({ isActive }) => ({
     fontWeight: isActive ? 700 : 400,
@@ -71,6 +71,7 @@ function Sidebar({ openModal }) {
           </NavigationLink>
 
           <NavLink
+            onClick={logoutUser}
             style={getActiveStyle}
             className="individualSection"
             to="/login"

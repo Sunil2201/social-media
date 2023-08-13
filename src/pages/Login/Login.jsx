@@ -55,18 +55,17 @@ function Login() {
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="usernameInputDiv">
-            <label htmlFor="email">Username</label>
             <input
               type="text"
               className="usernameInput"
               value={username}
               onChange={onChange}
               id="username"
+              placeholder="Enter Username"
               required
             />
           </div>
           <div className="passwordInputOuterDiv">
-            <label htmlFor="password">Password</label>
             <div className="passwordInputDiv">
               <input
                 type={showPassword ? "text" : "password"}
@@ -74,6 +73,7 @@ function Login() {
                 value={password}
                 onChange={onChange}
                 id="password"
+                placeholder="Enter Password"
                 required
               />
               <MdVisibility
@@ -84,14 +84,14 @@ function Login() {
             </div>
           </div>
           <div className="buttonContainer">
-            <button type="submit">Sign In</button> &nbsp;
-            <button type="button" onClick={enterTestCredentialsAndLogin}>
-              Test user
+            <button type="submit" className="loginBtn">Login</button>
+            <button type="button" className="loginAsGuestBtn" onClick={enterTestCredentialsAndLogin}>
+              Login as Guest
             </button>
           </div>
         </form>
         <p>
-          Don't have an account? <span onClick={navigateToSignup}>Signup</span>
+          Don't have an account? <span onClick={navigateToSignup}>Sign Up</span>
         </p>
       </main>
     </div>
