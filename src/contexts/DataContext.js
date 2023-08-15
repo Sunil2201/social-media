@@ -6,8 +6,8 @@ import { AuthContext } from "./AuthContext";
 export const DataContext = createContext();
 
 export function DataProvider({ children }) {
-  const [isPostsLoading, setIsPostsLoading] = useState(true);
-  const [isUsersLoading, setIsUsersLoading] = useState(true);
+  // const [isPostsLoading, setIsPostsLoading] = useState(true);
+  // const [isUsersLoading, setIsUsersLoading] = useState(true);
   const {authState} = useContext(AuthContext)
   const [filter, setFilter] = useState("trending");
 

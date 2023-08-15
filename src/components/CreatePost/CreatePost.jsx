@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { MdOutlineInsertPhoto, MdOutlineGifBox } from "react-icons/md";
+import { MdOutlineInsertPhoto } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { BsEmojiSmile } from "react-icons/bs";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -8,7 +8,7 @@ import { DataContext } from "../../contexts/DataContext";
 import { uploadImage } from "../../utils/UploadImage";
 import "./CreatePost.css";
 import EmojiPicker from "emoji-picker-react";
-import GifPicker from "gif-picker-react";
+// import GifPicker from "gif-picker-react";
 
 function CreatePost() {
   const { authState } = useContext(AuthContext);
@@ -24,7 +24,7 @@ function CreatePost() {
     mediaUrl: "",
   });
   const [showEmojiContainer, setShowEmojiContainer] = useState(false);
-  const [showGifContainer, setShowGifContainer] = useState(false);
+  // const [showGifContainer, setShowGifContainer] = useState(false);
   const [uploadingGif, setUploadingGif] = useState(false);
 
   const newPostRef = useRef();
@@ -51,9 +51,9 @@ function CreatePost() {
     setShowEmojiContainer((prevState) => !prevState);
   };
 
-  const toggleGifContainer = () => {
-    setShowGifContainer((prevState) => !prevState);
-  };
+  // const toggleGifContainer = () => {
+  //   setShowGifContainer((prevState) => !prevState);
+  // };
 
   const handleMediaInput = (e) => {
     const file = e.target.files[0];
@@ -105,15 +105,15 @@ function CreatePost() {
     }));
   };
 
-  const handleGifClick = (gif) => {
-    setUploadingGif(true);
-    setPostForm((prev) => ({
-      ...prev,
-      mediaUrl: gif.url,
-      type: "image",
-    }));
-    setShowGifContainer(false);
-  };
+  // const handleGifClick = (gif) => {
+  //   setUploadingGif(true);
+  //   setPostForm((prev) => ({
+  //     ...prev,
+  //     mediaUrl: gif.url,
+  //     type: "image",
+  //   }));
+  //   setShowGifContainer(false);
+  // };
 
   return (
     <div className="newPost">
