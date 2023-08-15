@@ -49,9 +49,9 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const handleUserSignup = async (username, password, firstName, lastName) => {
+  const handleUserSignup = async (formData) => {
     try {
-      const res = await signupService(username, password, firstName, lastName);
+      const res = await signupService(formData);
       const resJson = await res.json();
       const { createdUser, encodedToken } = resJson;
       if (res?.status === 201) {

@@ -16,9 +16,11 @@ function Signup() {
     username: "",
     password: "",
     confirmPassword: "",
+    profileAvatar:
+      "https://res.cloudinary.com/dp6uypw0c/image/upload/v1692093871/default-profile-pic_udl3w4.jpg",
   });
 
-  const { firstName, lastName, email, username, password, confirmPassword } =
+  const { firstName, lastName, email, username, password, confirmPassword, profileAvatar } =
     formData;
 
   const onChange = (e) => {
@@ -34,7 +36,7 @@ function Signup() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleUserSignup(username, password, firstName, lastName);
+    handleUserSignup(formData);
   };
 
   return (

@@ -10,16 +10,11 @@ export const loginService = async (username, password) => {
   }
 };
 
-export const signupService = async (
-  username,
-  password,
-  firstName,
-  lastName
-) => {
+export const signupService = async (formData) => {
   try {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
-      body: JSON.stringify({ username, password, firstName, lastName }),
+      body: JSON.stringify(formData),
     });
     return res;
   } catch (error) {

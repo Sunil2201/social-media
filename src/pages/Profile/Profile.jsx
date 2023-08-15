@@ -179,18 +179,27 @@ function Profile() {
         ...userProfile,
         profileAvatar: resp.url,
       };
-      const modifiedLoggedInUser = {...authState?.user, ...modifiedUserProfileForm}
+      const modifiedLoggedInUser = {
+        ...authState?.user,
+        ...modifiedUserProfileForm,
+      };
       editUser(
         authState?.token,
         modifiedUserProfileForm,
         dataDispatch,
         authDispatch,
         remainingUsers
-        );
+      );
       authDispatch({ type: "setUser", payload: modifiedLoggedInUser });
     } else {
-      const modifiedLoggedInUser = {...authState?.user, ...userProfile}
-      editUser(authState?.token, userProfile, dataDispatch, authDispatch, remainingUsers);
+      const modifiedLoggedInUser = { ...authState?.user, ...userProfile };
+      editUser(
+        authState?.token,
+        userProfile,
+        dataDispatch,
+        authDispatch,
+        remainingUsers
+      );
       authDispatch({ type: "setUser", payload: modifiedLoggedInUser });
     }
     setShowEditProfileModal(false);
@@ -275,9 +284,13 @@ function Profile() {
             </div>
           </div>
           <div className="profilePosts">
-            {[...postsOfCurrentUser].map((post, idx) => {
-              return <Post post={post} openModal={openModal} key={idx} />;
-            })}
+            {postsOfCurrentUser.length === 0 ? (
+              <p className="noPosts">You haven't posted anything yet!</p>
+            ) : (
+              [...postsOfCurrentUser].map((post, idx) => {
+                return <Post post={post} openModal={openModal} key={idx} />;
+              })
+            )}
           </div>
           {showEditProfileModal && (
             <EditProfileModal

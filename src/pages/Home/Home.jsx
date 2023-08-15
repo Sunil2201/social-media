@@ -17,7 +17,7 @@ function Home() {
   const { dataState, filter } = useContext(DataContext);
   const { setPostForm, setEditMode } = useContext(PostModalContext);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  
+
   const openModal = () => {
     setIsPostModalOpen(true);
     setEditMode(false);
@@ -65,9 +65,17 @@ function Home() {
           <CreatePost />
           <Filters />
           <div className="postsContainer">
-            {[...sortedPosts].reverse().map((post, idx) => (
-              <Post post={post} key={idx} openModal={openModal} />
-            ))}
+            {sortedPosts.length === 0 ? (
+              <p className="nothingToShow">
+                Sorry, there is nothing to show! Follow people to see their posts.
+              </p>
+            ) : (
+              [...sortedPosts]
+                .reverse()
+                .map((post, idx) => (
+                  <Post post={post} key={idx} openModal={openModal} />
+                ))
+            )}
           </div>
           {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
         </section>
