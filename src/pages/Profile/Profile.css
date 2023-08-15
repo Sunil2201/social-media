@@ -104,7 +104,7 @@
   }
   .profileSection {
     gap: 1rem;
-    min-height: auto;
+    min-height: 90vh;
   }
   .profilePrimaryInfo {
     padding: 1rem;
