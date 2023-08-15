@@ -71,6 +71,7 @@
     bottom: 0;
     z-index: 9;
     background: var(--background-color);
+    justify-content: space-around;
     height: fit-content;
     flex-direction: row;
     padding: 0.5rem;
