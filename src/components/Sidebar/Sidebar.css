@@ -64,13 +64,13 @@
 }
 @media screen and (max-width: 480px) {
   .sidebarContainer{
+    position: fixed;
     order: 2;
     top: unset;
     left: unset;
     bottom: 0;
     z-index: 9;
     background: var(--background-color);
-    justify-content: space-around;
     height: fit-content;
     flex-direction: row;
     padding: 0.5rem;
