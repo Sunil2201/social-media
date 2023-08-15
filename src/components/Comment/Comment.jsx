@@ -19,7 +19,7 @@ function Comment({ comment }) {
       </div>
       <div className="commentInfo">
         <div className="userInfoOfComment">
-          <div className="profile" onClick={() => navigateToUserProfile(comment?.username)}>
+          <div className="commentProfile" onClick={() => navigateToUserProfile(comment?.username)}>
             <span>{comment?.firstName + " " + comment?.lastName}</span>
             <p>@{comment?.username}</p>
           </div>

@@ -275,7 +275,10 @@ img {
   }
 
   .homePageContainer,
-  .profilePageContainer {
+  .profilePageContainer,
+  .explorePageContainer,
+  .bookmarksPageContainer,
+  .postDetailsPageContainer {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     width: fit-content;
@@ -286,7 +289,7 @@ img {
     right: 3%;
   }
 
-  .profilePicture{
+  .profilePicture {
     height: 2.2rem;
     width: 2.2rem;
   }

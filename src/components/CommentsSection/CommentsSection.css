@@ -8,7 +8,7 @@
   border-bottom: 1px solid var(--border-color);
 }
 .commentInput {
-  margin-left: 2%;
+  margin-left: 3%;
   border: none;
   display: flex;
   flex-grow: 1;

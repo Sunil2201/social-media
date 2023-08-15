@@ -72,6 +72,7 @@
     height: fit-content;
     flex-direction: row;
     padding: 0.5rem;
+    width: 100vw;
   }
   .topSection{
     flex-direction: row;
