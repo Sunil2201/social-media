@@ -39,13 +39,14 @@ function FiltersContainer({ filtersContainer, setFiltersContainer }) {
 
   return (
     <div className="filtersContainer" ref={filtersContainerRef}>
-      {filters.map((singleFilter) => {
+      {filters.map((singleFilter, idx) => {
         return (
           <div
             className={
               filter === singleFilter?.text ? "selectedFilter" : "singleFilter"
             }
             onClick={() => handleClick(singleFilter?.text)}
+            key={idx}
           >
             {singleFilter?.icon}
             <span>{singleFilter?.text}</span>
