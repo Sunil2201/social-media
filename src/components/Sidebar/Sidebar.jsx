@@ -7,6 +7,7 @@ import {
   MdHome,
   MdExplore,
   MdBookmarks,
+  MdCreate
 } from "react-icons/md";
 import "./Sidebar.css";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -48,24 +49,24 @@ function Sidebar({ openModal }) {
         <nav>
           <NavigationLink
             to="/"
-            icon={<MdOutlineHome size={25} />}
-            activeIcon={<MdHome size={25} />}
+            icon={<MdOutlineHome size={30} />}
+            activeIcon={<MdHome size={30} />}
           >
             Home
           </NavigationLink>
 
           <NavigationLink
             to="/explore"
-            icon={<MdOutlineExplore size={25} />}
-            activeIcon={<MdExplore size={25} />}
+            icon={<MdOutlineExplore size={30} />}
+            activeIcon={<MdExplore size={30} />}
           >
             Explore
           </NavigationLink>
 
           <NavigationLink
             to="/bookmarks"
-            icon={<MdOutlineBookmarks size={25} />}
-            activeIcon={<MdBookmarks size={25} />}
+            icon={<MdOutlineBookmarks size={30} />}
+            activeIcon={<MdBookmarks size={30} />}
           >
             Bookmarks
           </NavigationLink>
@@ -76,11 +77,12 @@ function Sidebar({ openModal }) {
             className="individualSection"
             to="/login"
           >
-            <MdOutlineLogout size={25} />
+            <MdOutlineLogout size={30} />
             <span>Logout</span>
           </NavLink>
         </nav>
         <button className="newPostBtn" onClick={openModal}>
+          <MdCreate size={25} />
           <span>New Post</span>
         </button>
       </div>
@@ -88,7 +90,7 @@ function Sidebar({ openModal }) {
         <div className="profilePicture">
           <img src={loggedInUser?.profileAvatar} alt="profile-img" />
         </div>
-        <div>
+        <div className="loggedInUserInfo">
           <p className="fullName">
             {loggedInUser?.firstName + " " + loggedInUser?.lastName}
           </p>

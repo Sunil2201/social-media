@@ -36,6 +36,10 @@
   border-radius: 25px;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 .newPostBtn:hover{
   background: var(--button-hover);
@@ -57,4 +61,43 @@
 }
 .loggedInUserProfile .username{
   opacity: 0.4;
+}
+@media screen and (max-width: 480px) {
+  .sidebarContainer{
+    order: 2;
+    bottom: 0;
+    z-index: 9;
+    background: var(--background-color);
+    justify-content: space-around;
+    height: fit-content;
+    flex-direction: row;
+    padding: 0.5rem;
+  }
+  .topSection{
+    flex-direction: row;
+  }
+  .topSection nav{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  .newPostBtn{
+    bottom: 150%;
+    position: absolute;
+    right: 4%;
+    padding: 1rem;
+    border-radius: 50%;
+  }
+  .newPostBtn span{
+    display: none;
+  }
+  .individualSection span{
+    display: none;
+  }
+  .loggedInUserInfo{
+    display: none;
+  }
+  .individualSection{
+    padding: 0.5rem 1rem;
+  }
 }

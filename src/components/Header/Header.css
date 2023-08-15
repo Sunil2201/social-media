@@ -40,3 +40,12 @@
   font-size: 14px;
   width: 100%;
 }
+@media screen and (max-width: 480px){
+  .searchContainer{
+    display: none;
+  }
+  .header{
+    width: 100%;
+    margin: 0;
+  }
+}

@@ -84,3 +84,9 @@
   font-size: 1.5rem;
   opacity: 0.9;
 }
+@media screen and (max-width: 480px) {
+  .modal{
+    top: 28%;
+    width: 90%;
+  }
+}

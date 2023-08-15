@@ -142,8 +142,8 @@ function Post({ post, openModal }) {
   
   return (
     <div className="post">
-      <div className="userProfileImage" onClick={navigateToUserProfile}>
-        <div className="profilePicture">
+      <div className="userProfileImage">
+        <div className="profilePicture" onClick={navigateToUserProfile}>
           <img src={currentUser?.profileAvatar} alt={currentUser?.username} />
         </div>
       </div>

@@ -71,3 +71,8 @@
   font-size: 1.2rem;
   text-align: center;
 }
+@media screen and (max-width: 480px) {
+  .exploreUsersContainer{
+    display: none;
+  }
+}

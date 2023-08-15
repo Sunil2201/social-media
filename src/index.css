@@ -211,12 +211,6 @@ img {
     padding: 1.5rem 1rem;
   }
 
-  .homePageContainer,
-  .profilePageContainer {
-    grid-template-columns: 1fr;
-    width: 95%;
-  }
-
   .formContainer {
     height: 100%;
   }
@@ -280,8 +274,20 @@ img {
     margin-top: 1rem;
   }
 
+  .homePageContainer,
+  .profilePageContainer {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    width: fit-content;
+  }
+
   .showPassword {
     top: 20%;
     right: 3%;
+  }
+
+  .profilePicture{
+    height: 2.2rem;
+    width: 2.2rem;
   }
 }

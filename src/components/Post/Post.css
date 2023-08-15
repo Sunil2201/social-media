@@ -6,7 +6,7 @@
   border-radius: 10px;
   gap: 0.8rem;
 }
-.postDetails{
+.postDetails {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -23,26 +23,26 @@
   align-items: flex-start;
   gap: 0.5rem;
 }
-.postContent{
+.postContent {
   width: 100%;
   overflow-wrap: break-word;
 }
-.postMedia{
+.postMedia {
   width: 100%;
   border-radius: 1rem;
 }
-.postActions{
+.postActions {
   display: flex;
   align-items: center;
   gap: 2rem;
 }
-.postActions .actionsContainer{
+.postActions .actionsContainer {
   display: flex;
   gap: 0.5rem;
   align-items: center;
   cursor: pointer;
 }
-.postActionsMenu{
+.postActionsMenu {
   position: absolute;
   top: 7.5%;
   right: 2%;
@@ -55,58 +55,86 @@
   flex-direction: column;
   gap: 0.5rem;
 }
-.postActionsMenu p{
+.postActionsMenu p {
   cursor: pointer;
   font-size: 1.1rem;
   padding: 2%;
   border-radius: 0.2rem;
 }
-.postActionsMenu p:hover{
+.postActionsMenu p:hover {
   background: rgb(109, 108, 108);
 }
-.profile{
+.profile {
   cursor: pointer;
   display: flex;
   gap: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.profile span{
+.profile span {
   font-weight: 700;
+  max-width: 100px;
 }
-.profile p, .dateCreated p{
+.profile p,
+.dateCreated p {
   color: gray;
+  max-width: 80px;
 }
-.media{
+.dateCreated p {
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.media {
   padding: 0.5rem 0rem;
   cursor: pointer;
 }
-.commentsActionContainer:hover, .bookmarkActionContainer:hover{
+.commentsActionContainer:hover,
+.bookmarkActionContainer:hover {
   color: var(--primary-color);
   transition: all 0.5s ease;
 }
-.likeActionContainer:hover{
+.likeActionContainer:hover {
   color: red;
   transition: all 0.5s ease;
 }
-.shareActionContainer:hover{
+.shareActionContainer:hover {
   color: rgb(0, 186, 124);
   transition: all 0.5s ease;
 }
-.iconContainer, .commentIconContainer, .likeIconContainer, .shareIconContainer, .bookmarkIconContainer{
+.iconContainer,
+.commentIconContainer,
+.likeIconContainer,
+.shareIconContainer,
+.bookmarkIconContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   padding: 0.4rem;
 }
-.commentIconContainer, .bookmarkIconContainer{
-  background: rgba(29, 145, 250, 0.2)
+.commentIconContainer,
+.bookmarkIconContainer {
+  background: rgba(29, 145, 250, 0.2);
 }
-.likeIconContainer{
+.likeIconContainer {
   background: rgba(249, 24, 128, 0.2);
 }
-.shareIconContainer{
+.shareIconContainer {
   background: rgba(0, 186, 124, 0.2);
 }
-.moreOptions{
+.moreOptions {
   padding-top: 1%;
+}
+@media screen and (max-width: 480px) {
+  .postHeader{
+    width: 100%;
+  }
+  .postActionsMenu{
+    top: 12%;
+    right: 4%;
+  }
 }
