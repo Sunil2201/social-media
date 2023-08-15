@@ -20,7 +20,7 @@ function Signup() {
       "https://res.cloudinary.com/dp6uypw0c/image/upload/v1692093871/default-profile-pic_udl3w4.jpg",
   });
 
-  const { firstName, lastName, email, username, password, confirmPassword, profileAvatar } =
+  const { firstName, lastName, email, username, password, confirmPassword } =
     formData;
 
   const onChange = (e) => {
