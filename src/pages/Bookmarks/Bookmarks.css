@@ -11,3 +11,8 @@
   text-align: center;
   padding: 1rem;
 }
+@media screen and (max-width: 480px) {
+  .bookmarksSection{
+    min-width: 100vw;
+  }
+}
