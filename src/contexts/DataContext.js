@@ -72,8 +72,6 @@ export function DataProvider({ children }) {
         dataState,
         filter,
         dataDispatch,
-        isPostsLoading,
-        isUsersLoading,
         handleChangeFilter,
       }}
     >
