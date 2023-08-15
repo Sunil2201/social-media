@@ -55,7 +55,6 @@ export function AuthProvider({ children }) {
       const resJson = await res.json();
       const { createdUser, encodedToken } = resJson;
       if (res?.status === 201) {
-        console.log(createdUser);
         localStorage.setItem("user", JSON.stringify(createdUser));
         authDispatch({ type: "setUser", payload: createdUser });
         localStorage.setItem("token", JSON.stringify(encodedToken));

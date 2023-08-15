@@ -78,7 +78,6 @@ function CreatePost() {
     if (postForm?.mediaUrl !== "") {
       if (uploadingGif) {
         const resp = await uploadImage(postForm?.mediaUrl);
-        console.log(resp.url);
         const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
         createPost(modifiedPostForm, authState?.token, dataDispatch);
         setUploadingGif(false);

@@ -56,8 +56,6 @@ function Home() {
       !usernameOfFollowingUsers.includes(user?.username)
   );
 
-  console.log(dataState?.users);
-
   return (
     <div className="homePage">
       <Header />

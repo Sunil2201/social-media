@@ -38,7 +38,14 @@ function UsersModal({
                   <div className="singleUserCard" key={idx}>
                     <div className="userCardPrimaryInfo">
                       <div className="profilePicture">
-                        <img src={user?.avatarUrl} alt={user?.username} />
+                        <img
+                          src={
+                            user?.avatarUrl
+                              ? user?.avatarUrl
+                              : user?.profileAvatar
+                          }
+                          alt={user?.username}
+                        />
                       </div>
                       <div className="fullNameAndUsername">
                         <p className="fullName">
