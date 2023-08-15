@@ -122,6 +122,7 @@ function Profile() {
 
   const handleOpenEditProfileModal = () => {
     setShowEditProfileModal((prevValue) => !prevValue);
+    document.body.style.overflow = "hidden";
   };
 
   const handleCloseEditProfileModal = () => {
@@ -134,6 +135,7 @@ function Profile() {
       about: currentUser?.about,
       website: currentUser?.website,
     });
+    document.body.style.overflow = "auto";
   };
 
   const handleChooseAvatar = (e) => {

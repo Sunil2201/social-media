@@ -127,3 +127,9 @@
   padding: 0.5rem;
   resize: none;
 }
+@media screen and (max-width: 480px) {
+  .editProfileModal{
+    top: 50%;
+    width: 90%;
+  }
+}

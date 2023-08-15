@@ -23,20 +23,22 @@
   flex-direction: column;
   gap: 1.2rem;
 }
-.profilePrimaryInfo .userPrimaryInfo h3{
+.profilePrimaryInfo .userPrimaryInfo h3 {
   font-size: 1.4rem;
   font-weight: 800;
 }
-.profilePrimaryInfo .userPrimaryInfo p{
+.profilePrimaryInfo .userPrimaryInfo p {
   color: grey;
   font-size: 1.1rem;
 }
-.profilePrimaryInfo .userWebsiteAndJoinedDate, .joinedDateInfo{
+.profilePrimaryInfo .userWebsiteAndJoinedDate,
+.joinedDateInfo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-.profilePrimaryInfo .userWebsiteAndJoinedDate, .joinedDateInfo p{
+.profilePrimaryInfo .userWebsiteAndJoinedDate,
+.joinedDateInfo p {
   color: grey;
   font-size: 1.1rem;
 }
@@ -54,7 +56,7 @@
   font-weight: 800;
   cursor: pointer;
 }
-.profilePicAndActionContainer button:hover{
+.profilePicAndActionContainer button:hover {
   background-color: rgb(199, 199, 199);
   transition: all 0.5s ease;
 }
@@ -78,20 +80,33 @@
   gap: 0.2rem;
   font-size: 1.1rem;
 }
-.userSecondaryInfo .singleStat p{
+.userSecondaryInfo .singleStat p {
   font-weight: 800;
 }
-.userSecondaryInfo .singleStat span{
+.userSecondaryInfo .singleStat span {
   color: grey;
 }
-.profilePosts{
+.profilePosts {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-.userAboutInfo{
+.userAboutInfo {
   font-size: 1.1rem;
 }
-.showAppropriateModal{
+.showAppropriateModal {
   cursor: pointer;
+}
+@media screen and (max-width: 480px) {
+  .profilePrimaryInfo .userWebsiteAndJoinedDate{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .profileSection {
+    gap: 1rem;
+    min-height: auto;
+  }
+  .profilePrimaryInfo {
+    padding: 1rem;
+  }
 }
