@@ -37,7 +37,6 @@ export function DataProvider({ children }) {
       const res = await getAllUsersService();
       const resJson = await res.json();
       if (res.status === 200) {
-        console.log(resJson?.users);
         dataDispatch({ type: "setUsers", payload: resJson?.users });
       }
     } catch (error) {
