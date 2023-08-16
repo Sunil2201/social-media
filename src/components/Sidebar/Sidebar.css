@@ -64,7 +64,6 @@
 }
 @media screen and (max-width: 480px) {
   .sidebarContainer{
-    position: fixed;
     order: 2;
     top: unset;
     left: unset;
