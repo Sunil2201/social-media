@@ -57,6 +57,10 @@
   border-radius: 30px;
 }
 .loggedInUserProfile .fullName{
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: 600;
 }
 .loggedInUserProfile .username{

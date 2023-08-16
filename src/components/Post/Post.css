@@ -68,25 +68,24 @@
   cursor: pointer;
   display: flex;
   gap: 0.5rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .profile span {
   font-weight: 700;
   max-width: 100px;
-}
-.profile p,
-.dateCreated p {
-  color: gray;
-  max-width: 80px;
-}
-.dateCreated p {
-  cursor: pointer;
-  display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.profile p{
+  max-width: 80px;
+  color: gray;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dateCreated p{
+  color: gray;
+  cursor: pointer;
 }
 .media {
   padding: 0.5rem 0rem;

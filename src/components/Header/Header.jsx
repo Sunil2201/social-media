@@ -34,6 +34,7 @@ function Header() {
           alt="app-logo"
         />
       </div>
+      <div></div>
       <div className="searchContainer">
         <BiSearch className="searchIcon" style={{color: "#000"}}/>
         <input
