@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { BiSearch } from "react-icons/bi";
-import { getAllUsersService } from "../../services/UserServices";
 import { users } from "../../backend/db/users";
 import "./Header.css";
 import { useNavigate } from "react-router-dom";
