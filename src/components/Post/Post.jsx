@@ -162,7 +162,7 @@ function Post({ post, openModal }) {
           </div>
           {authState?.user?.username === post?.username && (
             <div onClick={handlePostActionsMenu} className="moreOptions">
-              <BsThreeDots className="icon feedIcon" size={20} />
+              <BsThreeDots className="icon feedIcon" size={22} />
             </div>
           )}
           {showPostActionsMenu && (

@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
-import { MdVisibility } from "react-icons/md";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 
 function Signup() {
-  const { handleUserSignup } = useContext(AuthContext);
+  const { signupError, setSignupError, handleUserSignup } =
+    useContext(AuthContext);
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +29,9 @@ function Signup() {
       ...prevState,
       [e.target.id]: e.target.value,
     }));
+    if (e.target.id === "confirmPassword" && e.target.value === password) {
+      setSignupError("");
+    }
   };
 
   const navigateToSignIn = () => {
@@ -111,13 +115,22 @@ function Signup() {
                 onChange={onChange}
                 id="password"
                 placeholder="Enter Password"
+                minLength={8}
                 required
               />
-              <MdVisibility
-                size={25}
-                className="showPassword"
-                onClick={() => setShowPassword((prevState) => !prevState)}
-              />
+              {!showPassword ? (
+                <MdVisibilityOff
+                  size={25}
+                  className="showPassword"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
+                />
+              ) : (
+                <MdVisibility
+                  size={25}
+                  className="showPassword"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
+                />
+              )}
             </div>
           </div>
 
@@ -130,18 +143,29 @@ function Signup() {
                 onChange={onChange}
                 placeholder="Confirm Password"
                 id="confirmPassword"
+                minLength={8}
                 required
               />
-              <MdVisibility
-                size={25}
-                className="showPassword"
-                onClick={() =>
-                  setShowConfirmPassword((prevState) => !prevState)
-                }
-              />
+              {!showConfirmPassword ? (
+                <MdVisibilityOff
+                  size={25}
+                  className="showPassword"
+                  onClick={() =>
+                    setShowConfirmPassword((prevState) => !prevState)
+                  }
+                />
+              ) : (
+                <MdVisibility
+                  size={25}
+                  className="showPassword"
+                  onClick={() =>
+                    setShowConfirmPassword((prevState) => !prevState)
+                  }
+                />
+              )}
             </div>
           </div>
-
+          {signupError !== "" && <p className="error">{signupError}</p>}
           <button type="submit">Sign up</button>
         </form>
         <p>

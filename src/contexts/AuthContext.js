@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { loginService, signupService } from "../services/AuthService";
 
@@ -22,6 +22,8 @@ export function AuthProvider({ children }) {
   };
 
   const [authState, authDispatch] = useReducer(authReducer, initialAuthState);
+  const [loginError, setLoginError] = useState("");
+  const [signupError, setSignupError] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,6 +32,7 @@ export function AuthProvider({ children }) {
     try {
       const res = await loginService(username, password);
       const resJson = await res?.json();
+      console.log(resJson);
       const { foundUser, encodedToken } = resJson;
       if (res?.status === 200) {
         localStorage.setItem("user", JSON.stringify(foundUser));
@@ -42,31 +45,37 @@ export function AuthProvider({ children }) {
             : "/"
         );
       } else {
-        console.log(resJson?.errors[0]);
+        setLoginError("The username you entered is not registered.");
       }
     } catch (error) {
       console.error(error.message);
+      setLoginError(error.response.data.errors[0]);
     }
   };
 
   const handleUserSignup = async (formData) => {
     try {
-      const res = await signupService(formData);
-      const resJson = await res.json();
-      const { createdUser, encodedToken } = resJson;
-      if (res?.status === 201) {
-        localStorage.setItem("user", JSON.stringify(createdUser));
-        authDispatch({ type: "setUser", payload: createdUser });
-        localStorage.setItem("token", JSON.stringify(encodedToken));
-        authDispatch({ type: "setToken", payload: encodedToken });
-        navigate(
-          location?.state?.from?.pathname
-            ? location?.state?.from?.pathname
-            : "/"
-        );
+      if (formData?.password === formData?.confirmPassword) {
+        const res = await signupService(formData);
+        const resJson = await res.json();
+        const { createdUser, encodedToken } = resJson;
+        if (res?.status === 201) {
+          localStorage.setItem("user", JSON.stringify(createdUser));
+          authDispatch({ type: "setUser", payload: createdUser });
+          localStorage.setItem("token", JSON.stringify(encodedToken));
+          authDispatch({ type: "setToken", payload: encodedToken });
+          navigate(
+            location?.state?.from?.pathname
+              ? location?.state?.from?.pathname
+              : "/"
+          );
+        }
+      } else {
+        setSignupError("Password and Confirm Password do not match");
       }
     } catch (error) {
       console.error(error.message);
+      setSignupError(error.response.data.errors[0]);
     }
   };
 
@@ -79,7 +88,16 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ authState, authDispatch, handleUserLogin, handleUserSignup, logoutUser }}
+      value={{
+        authState,
+        loginError,
+        signupError,
+        setSignupError,
+        authDispatch,
+        handleUserLogin,
+        handleUserSignup,
+        logoutUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { MdVisibility } from "react-icons/md";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 
 function Login() {
-  const { handleUserLogin } = useContext(AuthContext);
+  const { handleUserLogin, loginError } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -76,16 +76,31 @@ function Login() {
                 placeholder="Enter Password"
                 required
               />
-              <MdVisibility
-                size={25}
-                className="showPassword"
-                onClick={() => setShowPassword((prevState) => !prevState)}
-              />
+              {!showPassword ? (
+                <MdVisibilityOff
+                  size={25}
+                  className="showPassword"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
+                />
+              ) : (
+                <MdVisibility
+                  size={25}
+                  className="showPassword"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
+                />
+              )}
             </div>
           </div>
+          {loginError && <p className="error">{loginError}</p>}
           <div className="buttonContainer">
-            <button type="submit" className="loginBtn">Login</button>
-            <button type="button" className="loginAsGuestBtn" onClick={enterTestCredentialsAndLogin}>
+            <button type="submit" className="loginBtn">
+              Login
+            </button>
+            <button
+              type="button"
+              className="loginAsGuestBtn"
+              onClick={enterTestCredentialsAndLogin}
+            >
               Login as Guest
             </button>
           </div>
