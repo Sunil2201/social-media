@@ -83,6 +83,7 @@ function Post({ post, openModal }) {
   const handleEditPost = (postToEdit) => {
     setShowPostActionMenu(false);
     openModal();
+    postToEdit?.media && delete postToEdit?.media;
     handleFormEdit(postToEdit);
   };
 
@@ -139,7 +140,7 @@ function Post({ post, openModal }) {
   const navigateToPost = () => {
     navigate(`/post-details/${post?.id}`);
   };
-  
+
   return (
     <div className="post">
       <div className="userProfileImage">

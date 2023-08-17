@@ -119,7 +119,10 @@ function CreatePost() {
     <div className="newPost">
       <div className="userAvatar">
         <div className="profilePicture">
-          <img src={authState?.user?.profileAvatar} alt={authState?.user?.username}/>
+          <img
+            src={authState?.user?.profileAvatar}
+            alt={authState?.user?.username}
+          />
         </div>
       </div>
       <form onSubmit={handleSubmit}>
@@ -140,7 +143,12 @@ function CreatePost() {
             <img src={postForm?.mediaUrl} alt="post-img" />
             <IoMdClose
               onClick={() => {
-                setPostForm((prev) => ({ ...prev, mediaUrl: "", media: "", type: ""}));
+                setPostForm((prev) => ({
+                  ...prev,
+                  mediaUrl: "",
+                  media: "",
+                  type: "",
+                }));
                 setUploadingGif(false);
               }}
               className="closeMedia"
@@ -155,7 +163,12 @@ function CreatePost() {
             </video>
             <IoMdClose
               onClick={() => {
-                setPostForm((prev) => ({ ...prev, mediaUrl: "", media: "", type: ""}));
+                setPostForm((prev) => ({
+                  ...prev,
+                  mediaUrl: "",
+                  media: "",
+                  type: "",
+                }));
               }}
               className="closeMedia"
             />
@@ -170,7 +183,9 @@ function CreatePost() {
                 className="fileInput"
                 onChange={handleMediaInput}
               />
-              <MdOutlineInsertPhoto size={25} className="icon blueIcon" />
+              <div className="insertPicEmoji">
+                <MdOutlineInsertPhoto size={23} className="icon blueIcon" />
+              </div>
             </label>
             {/* <MdOutlineGifBox
               size={25}
@@ -178,7 +193,7 @@ function CreatePost() {
               onClick={toggleGifContainer}
             /> */}
             <BsEmojiSmile
-              size={20}
+              size={19}
               className="icon blueIcon"
               onClick={toggleEmojiContainer}
             />
