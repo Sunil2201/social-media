@@ -50,10 +50,9 @@ function Explore() {
       <div className="explorePageContainer">
         <Sidebar openModal={openModal} />
         <section className="exploreSection">
-          {postsToDisplayOnExplorePage.length &&
-            postsToDisplayOnExplorePage.map((post, idx) => {
-              return <Post post={post} key={idx} openModal={openModal} />;
-            })}
+          {postsToDisplayOnExplorePage.map((post, idx) => {
+            return <Post post={post} key={idx} openModal={openModal} />;
+          })}
         </section>
         <ExploreUsers usersToFollow={usersToFollow} />
         {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
