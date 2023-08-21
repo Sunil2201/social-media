@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useReducer, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { getAllPostsService } from "../services/PostServices";
 import { getAllUsersService } from "../services/UserServices";
 import { AuthContext } from "./AuthContext";
@@ -6,9 +12,9 @@ import { AuthContext } from "./AuthContext";
 export const DataContext = createContext();
 
 export function DataProvider({ children }) {
-  // const [isPostsLoading, setIsPostsLoading] = useState(true);
-  // const [isUsersLoading, setIsUsersLoading] = useState(true);
-  const {authState} = useContext(AuthContext)
+  const [isPostsLoading, setIsPostsLoading] = useState(false);
+  const [isUsersLoading, setIsUsersLoading] = useState(false);
+  const { authState } = useContext(AuthContext);
   const [filter, setFilter] = useState("trending");
 
   const initialDataState = {
@@ -34,6 +40,7 @@ export function DataProvider({ children }) {
 
   const getAllUsers = async () => {
     try {
+      setIsUsersLoading(true);
       const res = await getAllUsersService();
       const resJson = await res.json();
       if (res.status === 200) {
@@ -41,11 +48,14 @@ export function DataProvider({ children }) {
       }
     } catch (error) {
       console.error(error.message);
+    } finally {
+      setIsUsersLoading(false);
     }
   };
 
   const getAllPosts = async () => {
     try {
+      setIsPostsLoading(true);
       const res = await getAllPostsService();
       const resJson = await res.json();
       if (res.status === 200) {
@@ -53,6 +63,8 @@ export function DataProvider({ children }) {
       }
     } catch (error) {
       console.error(error.message);
+    } finally {
+      setIsPostsLoading(false);
     }
   };
 
@@ -64,12 +76,14 @@ export function DataProvider({ children }) {
     getAllUsers();
     getAllPosts();
   }, [authState?.token]);
-  
+
   return (
     <DataContext.Provider
       value={{
         dataState,
         filter,
+        isPostsLoading,
+        isUsersLoading,
         dataDispatch,
         handleChangeFilter,
       }}

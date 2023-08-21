@@ -20,6 +20,7 @@ export function PostModalProvider({ children }) {
     mediaUrl: "",
   });
   const [editMode, setEditMode] = useState(false);
+  const [showPostSpinner, setShowPostSpinner] = useState(false);
 
   const handleChange = (e) => {
     setPostForm((prev) => ({ ...prev, content: e.target.value }));
@@ -44,25 +45,31 @@ export function PostModalProvider({ children }) {
   };
 
   const handlePostFormSubmit = async (e) => {
-    e.preventDefault();
-    if (postForm?.mediaUrl !== "") {
-      const resp = await uploadImage(postForm?.media);
-      const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
-      createPost(modifiedPostForm, authState?.token, dataDispatch);
-    } else {
-      createPost(postForm, authState?.token, dataDispatch);
+    try {
+      e.preventDefault();
+      setShowPostSpinner(true);
+      setPostForm({
+        firstName,
+        lastName,
+        content: "",
+        mediaUrl: "",
+      });
+      if (postForm?.mediaUrl !== "") {
+        const resp = await uploadImage(postForm?.media);
+        const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
+        createPost(modifiedPostForm, authState?.token, dataDispatch);
+      } else {
+        createPost(postForm, authState?.token, dataDispatch);
+      }
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setShowPostSpinner(false);
     }
-
-    setPostForm({
-      firstName,
-      lastName,
-      content: "",
-      mediaUrl: "",
-    });
   };
 
   const closeMedia = () => {
-    setPostForm((prev) => ({ ...prev, mediaUrl: "", media: "", type: ""}));
+    setPostForm((prev) => ({ ...prev, mediaUrl: "", media: "", type: "" }));
   };
 
   const handleFormEdit = (postToEdit) => {
@@ -71,14 +78,25 @@ export function PostModalProvider({ children }) {
   };
 
   const handleSubmitEditedPost = async (e) => {
-    e.preventDefault();
-    if (postForm?.media && postForm?.media !== "") {
-      const resp = await uploadImage(postForm?.media);
-      const modifiedPostForm = { ...postForm, mediaUrl: resp?.url };
-      editPost(postForm?._id, modifiedPostForm, authState?.token, dataDispatch);
-    }
-     else {
-      editPost(postForm?._id, postForm, authState?.token, dataDispatch);
+    try {
+      e.preventDefault();
+      setShowPostSpinner(true);
+      if (postForm?.media && postForm?.media !== "") {
+        const resp = await uploadImage(postForm?.media);
+        const modifiedPostForm = { ...postForm, mediaUrl: resp?.url };
+        editPost(
+          postForm?._id,
+          modifiedPostForm,
+          authState?.token,
+          dataDispatch
+        );
+      } else {
+        editPost(postForm?._id, postForm, authState?.token, dataDispatch);
+      }
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setShowPostSpinner(false);
     }
   };
 
@@ -86,6 +104,7 @@ export function PostModalProvider({ children }) {
     <PostModalContext.Provider
       value={{
         postForm,
+        showPostSpinner,
         setPostForm,
         editMode,
         setEditMode,
@@ -94,7 +113,7 @@ export function PostModalProvider({ children }) {
         handlePostFormSubmit,
         closeMedia,
         handleFormEdit,
-        handleSubmitEditedPost
+        handleSubmitEditedPost,
       }}
     >
       {children}

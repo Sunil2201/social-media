@@ -11,10 +11,12 @@ import { PostModalContext } from "../../contexts/PostModalContext";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ExploreUsers from "../../components/Explore Users/ExploreUsers";
 import Header from "../../components/Header/Header";
+import Spinner from "../../components/Spinner";
 
 function Home() {
   const { authState } = useContext(AuthContext);
-  const { dataState, filter } = useContext(DataContext);
+  const { isPostsLoading, isUsersLoading, dataState, filter } =
+    useContext(DataContext);
   const { setPostForm, setEditMode } = useContext(PostModalContext);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
@@ -65,9 +67,10 @@ function Home() {
           <CreatePost />
           <Filters />
           <div className="postsContainer">
-            {sortedPosts.length === 0 ? (
+            {sortedPosts.length === 0 && !(isPostsLoading || isUsersLoading) ? (
               <p className="nothingToShow">
-                Sorry, there is nothing to show! Follow people to see their posts.
+                Sorry, there is nothing to show! Follow people to see their
+                posts.
               </p>
             ) : (
               [...sortedPosts]
@@ -82,6 +85,7 @@ function Home() {
         <ExploreUsers usersToFollow={usersToFollow} />
         {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
       </div>
+      {(isPostsLoading || isUsersLoading) && <Spinner />}
     </div>
   );
 }

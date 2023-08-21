@@ -8,6 +8,7 @@ import { DataContext } from "../../contexts/DataContext";
 import { uploadImage } from "../../utils/UploadImage";
 import "./CreatePost.css";
 import EmojiPicker from "emoji-picker-react";
+import Spinner from "../Spinner";
 // import GifPicker from "gif-picker-react";
 
 function CreatePost() {
@@ -26,6 +27,7 @@ function CreatePost() {
   const [showEmojiContainer, setShowEmojiContainer] = useState(false);
   // const [showGifContainer, setShowGifContainer] = useState(false);
   const [uploadingGif, setUploadingGif] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   const newPostRef = useRef();
 
@@ -74,28 +76,34 @@ function CreatePost() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (postForm?.mediaUrl !== "") {
-      if (uploadingGif) {
-        const resp = await uploadImage(postForm?.mediaUrl);
-        const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
-        createPost(modifiedPostForm, authState?.token, dataDispatch);
-        setUploadingGif(false);
+    try {
+      e.preventDefault();
+      setShowSpinner(true);
+      setPostForm({
+        firstName,
+        lastName,
+        content: "",
+        mediaUrl: "",
+      });
+      if (postForm?.mediaUrl !== "") {
+        if (uploadingGif) {
+          const resp = await uploadImage(postForm?.mediaUrl);
+          const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
+          createPost(modifiedPostForm, authState?.token, dataDispatch);
+          setUploadingGif(false);
+        } else {
+          const resp = await uploadImage(postForm?.media);
+          const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
+          createPost(modifiedPostForm, authState?.token, dataDispatch);
+        }
       } else {
-        const resp = await uploadImage(postForm?.media);
-        const modifiedPostForm = { ...postForm, mediaUrl: resp.url };
-        createPost(modifiedPostForm, authState?.token, dataDispatch);
+        createPost(postForm, authState?.token, dataDispatch);
       }
-    } else {
-      createPost(postForm, authState?.token, dataDispatch);
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setShowSpinner(false);
     }
-
-    setPostForm({
-      firstName,
-      lastName,
-      content: "",
-      mediaUrl: "",
-    });
   };
 
   const handleEmojiClick = (emoji) => {
@@ -219,6 +227,7 @@ function CreatePost() {
           tenorApiKey="AIzaSyDHZRMhrQg0K7ibOX7Qq6zWjfZEm7j4bH4"
         />
       )} */}
+      {showSpinner && <Spinner />}
     </div>
   );
 }

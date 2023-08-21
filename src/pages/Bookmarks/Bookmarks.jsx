@@ -8,10 +8,11 @@ import ExploreUsers from "../../components/Explore Users/ExploreUsers";
 import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
 import Post from "../../components/Post/Post";
 import "./Bookmarks.css";
+import Spinner from "../../components/Spinner";
 
 function Bookmarks() {
   const { authState } = useContext(AuthContext);
-  const { dataState } = useContext(DataContext);
+  const { isPostsLoading, isUsersLoading, dataState } = useContext(DataContext);
   const { setPostForm, setEditMode } = useContext(PostModalContext);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
@@ -55,8 +56,11 @@ function Bookmarks() {
       <div className="bookmarksPageContainer">
         <Sidebar openModal={openModal} />
         <section className="bookmarksSection">
-          {bookmarkedPosts.length === 0 ? (
-            <p className="noBookmarks">You have not bookmarked any posts yet!</p>  
+          {bookmarkedPosts.length === 0 &&
+          !(isPostsLoading || isUsersLoading) ? (
+            <p className="noBookmarks">
+              You have not bookmarked any posts yet!
+            </p>
           ) : (
             bookmarkedPosts.map((post, idx) => {
               return <Post post={post} key={idx} openModal={openModal} />;
@@ -66,6 +70,7 @@ function Bookmarks() {
         <ExploreUsers usersToFollow={usersToFollow} />
         {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
       </div>
+      {(isPostsLoading || isUsersLoading) && <Spinner />}
     </div>
   );
 }

@@ -200,6 +200,18 @@ img {
 .error {
   color: red;
 }
+.spinnerContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (max-width: 820px) {
   .loginBtn,
   .loginAsGuestBtn,

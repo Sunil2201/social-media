@@ -19,10 +19,12 @@ import ExploreUsers from "../../components/Explore Users/ExploreUsers";
 import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
 import Header from "../../components/Header/Header";
 import UsersModal from "../../components/UsersModal/UsersModal";
+import Spinner from "../../components/Spinner";
 
 function Profile() {
   const { authState, authDispatch } = useContext(AuthContext);
-  const { dataState, dataDispatch } = useContext(DataContext);
+  const { isPostsLoading, isUsersLoading, dataState, dataDispatch } =
+    useContext(DataContext);
   const { setPostForm, setEditMode } = useContext(PostModalContext);
   const { username } = useParams();
 
@@ -39,6 +41,7 @@ function Profile() {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [showFollowingUsersModal, setShowFollowingUsersModal] = useState(false);
   const [showFollowersModal, setShowFollowersModal] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   const openModal = () => {
     setIsPostModalOpen(true);
@@ -172,38 +175,46 @@ function Profile() {
   };
 
   const handleEditProfileFormSubmit = async (e) => {
-    e.preventDefault();
-    if (isNewProfilePicUploaded) {
-      const resp = await uploadImage(userProfile?.media);
-      const modifiedUserProfileForm = {
-        ...userProfile,
-        profileAvatar: resp.url,
-      };
-      const modifiedLoggedInUser = {
-        ...authState?.user,
-        ...modifiedUserProfileForm,
-      };
-      editUser(
-        authState?.token,
-        modifiedUserProfileForm,
-        dataDispatch,
-        authDispatch,
-        remainingUsers
-      );
-      authDispatch({ type: "setUser", payload: modifiedLoggedInUser });
-    } else {
-      const modifiedLoggedInUser = { ...authState?.user, ...userProfile };
-      editUser(
-        authState?.token,
-        userProfile,
-        dataDispatch,
-        authDispatch,
-        remainingUsers
-      );
-      authDispatch({ type: "setUser", payload: modifiedLoggedInUser });
+    try {
+      e.preventDefault();
+      setShowSpinner(true);
+      setShowEditProfileModal(false);
+      if (isNewProfilePicUploaded) {
+        const resp = await uploadImage(userProfile?.media);
+        const modifiedUserProfileForm = {
+          ...userProfile,
+          profileAvatar: resp.url,
+        };
+        const modifiedLoggedInUser = {
+          ...authState?.user,
+          ...modifiedUserProfileForm,
+        };
+        editUser(
+          authState?.token,
+          modifiedUserProfileForm,
+          dataDispatch,
+          authDispatch,
+          remainingUsers
+        );
+        authDispatch({ type: "setUser", payload: modifiedLoggedInUser });
+      } else {
+        const modifiedLoggedInUser = { ...authState?.user, ...userProfile };
+        editUser(
+          authState?.token,
+          userProfile,
+          dataDispatch,
+          authDispatch,
+          remainingUsers
+        );
+        authDispatch({ type: "setUser", payload: modifiedLoggedInUser });
+      }
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setIsNewProfilePicUploaded(false);
+      document.body.style.overflow = "auto";
+      setShowSpinner(false);
     }
-    setShowEditProfileModal(false);
-    setIsNewProfilePicUploaded(false);
   };
 
   useEffect(() => {
@@ -223,68 +234,72 @@ function Profile() {
       <div className="profilePageContainer">
         <Sidebar openModal={openModal} />
         <section className="profileSection">
-          <div className="profilePrimaryInfo">
-            <div className="profilePicAndActionContainer">
-              <img src={currentUser?.profileAvatar} alt="profile-pic" />
-              {authState?.user?.username === currentUser?.username ? (
-                <button onClick={handleOpenEditProfileModal}>
-                  Edit Profile
-                </button>
-              ) : isFollowingCurrentUser !== undefined ? (
-                <button onClick={handleUnfollowUser}>Following</button>
-              ) : (
-                <button onClick={handleFollowUser}>Follow</button>
-              )}
-            </div>
+          {currentUser !== undefined && (
+            <div className="profilePrimaryInfo">
+              <div className="profilePicAndActionContainer">
+                <img src={currentUser?.profileAvatar} alt="profile-pic" />
+                {authState?.user?.username === currentUser?.username ? (
+                  <button onClick={handleOpenEditProfileModal}>
+                    Edit Profile
+                  </button>
+                ) : isFollowingCurrentUser !== undefined ? (
+                  <button onClick={handleUnfollowUser}>Following</button>
+                ) : (
+                  <button onClick={handleFollowUser}>Follow</button>
+                )}
+              </div>
 
-            <div className="userPrimaryInfo">
-              <h3>{fullName}</h3>
-              <p>@{currentUser?.username}</p>
-            </div>
+              <div className="userPrimaryInfo">
+                <h3>{fullName}</h3>
+                <p>@{currentUser?.username}</p>
+              </div>
 
-            <p className="userAboutInfo">{currentUser?.about}</p>
+              <p className="userAboutInfo">{currentUser?.about}</p>
 
-            <div className="userWebsiteAndJoinedDate">
-              <a className="userWebsite" href={currentUser?.website}>
-                {currentUser?.website}
-              </a>
-              <div className="joinedDateInfo">
-                <MdCalendarMonth />
-                <p>
-                  Joined{" "}
-                  {currentUser?.createdAt &&
-                    convertDateFormat(currentUser?.createdAt)}
-                </p>
+              <div className="userWebsiteAndJoinedDate">
+                <a className="userWebsite" href={currentUser?.website}>
+                  {currentUser?.website}
+                </a>
+                <div className="joinedDateInfo">
+                  <MdCalendarMonth />
+                  <p>
+                    Joined{" "}
+                    {currentUser?.createdAt &&
+                      convertDateFormat(currentUser?.createdAt)}
+                  </p>
+                </div>
+              </div>
+
+              <div className="userSecondaryInfo">
+                <div className="singleStat">
+                  <p>{noOfPosts}</p>
+                  <span>Posts</span>
+                </div>
+                <div className="singleStat">
+                  <p>{currentUser?.following.length}</p>
+                  <span
+                    className="showAppropriateModal"
+                    onClick={openFollowingUsersModal}
+                  >
+                    Following
+                  </span>
+                </div>
+                <div className="singleStat">
+                  <p>{currentUser?.followers.length}</p>
+                  <span
+                    className="showAppropriateModal"
+                    onClick={openFollowersModal}
+                  >
+                    Followers
+                  </span>
+                </div>
               </div>
             </div>
+          )}
 
-            <div className="userSecondaryInfo">
-              <div className="singleStat">
-                <p>{noOfPosts}</p>
-                <span>Posts</span>
-              </div>
-              <div className="singleStat">
-                <p>{currentUser?.following.length}</p>
-                <span
-                  className="showAppropriateModal"
-                  onClick={openFollowingUsersModal}
-                >
-                  Following
-                </span>
-              </div>
-              <div className="singleStat">
-                <p>{currentUser?.followers.length}</p>
-                <span
-                  className="showAppropriateModal"
-                  onClick={openFollowersModal}
-                >
-                  Followers
-                </span>
-              </div>
-            </div>
-          </div>
           <div className="profilePosts">
-            {postsOfCurrentUser.length === 0 ? (
+            {postsOfCurrentUser.length === 0 &&
+            !(isPostsLoading || isUsersLoading) ? (
               <p className="noPosts">You haven't posted anything yet!</p>
             ) : (
               [...postsOfCurrentUser].map((post, idx) => {
@@ -321,6 +336,7 @@ function Profile() {
         <ExploreUsers usersToFollow={usersToFollow} />
         {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
       </div>
+      {(isPostsLoading || isUsersLoading || showSpinner) && <Spinner />}
     </div>
   );
 }
