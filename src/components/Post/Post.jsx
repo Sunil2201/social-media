@@ -103,6 +103,7 @@ function Post({ post, openModal }) {
     const res = await addCommentsService(post?._id, comment, authState?.token);
     const resJson = await res.json();
     const modifiedPosts = resJson?.posts;
+    dataDispatch({ type: "setPosts", payload: modifiedPosts });
     const postOnWhichCommentIsAdded = [...modifiedPosts].find(
       (singlePost) => singlePost?._id === post?._id
     );
