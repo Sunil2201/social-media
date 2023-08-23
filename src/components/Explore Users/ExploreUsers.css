@@ -5,7 +5,7 @@
   padding: 0.5rem 0rem;
 }
 .suggestedUsersContainer {
-  background: #16181c;
+  background: var(--suggested-users-container);
   color: var(--text-color);
   border-radius: 10px;
   max-height: 80vh;
@@ -28,7 +28,7 @@
   padding: 0.5rem 1.2rem;
 }
 .userCard:hover {
-  background-color: rgb(34, 34, 34);
+  background-color: var(--hover-background);
   cursor: pointer;
 }
 .aboutUser {
@@ -72,7 +72,7 @@
   text-align: center;
 }
 @media screen and (max-width: 480px) {
-  .exploreUsersContainer{
+  .exploreUsersContainer {
     display: none;
   }
 }

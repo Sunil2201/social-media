@@ -11,7 +11,8 @@
   z-index: 8;
 }
 
-.singleFilter, .selectedFilter {
+.singleFilter,
+.selectedFilter {
   text-transform: capitalize;
   position: relative;
   display: flex;
@@ -25,17 +26,18 @@
   font-size: 1.2rem;
 }
 
-.singleFilter:hover, .selectedFilter:hover{
-  background: rgb(109, 108, 108);
+.singleFilter:hover,
+.selectedFilter:hover {
+  background: var(--hover-background);
 }
 
-.selectedFilter{
+.selectedFilter {
   color: var(--primary-color);
   font-weight: 600;
 }
 
 @media screen and (max-width: 480px) {
-  .filtersContainer{
+  .filtersContainer {
     top: 41.5%;
     left: 57%;
   }

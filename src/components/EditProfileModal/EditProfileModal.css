@@ -4,9 +4,9 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #000;
-  color: white;
-  z-index: 11;
+  background: var(--background-color);
+  color: var(--text-color);
+  z-index: 100;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   text-align: left;
@@ -26,7 +26,7 @@
   width: 100%;
   height: 100%;
   background: rgba(25, 25, 25, 0.7);
-  z-index: 10;
+  z-index: 99;
 }
 .editProfileModalHeader {
   display: flex;
@@ -41,8 +41,8 @@
 }
 .submitFormBtn {
   border: none;
-  background-color: #fff;
-  color: #000;
+  background-color: var(--primary-color);
+  color: var(--background-color);
   padding: 0.6rem 1.2rem;
   border-radius: 20px;
   font-size: 1rem;
@@ -51,8 +51,8 @@
   align-self: flex-end;
   cursor: pointer;
 }
-.submitFormBtn:hover{
-  background: rgb(199, 199, 199);
+.submitFormBtn:hover {
+  background: var(--button-hover);
   transition: all 0.5s ease;
 }
 .profileImageContainer {
@@ -73,7 +73,7 @@
   cursor: pointer;
 }
 .selectedAvatar {
-  border: 2px solid #fff;
+  border: 2px solid var(--text-color);
 }
 .cameraIcon {
   position: absolute;
@@ -115,10 +115,10 @@
 }
 .editAboutContainer textarea,
 .editWebsiteContainer textarea {
-  background-color: #1d1d1d;
+  background-color: var(--hover-background);
   border: none;
   border-radius: 0.5rem;
-  color: #fff;
+  color: var(--text-color);
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 1rem;
@@ -128,7 +128,7 @@
   resize: none;
 }
 @media screen and (max-width: 480px) {
-  .editProfileModal{
+  .editProfileModal {
     top: 50%;
     width: 90%;
   }

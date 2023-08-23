@@ -8,10 +8,26 @@
   --background-color: #000;
   --text-color: #fff;
   --primary-color: #1d9bf0;
+  --input-color: #1c1c1c;
   --primary-color-hover: #39b0ff;
   --button-hover: rgb(26, 140, 216);
   --hover-background: #292929;
   --border-color: #292929;
+  --suggested-users-container: #16181c;
+  --toggle-mode-background: rgb(63 63 70);
+}
+
+[data-theme="light"] {
+  --background-color: #fff;
+  --text-color: #000;
+  --input-color: #ccc;
+  --primary-color: #1d9bf0;
+  --primary-color-hover: #39b0ff;
+  --button-hover: rgb(26, 140, 216);
+  --hover-background: #ccc;
+  --border-color: #e0e0e0;
+  --suggested-users-container: #e6e6e6;
+  --toggle-mode-background: #ccc;
 }
 
 body {
@@ -46,7 +62,7 @@ code {
   grid-template-columns: 16vw auto 20vw;
   column-gap: 2rem;
   margin: 0 auto;
-  width: 80%;
+  width: 84%;
 }
 .loginVideoContainer,
 .signupVideoContainer {
@@ -77,6 +93,7 @@ code {
   top: 15%;
   left: 35%;
   background: rgba(0, 0, 0, 0.4);
+  color: #fff;
   border-radius: 1rem;
   padding: 1.5rem;
   display: flex;

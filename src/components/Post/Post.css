@@ -14,8 +14,8 @@
 .postHeader {
   display: flex;
   align-items: center;
-  width: 35vw;
   justify-content: space-between;
+  width: 36vw;
 }
 .primaryDetails,
 .userDetails {
@@ -63,7 +63,7 @@
   border-radius: 0.2rem;
 }
 .postActionsMenu p:hover {
-  background: rgb(109, 108, 108);
+  background: var(--hover-background);
 }
 .profile {
   cursor: pointer;
@@ -77,14 +77,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.profile p{
+.profile p {
   max-width: 80px;
   color: gray;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.dateCreated p{
+.dateCreated p {
   color: gray;
   cursor: pointer;
 }
@@ -128,13 +128,22 @@
 }
 .moreOptions {
   padding-top: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 @media screen and (max-width: 480px) {
-  .postHeader{
+  .postHeader {
     width: 100%;
   }
-  .postActionsMenu{
+  .postActionsMenu {
     top: 12%;
     right: 4%;
+  }
+  .dateCreated p {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

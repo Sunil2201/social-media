@@ -21,7 +21,7 @@
   padding: 0.8rem 1rem;
   border-radius: 25px;
   text-decoration: none;
-  color: #fff;
+  color: var(--text-color);
 }
 .individualSection:hover, .loggedInUserProfile:hover{
   background: var(--hover-background);

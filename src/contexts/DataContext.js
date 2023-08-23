@@ -16,6 +16,7 @@ export function DataProvider({ children }) {
   const [isUsersLoading, setIsUsersLoading] = useState(false);
   const { authState } = useContext(AuthContext);
   const [filter, setFilter] = useState("trending");
+  const [darkMode, setDarkMode] = useState(true);
 
   const initialDataState = {
     users: [],
@@ -72,6 +73,14 @@ export function DataProvider({ children }) {
     setFilter(selectedValue);
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode((prevState) => !prevState);
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "light" : "dark"
+    );
+  };
+
   useEffect(() => {
     getAllUsers();
     getAllPosts();
@@ -84,8 +93,10 @@ export function DataProvider({ children }) {
         filter,
         isPostsLoading,
         isUsersLoading,
+        darkMode,
         dataDispatch,
         handleChangeFilter,
+        toggleDarkMode,
       }}
     >
       {children}
