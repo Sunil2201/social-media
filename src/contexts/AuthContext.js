@@ -1,6 +1,7 @@
 import { createContext, useReducer, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { loginService, signupService } from "../services/AuthService";
+import { toast } from "react-hot-toast";
 
 export const AuthContext = createContext();
 
@@ -32,7 +33,6 @@ export function AuthProvider({ children }) {
     try {
       const res = await loginService(username, password);
       const resJson = await res?.json();
-      console.log(resJson);
       const { foundUser, encodedToken } = resJson;
       if (res?.status === 200) {
         localStorage.setItem("user", JSON.stringify(foundUser));
@@ -43,6 +43,14 @@ export function AuthProvider({ children }) {
           location?.state?.from?.pathname
             ? location?.state?.from?.pathname
             : "/"
+        );
+        toast(
+          () => (
+            <span>
+              Welcome back, <b>{username}</b>!
+            </span>
+          ),
+          { icon: "👋🏻" }
         );
       } else {
         setLoginError("The username you entered is not registered.");
@@ -68,6 +76,14 @@ export function AuthProvider({ children }) {
             location?.state?.from?.pathname
               ? location?.state?.from?.pathname
               : "/"
+          );
+          toast(
+            () => (
+              <span>
+                Welcome, <b>{formData?.username}</b>!
+              </span>
+            ),
+            { icon: "👋🏻" }
           );
         }
       } else {

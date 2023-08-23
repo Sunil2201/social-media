@@ -20,6 +20,7 @@ import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
 import Header from "../../components/Header/Header";
 import UsersModal from "../../components/UsersModal/UsersModal";
 import Spinner from "../../components/Spinner";
+import { toast } from "react-hot-toast";
 
 function Profile() {
   const { authState, authDispatch } = useContext(AuthContext);
@@ -167,10 +168,10 @@ function Profile() {
           profileAvatar: URL.createObjectURL(file),
         }));
       } else {
-        console.log("File size must be less than 10mb");
+        toast.error("File size must be less than 10mb");
       }
     } else {
-      console.log("File must be an image");
+      toast.error("File must be an image");
     }
   };
 

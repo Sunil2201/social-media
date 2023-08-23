@@ -3,6 +3,7 @@ import { AuthContext } from "./AuthContext";
 import { DataContext } from "./DataContext";
 import { uploadImage } from "../utils/UploadImage";
 import { createPost, editPost } from "../utils/PostUtils";
+import { toast } from "react-hot-toast";
 
 export const PostModalContext = createContext();
 
@@ -37,10 +38,10 @@ export function PostModalProvider({ children }) {
           type: file?.type.startsWith("image/") ? "image" : "video",
         }));
       } else {
-        console.log("File size must be less than 20mb");
+        toast.error("File size must be less than 20mb");
       }
     } else {
-      console.log("File must be a video or video or an image");
+      toast.error("File must be a video or an image");
     }
   };
 

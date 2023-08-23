@@ -21,6 +21,7 @@ import {
 } from "../../services/PostServices";
 import { useNavigate } from "react-router-dom";
 import UsersModal from "../UsersModal/UsersModal";
+import { toast } from "react-hot-toast";
 
 function Post({ post, openModal }) {
   const { authState } = useContext(AuthContext);
@@ -139,6 +140,11 @@ function Post({ post, openModal }) {
 
   const navigateToPost = () => {
     navigate(`/post-details/${post?.id}`);
+  };
+
+  const copyPostLinkHandler = (link) => {
+    navigator.clipboard.writeText(link);
+    toast.success("Link successfully copied");
   };
 
   return (
@@ -266,7 +272,15 @@ function Post({ post, openModal }) {
                 !hoveredOverShareAction ? "iconContainer" : "shareIconContainer"
               }
             >
-              <BiShareAlt size={22} className="icon" />
+              <BiShareAlt
+                size={22}
+                className="icon"
+                onClick={() =>
+                  copyPostLinkHandler(
+                    `https://trendwhirl.netlify.app/post-details/${post?.id}`
+                  )
+                }
+              />
             </div>
           </div>
 

@@ -9,11 +9,12 @@ import { uploadImage } from "../../utils/UploadImage";
 import "./CreatePost.css";
 import EmojiPicker from "emoji-picker-react";
 import Spinner from "../Spinner";
+import { toast } from "react-hot-toast";
 // import GifPicker from "gif-picker-react";
 
 function CreatePost() {
   const { authState } = useContext(AuthContext);
-  const { dataDispatch } = useContext(DataContext);
+  const { darkMode, dataDispatch } = useContext(DataContext);
 
   const firstName = authState?.user?.firstName;
   const lastName = authState?.user?.lastName;
@@ -68,10 +69,10 @@ function CreatePost() {
           type: file?.type.startsWith("image/") ? "image" : "video",
         }));
       } else {
-        console.log("File size must be less than 20mb");
+        toast.error("File size must be less than 20mb");
       }
     } else {
-      console.log("File must be a video or video or an image");
+      toast.error("File must be a video or an image");
     }
   };
 
@@ -217,7 +218,7 @@ function CreatePost() {
       {showEmojiContainer && (
         <EmojiPicker
           onEmojiClick={handleEmojiClick}
-          theme="dark"
+          theme={darkMode ? "dark" : "light"}
           className="emojiPickerContainer"
         />
       )}

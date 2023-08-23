@@ -6,9 +6,11 @@ import "./CreatePostModal.css";
 import { PostModalContext } from "../../contexts/PostModalContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import EmojiPicker from "emoji-picker-react";
+import { DataContext } from "../../contexts/DataContext";
 
 function CreatePostModal({ closeModal }) {
   const { authState } = useContext(AuthContext);
+  const { darkMode } = useContext(DataContext);
   const newPostRef = useRef();
   const {
     postForm,
@@ -113,11 +115,11 @@ function CreatePostModal({ closeModal }) {
                       className="fileInput"
                       onChange={handleMediaInput}
                     />
-                    <MdOutlineInsertPhoto size={25} className="icon blueIcon" />
+                    <MdOutlineInsertPhoto size={23} className="icon blueIcon" />
                   </label>
                   <BsEmojiSmile
                     onClick={toggleEmojiContainer}
-                    size={20}
+                    size={19}
                     className="icon blueIcon"
                   />
                 </div>
@@ -137,8 +139,8 @@ function CreatePostModal({ closeModal }) {
         {showEmojiContainer && (
           <EmojiPicker
             onEmojiClick={handleEmojiClick}
-            theme="dark"
-            className="emojiPickerContainer"
+            theme={darkMode ? "dark" : "light"}
+            className="emojiPickerContainerModal"
           />
         )}
       </div>

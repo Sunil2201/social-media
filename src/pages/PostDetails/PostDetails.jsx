@@ -8,11 +8,12 @@ import ExploreUsers from "../../components/Explore Users/ExploreUsers";
 import CreatePostModal from "../../components/CreatePostModal/CreatePostModal";
 import { useParams } from "react-router-dom";
 import Post from "../../components/Post/Post";
-import "./PostDetails.css"
+import "./PostDetails.css";
+import Spinner from "../../components/Spinner";
 
 function PostDetails() {
   const { authState } = useContext(AuthContext);
-  const { dataState } = useContext(DataContext);
+  const { isPostsLoading, isUsersLoading, dataState } = useContext(DataContext);
   const { setPostForm, setEditMode } = useContext(PostModalContext);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const { postId } = useParams();
@@ -53,11 +54,14 @@ function PostDetails() {
       <div className="postDetailsPageContainer">
         <Sidebar openModal={openModal} />
         <section className="postDetailSection">
-          <Post post={postToDisplay} openModal={openModal} />
+          {postToDisplay !== undefined && (
+            <Post post={postToDisplay} openModal={openModal} />
+          )}
         </section>
         <ExploreUsers usersToFollow={usersToFollow} />
         {isPostModalOpen && <CreatePostModal closeModal={closeModal} />}
       </div>
+      {(isPostsLoading || isUsersLoading) && <Spinner />}
     </div>
   );
 }
