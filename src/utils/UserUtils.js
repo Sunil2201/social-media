@@ -116,17 +116,27 @@ export function convertDateFormat(inputDate) {
     "Dec",
   ];
 
-  const dateParts = inputDate.split("T");
-  const dateString = dateParts[0];
-  const timeString = dateParts[1].split("+")[0];
+  let year, month, day;
+  if (inputDate.includes("-")) {
+    const dateParts = inputDate.split("T");
+    const dateString = dateParts[0];
+    const timeString = dateParts[1].split("+")[0];
 
-  const [year, month, day] = dateString.split("-");
-  const [hour, minute, second] = timeString.split(":");
+    [year, month, day] = dateString.split("-");
+    const [hour, minute, second] = timeString.split(":");
 
-  const newDate = new Date(year, month - 1, day, hour, minute, second);
-  const formattedDate = `${
-    months[newDate.getMonth()]
-  } ${newDate.getDate()}, ${newDate.getFullYear()}`;
+    const newDate = new Date(year, month - 1, day, hour, minute, second);
+    const formattedDate = `${
+      months[newDate.getMonth()]
+    } ${newDate.getDate()}, ${newDate.getFullYear()}`;
+    return formattedDate;
+  } else if (inputDate.includes("/")) {
+    [day, month, year] = inputDate.split("/");
+    const formattedDate = `${months[Number(month) - 1]} ${Number(
+      day
+    )}, ${year}`;
+    return formattedDate;
+  }
 
-  return formattedDate;
+  return "Invalid date format";
 }
