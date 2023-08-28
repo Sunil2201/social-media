@@ -10,7 +10,6 @@
   height: 23px;
 }
 .mediaContainer img, .mediaContainer video {
-  width: 40rem;
   border-radius: 10px;
 }
 .mediaContainer {
